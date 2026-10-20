@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "data_version": "2026-10-20-suzhou-v1",
+  "as_of": "2026-10-20",
+  "title": "苏州小学数学知识地图",
+  "scope": "苏教新版小学1—6年级；目录与概念映射分开标注",
+  "upstream": {
+    "url": "https://github.com/xiaoyang111222/cn-math-taxonomy",
+    "commit": "10a0f562b32433b785729661c2164756cb933154",
+    "license": "CC BY-NC 4.0"
+  },
+  "counts": {
+    "concepts": 243,
+    "mapped_concepts": 151,
+    "questions": 392,
+    "dependencies": 350,
+    "pdf_catalogs": 8,
+    "external_catalogs": 1,
+    "pending_catalogs": 3,
+    "rewritten_questions": 212
+  },
+  "limitations": [
+    "知识点拆分、落册和先修关系为AI整理稿，未经教师审核。",
+    "目录核对不等于逐节内容核定；有目录的单元也可能尚未拆分知识点。",
+    "四上仅有第三方参考目录；四下、五下、六下新版目录待补。",
+    "原项目课标小学条文来自公开转写，尚未与教育部PDF逐页核对。",
+    "练习结果是局部线索，不能作为完整掌握程度或学习能力的结论。"
+  ]
+}

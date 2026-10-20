@@ -10,3 +10,6 @@ __pycache__/
 .env.*
 PROMPT*.md
 chain.sh
+.local/
+*.local.*
+docs/screenshots/

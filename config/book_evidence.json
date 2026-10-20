@@ -1,0 +1,76 @@
+{
+  "1a": {
+    "filename": "【苏教版】一年级上册(2024秋版)数学电子课本.pdf",
+    "pages": 105,
+    "sha256": "54ebcbebdbba21d5c2fab5414c33b82cf311e5996a01ae0b92408b1441d7ac1d",
+    "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20"
+  },
+  "1b": {
+    "filename": "【苏教版】一年级下册(2025春版)数学电子课本.pdf",
+    "pages": 110,
+    "sha256": "f98d42534ce315fb0141998d990c7b27e51e36841f67feb285af17e831513e40",
+    "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20"
+  },
+  "3a": {
+    "filename": "【苏教版】三年级上册(2025秋版)数学电子课本.pdf",
+    "pages": 132,
+    "sha256": "886066f42b10b96c17c5ef6839489d41e5c7c9e45b2542f7d501c59b2cce7226",
+    "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20"
+  },
+  "3b": {
+    "filename": "【苏教版】三年级下册(2026春版)数学电子课本.pdf",
+    "pages": 122,
+    "sha256": "06220361177373a5430d873e8c91863c8e03ceaf47f797bc61beeebf5ba76fc4",
+    "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20",
+    "quality_note": "扫描件，目录页通过视觉转录，文本层只有扫描水印。"
+  },
+  "2a": {
+    "filename": "【苏教版】二年级上册(2025秋版)数学电子课本.pdf",
+    "pages": 120,
+    "sha256": "350e237026ddd33a09c43c9fe885d7b95934566fd728e7f338d4b3e0bf13d068",
+    "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20"
+  },
+  "2b": {
+    "filename": "【苏教版】二年级下册(2026春版)数学电子课本.pdf",
+    "pages": 110,
+    "sha256": "b855c7ed4e37671169a79725646e6e71172b1657b6432189f61351c183c2b765",
+    "version_evidence": "扫描件目录以厘米和米开篇，含简单的数量关系（二）、两位数乘除一位数等新版单元；原扫描未含清晰版权版次页",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20",
+    "quality_note": "扫描件，目录页通过视觉转录，未见清晰版权页。"
+  },
+  "5a": {
+    "filename": "【苏教版】五年级上册数学（2026秋新版）.pdf",
+    "pages": 131,
+    "sha256": "f6865b02488aa2d8bcca81d6edbbb796c290c83fc1ad43dcc6a34bc7ed50cea9",
+    "version_evidence": "封面2024审定标识；新版目录以图形的运动开篇，含小数乘法和除法（一）、因数与倍数、用字母表示数量关系（一）；可提取正文页码1至129。未含清晰版权页。",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20"
+  },
+  "6a": {
+    "filename": "【苏教版】六年级上册数学（2026秋新版双页扫描件）.pdf",
+    "pages": 120,
+    "sha256": "8c0b14bff9a35146f8effe13d562b38ace068f1ae9797625a611ee1c30a79780",
+    "version_evidence": "封面2024审定标识；新版目录以小数乘法和除法（二）开篇，含混合运算和数量关系（三）、数据调查的新认识、比和比例、圆、确定位置；已查看目录、前中后正文及末页。原文件为双页扫描并有重复跨页、部分页码边缘裁切，保留原文件内容；未据此声称逐页校审完整。",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20",
+    "quality_note": "双页扫描，重复跨页、部分页码边缘裁切；目录和前中后抽查，未逐页校审。"
+  },
+  "4a": {
+    "source": "第三方参考目录（非出版社发布），结合苏州市政府的换版说明交叉核对。",
+    "url": "http://www.dzkbw.com/books/sjb/shuxue/xs4s_2026/",
+    "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=07c75bda-7fff-4c4b-a271-9be638af37de&catalogType=tchMaterial&subCatalog=tchMaterial",
+    "checked_on": "2026-10-20",
+    "quality_note": "尚未取得PDF；此处不标为PDF目录核定，未核到正文印刷页。"
+  }
+}

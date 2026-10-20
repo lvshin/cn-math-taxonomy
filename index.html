@@ -1,83 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>中小学数学知识图谱</title>
-<meta name="description" content="沿先修关系自适应出题，从选中的知识点往回找到薄弱根因，并给出从低年级排起的学习路径。">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Ccircle cx='9' cy='21' r='2.5' fill='white'/%3E%3Ccircle cx='17' cy='11' r='2.5' fill='white'/%3E%3Ccircle cx='24' cy='20' r='2.5' fill='white'/%3E%3C/svg%3E">
-<script>
-(function () {
-  var id = location.hash.replace(/^#/, '');
-  try { id = decodeURIComponent(id); } catch (e) { return; }
-  if (/^cnm_[A-Za-z0-9]+$/.test(id)) {
-    document.documentElement.style.visibility = 'hidden';
-    location.replace('explore/#' + encodeURIComponent(id));
-  }
-})();
-</script>
-<link rel="stylesheet" href="assets/site.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173f38"><meta name="description" content="按苏教新版教材整理的小学数学知识地图、先修关系和练习工具。">
+<title>苏州小学数学知识地图</title><link rel="stylesheet" href="assets/app.css">
+<script defer src="diagnose/engine.js"></script><script defer src="assets/model.js"></script><script defer src="assets/app.js"></script>
 </head>
-<body class="page-home">
+<body>
+<a class="skip-link" href="#content">跳到正文</a>
 <header class="site-header">
-  <a class="brand" href="./">
-    <svg class="logo" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/><circle cx="9" cy="21" r="2.5" fill="#fff"/><circle cx="17" cy="11" r="2.5" fill="#fff"/><circle cx="24" cy="20" r="2.5" fill="#fff"/><path d="M11.2 19.2 15.2 12.8M18.6 12.6 22.2 18.2" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
-    <span class="brand-name">中小学数学知识图谱</span>
-  </a>
-  <nav class="site-nav" aria-label="主导航">
-    <a class="nav-link active" href="./" aria-current="page">首页</a>
-    <a class="nav-link" href="explore/">知识图谱</a>
-    <a class="nav-link" href="diagnose/">诊断</a>
-    <a class="nav-link" href="https://github.com/xiaoyang111222/cn-math-taxonomy" target="_blank" rel="noopener noreferrer">关于</a>
-  </nav>
+<a class="brand" href="#home"><span class="seal" aria-hidden="true">苏</span><span>小学数学知识地图<small>SUZHOU · PRIMARY MATH</small></span></a>
+<nav aria-label="主导航"><a href="#home" data-nav="home">教材地图</a><a href="#map" data-nav="map">知识图谱</a><a href="#practice" data-nav="practice">练习与记录</a><a href="#sources" data-nav="sources">版本与来源</a></nav>
+<span class="header-tag">苏教版 · 一至六年级</span>
 </header>
-<main class="home">
-  <section class="hero">
-    <p class="eyebrow">一至九年级 · 人教版数学</p>
-    <h1>先找到真正没学会的那一步</h1>
-    <p class="lede">沿着先修关系自适应出题，从你选的知识点往回追，定位薄弱根因，并给出一条从低年级排起的学习路径。</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary btn-lg" href="diagnose/">开始诊断</a>
-      <a class="btn btn-lg" href="explore/">浏览知识图谱</a>
-    </div>
-    <p class="quiet-link"><a href="diagnose/?target=cnm_221&amp;demo=1">先看一遍演示：配方法</a></p>
-  </section>
-
-  <h2 class="section-title">三步</h2>
-  <ol class="steps">
-    <li>
-      <span class="step-no">1</span>
-      <h3>选知识点</h3>
-      <p>从一年级到九年级，搜索或按册、章找到想检查的内容。</p>
-    </li>
-    <li>
-      <span class="step-no">2</span>
-      <h3>自适应答题</h3>
-      <p>先问目标本身。答错再出一道同级或更容易的题，仍然错才沿着先修往回追。</p>
-    </li>
-    <li>
-      <span class="step-no">3</span>
-      <h3>找到根因和学习路径</h3>
-      <p>标出薄弱根因和不稳的点，并按年级从低到高排出建议补学的顺序。</p>
-    </li>
-  </ol>
-
-  <h2 class="section-title">图谱里有什么</h2>
-  <div class="stat-grid" id="stats">
-    <div class="stat-card"><div class="stat-num" id="n-topics">…</div><div class="stat-label">知识点</div></div>
-    <div class="stat-card"><div class="stat-num" id="n-edges">…</div><div class="stat-label">先修边</div></div>
-    <div class="stat-card"><div class="stat-num" id="n-questions">…</div><div class="stat-label">题目</div></div>
-    <div class="stat-card"><div class="stat-num" id="n-standards">…</div><div class="stat-label">课标条目</div></div>
-  </div>
-  <p class="stat-note">以上数字在打开页面时从知识点、先修、题库和课标文件统计。</p>
-  <div id="load-error" class="load-error" hidden></div>
-
-  <h2 class="section-title">按年级进入</h2>
-  <div class="grade-grid" id="grades" aria-busy="true"></div>
-</main>
-<footer class="site-footer">
-  <p>AI 生成初稿，未经教师审核。<a href="https://github.com/xiaoyang111222/cn-math-taxonomy/issues/new/choose">提交 Issue</a></p>
-</footer>
-<script src="assets/home.js"></script>
-</body>
-</html>
+<main id="content" tabindex="-1"><div class="loading" role="status">正在展开知识地图…</div></main>
+<footer class="site-footer"><span>从一道题，找到它的来路。</span><span>基于 <a href="https://github.com/xiaoyang111222/cn-math-taxonomy" target="_blank" rel="noopener">cn-math-taxonomy</a> 改编 · CC BY-NC 4.0</span></footer>
+<div id="toast" role="status" aria-live="polite"></div>
+</body></html>

@@ -1,0 +1,1107 @@
+[
+  {
+    "id": "1a",
+    "grade": 1,
+    "semester": "上",
+    "title": "一年级上册",
+    "edition_label": "2024秋版",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 6,
+    "evidence": {
+      "filename": "【苏教版】一年级上册(2024秋版)数学电子课本.pdf",
+      "pages": 105,
+      "sha256": "54ebcbebdbba21d5c2fab5414c33b82cf311e5996a01ae0b92408b1441d7ac1d",
+      "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+      "source": "本地已收集教材；不随程序分发PDF",
+      "checked_on": "2026-10-20"
+    },
+    "units": [
+      {
+        "id": "1a-u01",
+        "title": "数学游戏分享",
+        "printed_page": 1,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "1a-u02",
+        "title": "一 0～5的认识和加减法",
+        "printed_page": 11,
+        "topic_ids": [
+          "cnm_p001",
+          "cnm_p002",
+          "cnm_p003",
+          "cnm_p004",
+          "cnm_p005",
+          "cnm_p006",
+          "cnm_p007"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1a-u03",
+        "title": "生活中的位置",
+        "printed_page": 32,
+        "topic_ids": [
+          "cnm_p015"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1a-u04",
+        "title": "二 6～9的认识和加减法",
+        "printed_page": 35,
+        "topic_ids": [
+          "sj001",
+          "sj002"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1a-u05",
+        "title": "三 图形的初步认识（一）",
+        "printed_page": 53,
+        "topic_ids": [
+          "cnm_p014"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1a-u06",
+        "title": "四 10的认识和加减法",
+        "printed_page": 62,
+        "topic_ids": [
+          "cnm_p008",
+          "cnm_p009",
+          "cnm_p010",
+          "cnm_p011",
+          "cnm_p012",
+          "cnm_p013"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1a-u07",
+        "title": "好玩的“抢10”",
+        "printed_page": 75,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "1a-u08",
+        "title": "五 认识11～19",
+        "printed_page": 78,
+        "topic_ids": [
+          "sj003",
+          "sj004"
+        ],
+        "coverage": "partial"
+      }
+    ]
+  },
+  {
+    "id": "1b",
+    "grade": 1,
+    "semester": "下",
+    "title": "一年级下册",
+    "edition_label": "2025春版",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 6,
+    "evidence": {
+      "filename": "【苏教版】一年级下册(2025春版)数学电子课本.pdf",
+      "pages": 110,
+      "sha256": "f98d42534ce315fb0141998d990c7b27e51e36841f67feb285af17e831513e40",
+      "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+      "source": "本地已收集教材；不随程序分发PDF",
+      "checked_on": "2026-10-20"
+    },
+    "units": [
+      {
+        "id": "1b-u01",
+        "title": "一 进位加法和退位减法",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p019",
+          "cnm_p020",
+          "cnm_p021",
+          "cnm_p025",
+          "cnm_p026",
+          "cnm_p027"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1b-u02",
+        "title": "二 图形的初步认识（二）",
+        "printed_page": 22,
+        "topic_ids": [
+          "cnm_p023"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1b-u03",
+        "title": "图形的拼组",
+        "printed_page": 32,
+        "topic_ids": [
+          "cnm_p024"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1b-u04",
+        "title": "三 数据分类（一）",
+        "printed_page": 36,
+        "topic_ids": [
+          "sj005"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1b-u05",
+        "title": "四 认识20～99",
+        "printed_page": 42,
+        "topic_ids": [
+          "sj006",
+          "cnm_p029"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1b-u06",
+        "title": "50有多大",
+        "printed_page": 53,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "1b-u07",
+        "title": "五 两位数加、减整十数和一位数",
+        "printed_page": 57,
+        "topic_ids": [
+          "cnm_p030",
+          "cnm_p031",
+          "cnm_p032"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1b-u08",
+        "title": "六 简单的数量关系（一）",
+        "printed_page": 71,
+        "topic_ids": [
+          "sj007"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1b-u09",
+        "title": "七 观察物体（一）",
+        "printed_page": 78,
+        "topic_ids": [
+          "sj008"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "1b-u10",
+        "title": "数学连环画",
+        "printed_page": 85,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      }
+    ]
+  },
+  {
+    "id": "2a",
+    "grade": 2,
+    "semester": "上",
+    "title": "二年级上册",
+    "edition_label": "2025秋版",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 7,
+    "evidence": {
+      "filename": "【苏教版】二年级上册(2025秋版)数学电子课本.pdf",
+      "pages": 120,
+      "sha256": "350e237026ddd33a09c43c9fe885d7b95934566fd728e7f338d4b3e0bf13d068",
+      "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+      "source": "本地已收集教材；不随程序分发PDF",
+      "checked_on": "2026-10-20"
+    },
+    "units": [
+      {
+        "id": "2a-u01",
+        "title": "一 1～6的表内乘法",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p038",
+          "cnm_p039"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2a-u02",
+        "title": "二 1～6的表内除法",
+        "printed_page": 19,
+        "topic_ids": [
+          "cnm_p043",
+          "cnm_p046"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2a-u03",
+        "title": "三 7～9的表内乘除法",
+        "printed_page": 33,
+        "topic_ids": [
+          "cnm_p042",
+          "cnm_p044",
+          "cnm_p047"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2a-u04",
+        "title": "四 认识三位数",
+        "printed_page": 39,
+        "topic_ids": [
+          "sj009",
+          "sj010"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2a-u05",
+        "title": "奇妙的七巧板",
+        "printed_page": 56,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "2a-u06",
+        "title": "五 两位数加、减两位数",
+        "printed_page": 61,
+        "topic_ids": [
+          "cnm_p033",
+          "cnm_p034"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2a-u07",
+        "title": "六 有余数的除法",
+        "printed_page": 74,
+        "topic_ids": [
+          "cnm_p050",
+          "cnm_p051",
+          "cnm_p052"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2a-u08",
+        "title": "欢乐购物街",
+        "printed_page": 86,
+        "topic_ids": [
+          "cnm_p036"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2a-u09",
+        "title": "生活中的方向",
+        "printed_page": 91,
+        "topic_ids": [
+          "cnm_p049"
+        ],
+        "coverage": "partial"
+      }
+    ]
+  },
+  {
+    "id": "2b",
+    "grade": 2,
+    "semester": "下",
+    "title": "二年级下册",
+    "edition_label": "2026春版",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 3,
+    "evidence": {
+      "filename": "【苏教版】二年级下册(2026春版)数学电子课本.pdf",
+      "pages": 110,
+      "sha256": "b855c7ed4e37671169a79725646e6e71172b1657b6432189f61351c183c2b765",
+      "version_evidence": "扫描件目录以厘米和米开篇，含简单的数量关系（二）、两位数乘除一位数等新版单元；原扫描未含清晰版权版次页",
+      "source": "本地已收集教材；不随程序分发PDF",
+      "checked_on": "2026-10-20",
+      "quality_note": "扫描件，目录页通过视觉转录，未见清晰版权页。"
+    },
+    "units": [
+      {
+        "id": "2b-u01",
+        "title": "一 厘米和米",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p040",
+          "cnm_p041"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2b-u02",
+        "title": "我们的“身体尺”",
+        "printed_page": 14,
+        "topic_ids": [
+          "cnm_p045"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2b-u03",
+        "title": "二 简单的数量关系（二）",
+        "printed_page": 18,
+        "topic_ids": [
+          "cnm_p048",
+          "sj011"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2b-u04",
+        "title": "时间有多长",
+        "printed_page": 27,
+        "topic_ids": [
+          "sj012"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2b-u05",
+        "title": "三 两位数乘、除以一位数",
+        "printed_page": 33,
+        "topic_ids": [
+          "sj013",
+          "sj014"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2b-u06",
+        "title": "四 数据分类（二）",
+        "printed_page": 40,
+        "topic_ids": [
+          "sj015"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2b-u07",
+        "title": "五 认识四位数",
+        "printed_page": 48,
+        "topic_ids": [
+          "cnm_p053",
+          "cnm_p054",
+          "cnm_p055"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2b-u08",
+        "title": "1200有多大",
+        "printed_page": 62,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "2b-u09",
+        "title": "六 两、三位数的加法和减法",
+        "printed_page": 66,
+        "topic_ids": [
+          "cnm_p064",
+          "cnm_p065",
+          "cnm_p071",
+          "cnm_p072"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "2b-u10",
+        "title": "七 图形的初步认识（三）",
+        "printed_page": 90,
+        "topic_ids": [
+          "sj016"
+        ],
+        "coverage": "partial"
+      }
+    ]
+  },
+  {
+    "id": "3a",
+    "grade": 3,
+    "semester": "上",
+    "title": "三年级上册",
+    "edition_label": "2025秋版",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 7,
+    "evidence": {
+      "filename": "【苏教版】三年级上册(2025秋版)数学电子课本.pdf",
+      "pages": 132,
+      "sha256": "886066f42b10b96c17c5ef6839489d41e5c7c9e45b2542f7d501c59b2cce7226",
+      "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+      "source": "本地已收集教材；不随程序分发PDF",
+      "checked_on": "2026-10-20"
+    },
+    "units": [
+      {
+        "id": "3a-u01",
+        "title": "一 混合运算与数量关系（一）",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p057",
+          "cnm_p058"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3a-u02",
+        "title": "一天的时间",
+        "printed_page": 11,
+        "topic_ids": [
+          "cnm_p092"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3a-u03",
+        "title": "二 两、三位数乘一位数",
+        "printed_page": 17,
+        "topic_ids": [
+          "cnm_p074",
+          "cnm_p075"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3a-u04",
+        "title": "曹冲称象的故事",
+        "printed_page": 31,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "3a-u05",
+        "title": "三 数据的收集与整理",
+        "printed_page": 36,
+        "topic_ids": [
+          "sj017"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3a-u06",
+        "title": "了解你的好朋友",
+        "printed_page": 47,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "3a-u07",
+        "title": "四 毫米、分米和千米",
+        "printed_page": 50,
+        "topic_ids": [
+          "cnm_p067",
+          "cnm_p068",
+          "cnm_p069"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3a-u08",
+        "title": "五 平移、旋转和轴对称",
+        "printed_page": 59,
+        "topic_ids": [
+          "cnm_p127",
+          "cnm_p128",
+          "sj018"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3a-u09",
+        "title": "六 两、三位数除以一位数",
+        "printed_page": 68,
+        "topic_ids": [
+          "cnm_p083",
+          "cnm_p084"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3a-u10",
+        "title": "间隔排列",
+        "printed_page": 86,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "3a-u11",
+        "title": "七 数量关系的分析（一）",
+        "printed_page": 88,
+        "topic_ids": [
+          "sj019"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3a-u12",
+        "title": "八 观察物体（二）",
+        "printed_page": 95,
+        "topic_ids": [
+          "cnm_p113"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3a-u13",
+        "title": "附录 倍的认识",
+        "printed_page": 111,
+        "topic_ids": [
+          "cnm_p073"
+        ],
+        "coverage": "partial"
+      }
+    ]
+  },
+  {
+    "id": "3b",
+    "grade": 3,
+    "semester": "下",
+    "title": "三年级下册",
+    "edition_label": "2026春版",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 2,
+    "evidence": {
+      "filename": "【苏教版】三年级下册(2026春版)数学电子课本.pdf",
+      "pages": 122,
+      "sha256": "06220361177373a5430d873e8c91863c8e03ceaf47f797bc61beeebf5ba76fc4",
+      "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+      "source": "本地已收集教材；不随程序分发PDF",
+      "checked_on": "2026-10-20",
+      "quality_note": "扫描件，目录页通过视觉转录，文本层只有扫描水印。"
+    },
+    "units": [
+      {
+        "id": "3b-u01",
+        "title": "一 角",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p099",
+          "cnm_p100",
+          "cnm_p101"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3b-u02",
+        "title": "二 加法数量关系",
+        "printed_page": 21,
+        "topic_ids": [
+          "sj020"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3b-u03",
+        "title": "年、月、日的秘密",
+        "printed_page": 31,
+        "topic_ids": [
+          "cnm_p091"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3b-u04",
+        "title": "三 两位数乘两位数",
+        "printed_page": 37,
+        "topic_ids": [
+          "cnm_p086",
+          "cnm_p087"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3b-u05",
+        "title": "简单的周期",
+        "printed_page": 58,
+        "topic_ids": [
+          "cnm_p060"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3b-u06",
+        "title": "四 统计表和条形统计图（一）",
+        "printed_page": 60,
+        "topic_ids": [
+          "sj021",
+          "cnm_p108"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3b-u07",
+        "title": "垃圾分类中的数学问题",
+        "printed_page": 71,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "3b-u08",
+        "title": "五 长方形和正方形",
+        "printed_page": 75,
+        "topic_ids": [
+          "cnm_p077",
+          "cnm_p078"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "3b-u09",
+        "title": "寻找“宝藏”",
+        "printed_page": 91,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "3b-u10",
+        "title": "六 分数的初步认识",
+        "printed_page": 94,
+        "topic_ids": [
+          "cnm_p079",
+          "cnm_p080"
+        ],
+        "coverage": "partial"
+      }
+    ]
+  },
+  {
+    "id": "4a",
+    "grade": 4,
+    "semester": "上",
+    "title": "四年级上册",
+    "edition_label": "2026秋新版",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "external_outline",
+    "toc_pdf_page": null,
+    "evidence": {
+      "source": "第三方参考目录（非出版社发布），结合苏州市政府的换版说明交叉核对。",
+      "url": "http://www.dzkbw.com/books/sjb/shuxue/xs4s_2026/",
+      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=07c75bda-7fff-4c4b-a271-9be638af37de&catalogType=tchMaterial&subCatalog=tchMaterial",
+      "checked_on": "2026-10-20",
+      "quality_note": "尚未取得PDF；此处不标为PDF目录核定，未核到正文印刷页。"
+    },
+    "units": [
+      {
+        "id": "4a-u01",
+        "title": "一 两、三位数除以两位数",
+        "printed_page": null,
+        "topic_ids": [
+          "cnm_p106",
+          "cnm_p107"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4a-u02",
+        "title": "二 周长与面积",
+        "printed_page": null,
+        "topic_ids": [
+          "cnm_p088",
+          "cnm_p089",
+          "cnm_p090"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4a-u03",
+        "title": "周长和面积的变化",
+        "printed_page": null,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "4a-u04",
+        "title": "三 乘法数量关系",
+        "printed_page": null,
+        "topic_ids": [
+          "sj022"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4a-u05",
+        "title": "四 混合运算与数量关系（二）",
+        "printed_page": null,
+        "topic_ids": [
+          "cnm_p112"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4a-u06",
+        "title": "制订旅游计划",
+        "printed_page": null,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "4a-u07",
+        "title": "五 多位数的认识",
+        "printed_page": null,
+        "topic_ids": [
+          "cnm_p096",
+          "cnm_p097"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4a-u08",
+        "title": "度量衡的故事",
+        "printed_page": null,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "4a-u09",
+        "title": "六 大数运算",
+        "printed_page": null,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "4a-u10",
+        "title": "生活中的大数",
+        "printed_page": null,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      }
+    ]
+  },
+  {
+    "id": "4b",
+    "grade": 4,
+    "semester": "下",
+    "title": "四年级下册",
+    "edition_label": "待核新版目录",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pending",
+    "toc_pdf_page": null,
+    "evidence": null,
+    "units": []
+  },
+  {
+    "id": "5a",
+    "grade": 5,
+    "semester": "上",
+    "title": "五年级上册",
+    "edition_label": "2026秋新版",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 2,
+    "evidence": {
+      "filename": "【苏教版】五年级上册数学（2026秋新版）.pdf",
+      "pages": 131,
+      "sha256": "f6865b02488aa2d8bcca81d6edbbb796c290c83fc1ad43dcc6a34bc7ed50cea9",
+      "version_evidence": "封面2024审定标识；新版目录以图形的运动开篇，含小数乘法和除法（一）、因数与倍数、用字母表示数量关系（一）；可提取正文页码1至129。未含清晰版权页。",
+      "source": "本地已收集教材；不随程序分发PDF",
+      "checked_on": "2026-10-20"
+    },
+    "units": [
+      {
+        "id": "5a-u01",
+        "title": "一 图形的运动",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p127",
+          "cnm_p128",
+          "cnm_p171"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5a-u02",
+        "title": "图案的还原",
+        "printed_page": 14,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "5a-u03",
+        "title": "二 统计表和条形统计图（二）",
+        "printed_page": 17,
+        "topic_ids": [
+          "cnm_p085",
+          "cnm_p130"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5a-u04",
+        "title": "绿色出行",
+        "printed_page": 26,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "5a-u05",
+        "title": "三 多边形的面积",
+        "printed_page": 30,
+        "topic_ids": [
+          "cnm_p147",
+          "cnm_p148",
+          "cnm_p149",
+          "cnm_p150"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5a-u06",
+        "title": "农田收入调查",
+        "printed_page": 51,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "5a-u07",
+        "title": "四 小数乘法和除法（一）",
+        "printed_page": 55,
+        "topic_ids": [
+          "cnm_p132",
+          "cnm_p137"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5a-u08",
+        "title": "五 可能性",
+        "printed_page": 65,
+        "topic_ids": [
+          "cnm_p140",
+          "cnm_p141"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5a-u09",
+        "title": "六 因数与倍数",
+        "printed_page": 74,
+        "topic_ids": [
+          "cnm_p153",
+          "cnm_p154",
+          "cnm_p155",
+          "cnm_p156",
+          "cnm_p157",
+          "cnm_p158",
+          "cnm_p159"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5a-u10",
+        "title": "七 用字母表示数量关系（一）",
+        "printed_page": 96,
+        "topic_ids": [
+          "cnm_p142"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5a-u11",
+        "title": "钉子板上的多边形",
+        "printed_page": 110,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "5a-u12",
+        "title": "八 观察物体（三）",
+        "printed_page": 112,
+        "topic_ids": [
+          "cnm_p152"
+        ],
+        "coverage": "partial"
+      }
+    ]
+  },
+  {
+    "id": "5b",
+    "grade": 5,
+    "semester": "下",
+    "title": "五年级下册",
+    "edition_label": "待核新版目录",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pending",
+    "toc_pdf_page": null,
+    "evidence": null,
+    "units": []
+  },
+  {
+    "id": "6a",
+    "grade": 6,
+    "semester": "上",
+    "title": "六年级上册",
+    "edition_label": "2026秋新版",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 2,
+    "evidence": {
+      "filename": "【苏教版】六年级上册数学（2026秋新版双页扫描件）.pdf",
+      "pages": 120,
+      "sha256": "8c0b14bff9a35146f8effe13d562b38ace068f1ae9797625a611ee1c30a79780",
+      "version_evidence": "封面2024审定标识；新版目录以小数乘法和除法（二）开篇，含混合运算和数量关系（三）、数据调查的新认识、比和比例、圆、确定位置；已查看目录、前中后正文及末页。原文件为双页扫描并有重复跨页、部分页码边缘裁切，保留原文件内容；未据此声称逐页校审完整。",
+      "source": "本地已收集教材；不随程序分发PDF",
+      "checked_on": "2026-10-20",
+      "quality_note": "双页扫描，重复跨页、部分页码边缘裁切；目录和前中后抽查，未逐页校审。"
+    },
+    "units": [
+      {
+        "id": "6a-u01",
+        "title": "一 小数乘法和除法（二）",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p133",
+          "cnm_p135",
+          "cnm_p138",
+          "cnm_p139"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6a-u02",
+        "title": "二 混合运算和数量关系（三）",
+        "printed_page": 14,
+        "topic_ids": [
+          "sj023"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6a-u03",
+        "title": "生活中的分段计费",
+        "printed_page": 26,
+        "topic_ids": [
+          "sj024"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6a-u04",
+        "title": "三 数与运算的再认识",
+        "printed_page": 30,
+        "topic_ids": [
+          "sj025"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6a-u05",
+        "title": "二进制的秘密",
+        "printed_page": 42,
+        "topic_ids": [
+          "sj026"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6a-u06",
+        "title": "四 比和比例",
+        "printed_page": 44,
+        "topic_ids": [
+          "cnm_p185",
+          "cnm_p186",
+          "cnm_p187",
+          "cnm_p210",
+          "cnm_p211"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6a-u07",
+        "title": "神奇的黄金比",
+        "printed_page": 64,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "6a-u08",
+        "title": "五 圆",
+        "printed_page": 68,
+        "topic_ids": [
+          "cnm_p188",
+          "cnm_p189",
+          "cnm_p190",
+          "cnm_p191",
+          "cnm_p192",
+          "cnm_p193"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6a-u09",
+        "title": "体育中的数学",
+        "printed_page": 88,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "6a-u10",
+        "title": "六 放大与缩小",
+        "printed_page": 92,
+        "topic_ids": [
+          "sj027"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6a-u11",
+        "title": "七 确定位置",
+        "printed_page": 103,
+        "topic_ids": [
+          "cnm_p136",
+          "cnm_p180",
+          "cnm_p181"
+        ],
+        "coverage": "partial"
+      }
+    ]
+  },
+  {
+    "id": "6b",
+    "grade": 6,
+    "semester": "下",
+    "title": "六年级下册",
+    "edition_label": "待核新版目录",
+    "publisher": "江苏凤凰教育出版社",
+    "series": "苏教版·2022课标修订系列",
+    "catalog_status": "pending",
+    "toc_pdf_page": null,
+    "evidence": null,
+    "units": []
+  }
+]

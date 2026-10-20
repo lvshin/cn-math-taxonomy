@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+python3 scripts/check_public_boundary.py
+while read -r local_ref local_sha remote_ref remote_sha; do
+    case "$local_sha" in
+        0000000000000000000000000000000000000000) continue ;;
+    esac
+    python3 scripts/check_public_boundary.py --history "$local_sha"
+done
