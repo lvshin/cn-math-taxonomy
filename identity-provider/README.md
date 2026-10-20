@@ -59,4 +59,37 @@ python3 identity-provider/scripts/prepare_joint.py --stop
 
 `prepare_joint.py` 创建一次性 Keycloak、专用合成 Realm 和强制PKCE S256的 confidential OIDC 客户端，默认端口为18885/18886；生成的管理员、运营身份和客户端秘密仅在忽略目录中。`test_joint.py` 通过真实登录表单、S256授权码交换和 Cookie/CSRF 测试入站邀请、受控注册、明确接受邀请、家庭与孩子历史隔离、只读成员、错误 OAuth state 和全局退出。`--stop` 删除一次性身份容器及凭据文件，业务后端和合成数据库由启动方清理。
 
+## 记住登录状态
+
+使用 Keycloak 原生“记住我”复选框。勾选后，认证中心通过 HttpOnly 持久 Cookie 保留 SSO，闲置和绝对最长时间均为30天；未勾选时保留原有普通会话时长。浏览器保存的 Cookie 仍须通过认证中心校验，应用继续采用短期安全会话，不能将浏览器返回标记当成认证凭据。退出、撤销或过期后的 SSO 不能恢复登录。
+
+设置属于 Realm，因此该统一账号登录页中的其他客户端也会显示原生复选框。仅修改三个 Remember Me 设置，不重新导入 Realm、不改变普通超时、现有客户端或流程：
+
+```sh
+# 默认只读预览；管理员令牌仍经 KEYCLOAK_ADMIN_ACCESS_TOKEN 注入。
+python3 identity-provider/scripts/configure_remember_me.py \
+  --base-url "$IDENTITY_ADMIN_URL" --realm "$IDENTITY_REALM" \
+  --client-id "$EDUCATION_CLIENT_ID" --days 30
+
+# 确认隔离验收后，显式写入；恢复文件只能新建，权限0600，不进公开仓库。
+python3 identity-provider/scripts/configure_remember_me.py \
+  --base-url "$IDENTITY_ADMIN_URL" --realm "$IDENTITY_REALM" \
+  --client-id "$EDUCATION_CLIENT_ID" --days 30 \
+  --apply --backup-file "$PRIVATE_RECOVERY_FILE"
+
+# 恢复仍先只读预览；实际恢复加 --apply 及另一个新的 --backup-file。
+python3 identity-provider/scripts/configure_remember_me.py \
+  --base-url "$IDENTITY_ADMIN_URL" --realm "$IDENTITY_REALM" \
+  --client-id "$EDUCATION_CLIENT_ID" --restore-backup "$PRIVATE_RECOVERY_FILE"
+
+python3 identity-provider/scripts/test_configure_remember_me.py
+python3 identity-provider/scripts/test_remember_me.py
+```
+
+后一项验收使用独立一次性 Keycloak26.7.3、合成账号和回调，默认端口18895/18897；结束清理容器及一次性凭据，受保护结果保存在忽略目录。实际验证原生复选框、普通登录的会话Cookie、勾选后的30天HttpOnly持久Cookie、只保留持久Cookie模拟浏览器重启后的 `prompt=none` / S256授权码登录、原服务端会话起点保持、退出撤销及三字段恢复。它不声称等待了30天或重新启动了用户的真实浏览器；30天边界同时根据配置、Cookie和服务端会话起点核对。
+
+已有普通登录不会自动转换为“记住我”。需要一次显示密码表单的登录并勾选，后续才能在同一浏览器使用持久SSO。清除Cookie或使用无痕窗口也需要重新登录。Keycloak没有在默认ID token或introspection中提供标准的“记住我”claim，本实现不增加自定义身份Provider或将该选择复制到用户属性。
+
 SPI依据：[Keycloak官方扩展文档](https://www.keycloak.org/docs/latest/server_development/#_auth_spi)、[FormAction注册顺序说明](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_development/topics/auth-spi.adoc)。
+
+会话依据：[Keycloak会话超时说明](https://github.com/keycloak/keycloak/blob/26.7.3/docs/documentation/server_admin/topics/sessions/timeouts.adoc)、[原生登录Cookie实现](https://github.com/keycloak/keycloak/blob/26.7.3/services/src/main/java/org/keycloak/services/managers/AuthenticationManager.java)、[服务端会话期限计算](https://github.com/keycloak/keycloak/blob/26.7.3/server-spi-private/src/main/java/org/keycloak/models/utils/SessionExpirationUtils.java)。

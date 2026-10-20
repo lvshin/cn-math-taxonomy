@@ -3,52 +3,55 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),Cloud=require('../assets/cloud.js');
 let passed=0;
 const clone=x=>JSON.parse(JSON.stringify(x));
-function fixture({staticMode=false,role='OWNER',archived=false}={}){
- const calls=[],sessions=new Map();let loseCreate=false,conflict=false,barrier=null;
+function fixture({staticMode=false,role='OWNER',archived=false,signedIn=true,sessionRestoreUrl,capabilityStatus=200}={}){
+ const calls=[],sessions=new Map(),navigations=[];let loseCreate=false,conflict=false,barrier=null;
  const familyOptions=[{id:'family-a',name:'合成家庭甲',role},{id:'family-b',name:'合成家庭乙',role:'EDITOR'}];let families=[familyOptions[0]];
  const children={'family-a':[{id:'child-a',nickname:'样例甲',archived,version:0},{id:'child-aa',nickname:'样例乙',archived:false,version:0}],'family-b':[{id:'child-b',nickname:'样例丙',archived:false,version:0}]};
  const res=(status,data)=>({ok:status>=200&&status<300,status,json:async()=>clone(data)});
  async function fetcher(path,options={}){
   const method=options.method||'GET',body=options.body?JSON.parse(options.body):null;calls.push({path,method,body,options});
-  if(path.endsWith('capabilities'))return res(staticMode?404:200,{cloud:true,loginUrl:'oauth2/authorization/learning'});
+  if(path.endsWith('capabilities'))return res(staticMode?404:capabilityStatus,{cloud:true,loginUrl:'oauth2/authorization/learning',sessionRestoreUrl});
   if(path.endsWith('/csrf'))return res(200,{token:'synthetic-csrf',headerName:'X-CSRF-TOKEN'});
-  if(path.endsWith('/me'))return res(200,{id:'user-a',name:'合成成人'});
+  if(path.endsWith('/me'))return signedIn?res(200,{id:'user-a',name:'合成成人'}):res(401,{code:'UNAUTHENTICATED'});
   if(path.endsWith('/families'))return res(200,families);
   const match=path.match(/families\/(family-[ab])\/children$/);if(match)return res(200,children[match[1]]);
   if(path.endsWith('/sessions')&&method==='POST'){
+   if(!signedIn)return res(401,{code:'UNAUTHENTICATED'});
    if(barrier)await barrier;
    if(!sessions.has(body.id))sessions.set(body.id,{...clone(body),version:0});
    if(loseCreate){loseCreate=false;throw Error('response lost');}return res(200,sessions.get(body.id));
   }
   if(path.includes('/sessions/')&&method==='PUT'){
+   if(!signedIn)return res(401,{code:'UNAUTHENTICATED'});
    if(conflict)return res(409,{detail:'合成并发冲突'});
    const id=path.split('/').pop(),old=sessions.get(id);if(body.version!==old.version)return res(409,{});
    const next={...old,...clone(body),version:old.version+1};sessions.set(id,next);return res(200,next);
   }
   throw Error('Unexpected request '+method+' '+path);
  }
- let uuid=0;const cloud=Cloud.create({fetcher,uuid:()=>`session-${++uuid}`});
- return {cloud,calls,sessions,setLoseCreate:()=>loseCreate=true,setConflict:()=>conflict=true,setBarrier:p=>barrier=p,setFamily:id=>families=id?[familyOptions.find(f=>f.id===id)]:[]};
+ let uuid=0;const cloud=Cloud.create({fetcher,uuid:()=>`session-${++uuid}`,navigate:target=>navigations.push(target)});
+ return {cloud,calls,sessions,navigations,setSignedIn:value=>signedIn=value,setLoseCreate:()=>loseCreate=true,setConflict:()=>conflict=true,setBarrier:p=>barrier=p,setFamily:id=>families=id?[familyOptions.find(f=>f.id===id)]:[]};
 }
 // 只模拟本模块使用的DOM接口，运行实际条件渲染与事件处理；浏览器布局另行验证。
 function uiFixture(cloud,{previewFamily='family-b',used=false}={}){
- const nodes=new Map(),calls=[],messages=[];let routeCount=0;
+ const nodes=new Map(),calls=[],messages=[],submittedForms=[];let routeCount=0;
  class Element{
-  constructor(id){this.id=id;this.html='';this.ids=[];this.handlers={};}
+  constructor(id){this.id=id;this.html='';this.ids=[];this.handlers={};this.children=[];}
   set innerHTML(value){for(const id of this.ids){const node=nodes.get(id);if(node)node.innerHTML='';nodes.delete(id);}this.ids=[];this.html=value;for(const match of value.matchAll(/\bid="([^"]+)"/g)){this.ids.push(match[1]);nodes.set(match[1],new Element(match[1]));}}
   get innerHTML(){return this.html;}
   querySelector(selector){return selector.startsWith('#')?nodes.get(selector.slice(1))||null:null;}
   querySelectorAll(){return [];}
   addEventListener(type,fn){this.handlers[type]=fn;}
-  append(){}
+  append(...children){this.children.push(...children);}
+  submit(){submittedForms.push(this);}
  }
  const root=new Element('root'),bar=new Element('family-context');nodes.set('root',root);nodes.set('family-context',bar);
  const original=cloud.request;cloud.request=async(path,options={})=>{calls.push({path,...options});if(path==='invitations/preview'){if(used)throw new Cloud.ApiError(409,{code:'INVITATION_USED'});return {familyId:previewFamily,familyName:previewFamily?'受邀合成家庭':null,role:previewFamily?'EDITOR':null,expiresAt:'2099-01-01T00:00:00Z'};}if(path.endsWith('/members')||path.endsWith('/invitations'))return [];return original(path,options);};
- const document={getElementById:id=>nodes.get(id)||null,querySelector:selector=>nodes.get(selector.slice(1))||null};
+ const document={getElementById:id=>nodes.get(id)||null,querySelector:selector=>nodes.get(selector.slice(1))||null,createElement:tag=>Object.assign(new Element(''),{tagName:tag.toUpperCase()}),body:new Element('body')};
  const window={addEventListener(){}};vm.runInNewContext(fs.readFileSync('assets/cloud-ui.js','utf8'),{window,document,LearningCloud:Cloud,URL,URLSearchParams,history:{replaceState(){}},location:{href:'https://example.test/edu/math/'},CSS:{escape:x=>x},FormData,console});
  const ui=window.LearningCloudUI.create(cloud,{root,toast:message=>messages.push(message),onRoute(){routeCount++;},onResume(){}});
  async function route(name,params={}){ui.renderRoute(name,new URLSearchParams(params));await new Promise(setImmediate);return root.innerHTML;}
- return {ui,route,root,bar,nodes,calls,messages,get routeCount(){return routeCount;}};
+ return {ui,route,root,bar,nodes,calls,messages,submittedForms,get routeCount(){return routeCount;}};
 }
 const initial={schema:1,dataVersion:'synthetic-v1',targets:['concept-a'],answers:[],options:{seed:'test',limit:12,mode:'target'}};
 async function test(name,fn){await fn();passed++;console.log('✓ '+name);}
@@ -57,12 +60,30 @@ async function test(name,fn){await fn();passed++;console.log('✓ '+name);}
   const {cloud,calls}=fixture({staticMode:true});await cloud.init();assert.equal(cloud.state.mode,'static');assert.equal(calls.length,1);assert.throws(()=>cloud.context(),/登录/);assert.equal(cloud.state.active,null);
   const source=fs.readFileSync('assets/cloud.js','utf8')+fs.readFileSync('assets/app.js','utf8');assert.ok(!source.includes('localStorage.setItem'));assert.ok(!source.includes('localStorage.removeItem'));assert.ok(!source.includes('Authorization:'));
  });
+ await test('首次身份401只按服务端设备标记自动恢复一次，不先加载家庭',async()=>{
+  const target='oauth2/authorization/learning?restore=1',f=fixture({signedIn:false,sessionRestoreUrl:target});await f.cloud.init();assert.deepEqual(f.navigations,[target]);assert.match(f.cloud.state.notice,/正在恢复/);assert.ok(!f.calls.some(c=>c.path.endsWith('/families')));await f.cloud.init();assert.deepEqual(f.navigations,[target]);assert.equal(f.cloud.state.mode,'cloud');
+ });
+ await test('没有设备标记仍显示普通登录，恢复失败清标记后不再跳转',async()=>{
+  const f=fixture({signedIn:false});await f.cloud.init();assert.equal(f.navigations.length,0);const view=uiFixture(f.cloud);await view.route('family');assert.match(view.root.innerHTML,/使用统一账号登录/);assert.match(view.root.innerHTML,/记住我/);assert.match(view.root.innerHTML,/30天/);assert.ok(view.root.innerHTML.includes('href="oauth2/authorization/learning"'));await f.cloud.init();assert.equal(f.navigations.length,0);
+ });
+ await test('自动恢复只接受固定同源授权入口，忽略外部或被改写的目标',async()=>{
+  for(const target of ['https://other.example/','//other.example/','javascript:alert(1)','oauth2/authorization/learning?restore=1&next=https://other.example/']){const f=fixture({signedIn:false,sessionRestoreUrl:target});await f.cloud.init();assert.equal(f.navigations.length,0);}
+ });
+ await test('已有有效会话不重复恢复登录，静态站和服务异常不触发认证',async()=>{
+  for(const options of [{},{staticMode:true},{capabilityStatus:503}]){const f=fixture({...options,sessionRestoreUrl:'oauth2/authorization/learning?restore=1'});await f.cloud.init();assert.equal(f.navigations.length,0);if(options.staticMode||options.capabilityStatus)assert.ok(!f.calls.some(c=>c.path.endsWith('/me')));}
+ });
+ await test('保存时身份失效保留本轮和待保存内容，不自动跳走或重复认证',async()=>{
+  const f=fixture({sessionRestoreUrl:'oauth2/authorization/learning?restore=1'});await f.cloud.init();await f.cloud.begin(initial,{});f.setSignedIn(false);const next={...initial,answers:[{qid:'q1',result:'correct'}]};await f.cloud.save(next,{},true);assert.equal(f.cloud.state.pending,true);assert.equal(f.cloud.state.active.id,'session-1');assert.equal(f.cloud.state.me,null);assert.equal(f.navigations.length,0);assert.equal(f.sessions.get('session-1').snapshot.answers.length,0);await f.cloud.init();assert.equal(f.navigations.length,0);f.setSignedIn(true);await f.cloud.init();await f.cloud.flush();assert.equal(f.sessions.get('session-1').snapshot.answers.length,1);assert.equal(f.cloud.state.pending,false);
+ });
  await test('单个家庭中切换孩子，刷新保持当前孩子',async()=>{
   const {cloud}=fixture();await cloud.init();assert.equal(cloud.state.families.length,1);assert.equal(cloud.context().childId,'child-a');cloud.selectChild('child-aa');await cloud.refresh();assert.equal(cloud.context().childId,'child-aa');
  });
  await test('无家庭才显示创建表单，所有家庭角色加入后均不再显示',async()=>{
   const empty=fixture();empty.setFamily(null);await empty.cloud.init();const fresh=uiFixture(empty.cloud);await fresh.route('family');assert.ok(fresh.nodes.has('new-family'));assert.match(fresh.root.innerHTML,/一个成人账号只能有一个家庭/);
   for(const role of ['OWNER','EDITOR','VIEWER']){const f=fixture({role});await f.cloud.init();const joined=uiFixture(f.cloud);await joined.route('family');assert.ok(!joined.nodes.has('new-family'));assert.match(joined.root.innerHTML,/我的家庭：合成家庭甲/);assert.match(joined.root.innerHTML,/不能再创建或加入其他家庭/);assert.ok(joined.nodes.has('leave-family'));}
+ });
+ await test('设置记住我先明确退出范围，并复用带CSRF的退出和待保存保护',async()=>{
+  const {cloud}=fixture();await cloud.init();const view=uiFixture(cloud);await view.route('family');assert.match(view.root.innerHTML,/<button id="remember-login" type="button">退出后设置“记住我”/);assert.match(view.root.innerHTML,/这会结束统一账号在其他应用的旧登录/);assert.ok(!view.root.innerHTML.includes('?relogin='));const button=view.nodes.get('remember-login');assert.ok(button);cloud.state.pending=true;await button.handlers.click();assert.equal(view.submittedForms.length,0);assert.ok(!view.calls.some(c=>c.path==='csrf'));assert.match(view.messages.at(-1),/待保存内容/);cloud.state.pending=false;await button.handlers.click();assert.equal(view.submittedForms.length,1);const form=view.submittedForms[0];assert.equal(form.method,'POST');assert.equal(form.action,'logout');assert.equal(form.children[0].type,'hidden');assert.equal(form.children[0].name,'_csrf');assert.equal(form.children[0].value,'synthetic-csrf');view.ui.renderBar();await view.nodes.get('cloud-logout').onclick();assert.equal(view.submittedForms.length,2);
  });
  await test('家庭栏显示固定家庭名称，仍可切换孩子',async()=>{
   const {cloud}=fixture();await cloud.init();const view=uiFixture(cloud);view.ui.renderBar();assert.ok(!view.nodes.has('context-family'));assert.match(view.bar.innerHTML,/aria-label="当前家庭">合成家庭甲/);view.nodes.get('context-child').onchange({target:{value:'child-aa'}});assert.equal(cloud.state.child.id,'child-aa');

@@ -1,6 +1,8 @@
 package org.cnmathtaxonomy.learning;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -31,8 +33,13 @@ class LearningController {
     }
 
     @GetMapping("/capabilities")
-    Map<String, Object> capabilities() {
-        return Map.of("cloud", true, "apiVersion", 1, "loginUrl", "oauth2/authorization/learning");
+    ResponseEntity<Map<String, Object>> capabilities(HttpServletRequest request) {
+        Map<String, Object> capabilities = new LinkedHashMap<>(Map.of("cloud", true, "apiVersion", 1,
+                "loginUrl", "oauth2/authorization/learning"));
+        if (SessionRestoration.hasMarker(request)) {
+            capabilities.put("sessionRestoreUrl", "oauth2/authorization/learning?restore=1");
+        }
+        return ResponseEntity.ok().header("Cache-Control", "no-store").header("Vary", "Cookie").body(capabilities);
     }
 
     @GetMapping("/csrf")

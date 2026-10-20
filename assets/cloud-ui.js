@@ -12,13 +12,17 @@
   const writable=()=>s.me&&s.family&&s.child&&!s.child.archived&&s.family.role!=='VIEWER';
   function download(data,name){const u=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}
   async function act(fn){try{await fn();}catch(e){toast(e.message);}}
+  async function signOut(){
+   if(s.pending||observationDraft?.pending)throw Error('还有待保存内容，请先重试保存或导出。');
+   const csrf=await cloud.request('csrf'),form=document.createElement('form'),input=document.createElement('input');form.method='POST';form.action='logout';input.type='hidden';input.name=csrf.parameterName||'_csrf';input.value=csrf.token;form.append(input);document.body.append(form);form.submit();
+  }
   function renderBar(){
    const pending=s.pending?`<span class="save-state pending" role="status">${esc(s.notice)} <button id="retry-save">重试保存</button></span>`:s.active?`<span class="save-state" role="status">${esc(s.notice)}</span>`:'';
    if(!s.me){bar.innerHTML=`<div class="context-inner"><span>${esc(s.mode==='loading'?'正在连接学习服务…':s.notice)}</span><a class="text-link" href="#family">${s.mode==='cloud'?'登录 / 接受邀请':'了解家庭学习'}</a>${s.mode==='unavailable'?'<button id="retry-cloud">重试连接</button>':''}</div>`;bar.querySelector('#retry-cloud')?.addEventListener('click',()=>act(()=>cloud.init()));pendingObservationBar();return;}
    bar.innerHTML=`<div class="context-inner"><div class="context-selectors"><div class="context-family">家庭<strong aria-label="当前家庭">${s.family?`${esc(s.family.name)} · ${esc(roles[s.family.role])}`:'尚未加入家庭'}</strong></div><label>孩子<select id="context-child" aria-label="当前孩子">${s.children.length?s.children.map(c=>`<option value="${esc(c.id)}"${c.id===s.child?.id?' selected':''}>${esc(c.nickname)}${c.archived?'（已归档）':''}</option>`).join(''):'<option>尚无孩子档案</option>'}</select></label></div><div class="context-account"><span>${esc(s.me.name)}</span><a href="#family" class="text-link">家庭管理</a><button id="cloud-logout">退出登录</button></div>${s.me.registrationPending?'<span class="save-state pending">账号已建立，原邀请尚未完成。可重新打开有效邀请接受，或请管理员补发邀请。</span>':''}${pending}</div>`;
    bar.querySelector('#context-child').onchange=e=>cloud.selectChild(e.target.value);
    bar.querySelector('#retry-save')?.addEventListener('click',()=>cloud.flush());
-   bar.querySelector('#cloud-logout').onclick=()=>act(async()=>{if(s.pending||observationDraft?.pending)throw Error('还有待保存内容，请先重试保存或导出。');const csrf=await cloud.request('csrf'),form=document.createElement('form'),input=document.createElement('input');form.method='POST';form.action='logout';input.type='hidden';input.name=csrf.parameterName||'_csrf';input.value=csrf.token;form.append(input);document.body.append(form);form.submit();});
+   bar.querySelector('#cloud-logout').onclick=()=>act(signOut);
    pendingObservationBar();
   }
   function pendingObservationBar(){if(!observationDraft?.pending)return;const line=document.createElement('div');line.className='context-inner';line.innerHTML=`<span class="save-state pending">${esc(observationDraft.ctx.childName)}的观察尚未保存。内容留在本页。 <button id="retry-observation">重试保存观察</button> <button id="export-observation">导出待保存观察</button></span>`;bar.append(line);line.querySelector('#retry-observation').onclick=()=>act(()=>saveObservation());line.querySelector('#export-observation').onclick=()=>download(observationDraft,'待保存的亲子观察.json');}
@@ -26,7 +30,7 @@
   cloud.subscribe(kind=>{renderBar();if(['context','ready','auth'].includes(kind))onRoute();});
   window.addEventListener('beforeunload',e=>{if(s.pending||observationDraft?.pending){e.preventDefault();e.returnValue='';}});
   function frame(title,intro,content){root.innerHTML=`<div class="wrap cloud-wrap"><div class="page-heading"><div><div class="eyebrow">一起看见成长的过程</div><h1>${title}</h1><p>${intro}</p></div></div>${content}</div>`;}
-  function signIn(){return `<a class="btn primary" href="${esc(s.loginUrl||'oauth2/authorization/learning')}">使用统一账号登录 →</a>`;}
+  function signIn(){return `<a class="btn primary" href="${esc(s.loginUrl||'oauth2/authorization/learning')}">使用统一账号登录 →</a><p class="muted">在登录页勾选“记住我”，此设备30天内可自动恢复登录。</p>`;}
   function gate(){
    if(s.mode==='static'){frame('家庭学习，接续每一次尝试','当前为教材浏览模式。',`<section class="panel cloud-panel"><h2>把过程留给下一次陪伴</h2><p>云端家庭入口支持共同照护、多孩子档案、亲子活动和独立的学习历史。这里仍可浏览教材、图谱和活动卡。</p><p class="muted">本机不新增第二份长期记录。原浏览器里的旧练习仍保留，可导出后在云端选择孩子导入。</p><button id="export-legacy">导出旧浏览器记录</button><a class="btn" href="#activities">看看亲子活动</a></section>`);document.getElementById('export-legacy').onclick=exportLegacy;return true;}
    if(s.mode!=='cloud'){frame('学习服务暂时无法连接','教材和活动卡仍可浏览；学习记录需要连接云端。','<button id="connect-again" class="btn primary">重新连接</button>');document.getElementById('connect-again').onclick=()=>act(()=>cloud.init());return true;}
@@ -45,7 +49,8 @@
   async function familyPage(){
    if(gate())return;
    const existingFamily=s.family||s.families[0];
-   frame('家庭与孩子','一个成人账号只属于一个家庭，家人共用资料，每个孩子保留自己的学习历史。',`${existingFamily?`<section class="panel cloud-panel"><h2>我的家庭：${esc(existingFamily.name)}</h2><p>你已是这个家庭的${esc(roles[existingFamily.role])}。建立或加入家庭后，不能再创建或加入其他家庭。</p></section>`:'<section class="panel cloud-panel"><h2>建立家庭</h2><form id="new-family" class="inline-form"><label>家庭名称<input name="name" maxlength="80" required placeholder="为家庭取一个称呼"></label><button class="btn primary">创建家庭</button></form><p class="muted">也可以使用管理员发来的邀请链接，加入已有家庭。一个成人账号只能有一个家庭。</p></section>'}<div id="family-details"></div><div id="operator-panel"></div>`);
+   frame('家庭与孩子','一个成人账号只属于一个家庭，家人共用资料，每个孩子保留自己的学习历史。',`<p class="muted">此前未勾选“记住我”的登录，需退出并重新登录一次；这会结束统一账号在其他应用的旧登录。重新登录时勾选“记住我”。 <button id="remember-login" type="button">退出后设置“记住我”</button></p>${existingFamily?`<section class="panel cloud-panel"><h2>我的家庭：${esc(existingFamily.name)}</h2><p>你已是这个家庭的${esc(roles[existingFamily.role])}。建立或加入家庭后，不能再创建或加入其他家庭。</p></section>`:'<section class="panel cloud-panel"><h2>建立家庭</h2><form id="new-family" class="inline-form"><label>家庭名称<input name="name" maxlength="80" required placeholder="为家庭取一个称呼"></label><button class="btn primary">创建家庭</button></form><p class="muted">也可以使用管理员发来的邀请链接，加入已有家庭。一个成人账号只能有一个家庭。</p></section>'}<div id="family-details"></div><div id="operator-panel"></div>`);
+   document.getElementById('remember-login').addEventListener('click',()=>act(signOut));
    document.getElementById('new-family')?.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);act(async()=>{try{const added=await cloud.request('families',{method:'POST',body:{name:String(f.get('name')).trim()}});await cloud.refresh();await cloud.selectFamily(added.id);toast('家庭已建立。');}catch(error){if(error.status===409)await cloud.refresh();throw error;}});});
    const seq=renderId;await operatorPanel(seq);if(seq!==renderId||!s.family)return;
    const familyId=s.family.id,owner=s.family.role==='OWNER';

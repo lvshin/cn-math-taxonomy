@@ -50,6 +50,7 @@ class SecurityConfiguration {
             LearningProperties properties, ObjectMapper mapper, OidcBackChannelLogoutHandler backChannelLogoutHandler) throws Exception {
         var logoutHandler = new OidcClientInitiatedLogoutSuccessHandler(clients);
         logoutHandler.setPostLogoutRedirectUri("{baseUrl}/");
+        var sessionRestoration = new SessionRestoration();
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/healthz", "/readyz", "/api/v1/capabilities", "/api/v1/csrf",
                         "/api/v1/invitations/preview", "/api/v1/invitations/registration-grant", "/internal/registration/**").permitAll()
@@ -58,9 +59,9 @@ class SecurityConfiguration {
                 .anyRequest().denyAll())
                 .csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/internal/registration/**")))
                 .oauth2Login(login -> login.authorizationEndpoint(endpoint -> endpoint.authorizationRequestResolver(new InvitedRegistrationResolver(clients)))
-                        .successHandler((request, response, authentication) -> response.sendRedirect(request.getContextPath() + "/")))
+                        .successHandler(sessionRestoration).failureHandler(sessionRestoration))
                 .oidcLogout(logout -> logout.backChannel(back -> back.logoutHandler(backChannelLogoutHandler)))
-                .logout(logout -> logout.logoutSuccessHandler(logoutHandler))
+                .logout(logout -> logout.addLogoutHandler(sessionRestoration).logoutSuccessHandler(logoutHandler))
                 .exceptionHandling(errors -> errors
                         .defaultAuthenticationEntryPointFor((request, response, exception) -> {
                             response.setStatus(401);

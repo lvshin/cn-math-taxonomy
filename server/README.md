@@ -28,6 +28,16 @@ java -jar server/target/family-learning-server.jar
 
 客户端需配置准确的登录回调、退出返回地址及 `/edu/math/logout/connect/back-channel/learning`；启用携带会话ID的Keycloak后向退出。服务使用host-only、Secure、HttpOnly、SameSite=Lax会话Cookie，OIDC令牌不交给前端。
 
+## 记住登录
+
+认证中心提供“记住我”选项；勾选后，Keycloak自身的持久SSO Cookie与会话负责30天登录有效期，未勾选仍沿用普通SSO会话。应用内存会话继续闲置60分钟过期，不把内存会话Cookie延长30天，也不建立第二套长期认证令牌。
+
+成功OIDC回调会设置30天、host-only、Secure、HttpOnly、SameSite=Lax的 `LEARNING_RETURNING` 提示Cookie。此Cookie只有固定值 `1`，不包含用户身份或令牌，不能授权任何API。`GET api/v1/capabilities` 仅在有该提示时返回相对地址 `sessionRestoreUrl`，且使用 `Cache-Control: no-store` 与 `Vary: Cookie`。前端首次加载遇到401时可尝试一次恢复；保存失败不能自动跳转或重新提交。
+
+恢复地址 `oauth2/authorization/learning?restore=1` 通过Spring Security标准授权码流程发出 `prompt=none`，保留state、nonce及S256 PKCE。只有认证中心仍有有效SSO时才重新建立应用会话；SSO失效则清除提示并返回家庭页，不反复自动尝试。普通登录错误继续返回登录错误页，所有失败都会清除提示。提示过期或手工删除后，普通登录仍然可用。
+
+已有普通SSO登录不会自动延长为30天。Keycloak已有身份的密码重验页不显示“记住我”，因此页面提供明确的“退出后设置记住我”操作，由用户选择后通过现有CSRF退出流程清除提示、结束本地会话及发起统一退出，再由本人在新登录表单勾选“记住我”。这也会退出同一SSO会话中的其他统一登录应用；有未保存记录时沿用离开页面保护。恢复与受邀注册互斥，两者都由认证中心核对真实身份。后向退出保留原有签名验证和会话撤销，不接受任意返回网址。
+
 ## 权限与持久化
 
 身份只按issuer与subject建立；不同系统中的同名用户不会自动合并。每个请求在事务内重新验证成员资格，再设置事务级用户、家庭和角色上下文。数据库所有家庭表启用FORCE RLS，孩子关联使用家庭与孩子复合外键。连接归还池时事务上下文自动结束。

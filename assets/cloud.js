@@ -7,9 +7,9 @@
  const ROLES={OWNER:'家庭管理员',EDITOR:'记录成员',VIEWER:'只读成员'};
  const clone=x=>JSON.parse(JSON.stringify(x));
  class ApiError extends Error{constructor(status,body){super(body?.detail||body?.message||({401:'请先登录。',403:'没有这项操作的权限。',404:'内容不可见或已移除。',409:'记录已变化，请重新加载后再操作。'}[status])||'服务暂时不可用，请稍后重试。');this.status=status;this.code=body?.code;}}
- function create({fetcher=globalThis.fetch.bind(globalThis),base='api/v1/',uuid=()=>globalThis.crypto.randomUUID()}={}){
+ function create({fetcher=globalThis.fetch.bind(globalThis),base='api/v1/',uuid=()=>globalThis.crypto.randomUUID(),navigate=target=>globalThis.location.assign(target)}={}){
   const state={mode:'loading',me:null,families:[],children:[],family:null,child:null,active:null,notice:'正在连接学习服务…',pending:false};
-  let csrf=null,running=null,latest=null,listeners=[],generation=0;
+  let csrf=null,running=null,latest=null,listeners=[],generation=0,initialized=false;
   const emit=kind=>listeners.forEach(fn=>fn(kind,state));
   function url(path){return base+path;}
   async function request(path,{method='GET',body,signal}={}){
@@ -27,12 +27,21 @@
   }
   const array=x=>Array.isArray(x)?x:(x?.items||[]);
   async function init(){
+   const initialLoad=!initialized;initialized=true;
    csrf=null; // 登录可能轮换会话和CSRF令牌，受邀页返回后重新取得。
    try{const r=await fetcher(url('capabilities'),{credentials:'same-origin',headers:{Accept:'application/json'}});
     if(r.status===404){state.mode='static';state.notice='教材浏览模式 · 学习记录请使用云端家庭入口';emit('ready');return;}
     if(!r.ok)throw new ApiError(r.status,{});const cap=await r.json();if(!cap.cloud)throw new Error('服务未启用云端功能。');
     state.mode='cloud';state.loginUrl=cap.loginUrl||'oauth2/authorization/learning';
-    try{state.me=await request('me');await refresh();}catch(e){if(e.status!==401)throw e;state.notice='登录后，与家人共同留下每个孩子的学习过程。';}
+    let identityLoaded=false;
+    try{state.me=await request('me');identityLoaded=true;await refresh();}catch(e){
+     if(e.status!==401)throw e;
+     // 仅首次身份探测恢复已登录过的设备；作答或观察保存失败时不离开当前页。
+     if(initialLoad&&!identityLoaded&&!state.pending&&!state.active&&cap.sessionRestoreUrl==='oauth2/authorization/learning?restore=1'){
+      state.notice='正在恢复此设备上的登录…';emit('ready');navigate(cap.sessionRestoreUrl);return;
+     }
+     state.notice='登录后，与家人共同留下每个孩子的学习过程。';
+    }
    }catch(e){state.mode='unavailable';state.notice='学习服务暂时无法连接。教材仍可浏览，请稍后重试。';}
    emit('ready');
   }

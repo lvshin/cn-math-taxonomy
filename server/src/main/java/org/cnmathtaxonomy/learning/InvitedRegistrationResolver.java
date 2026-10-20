@@ -28,8 +28,23 @@ final class InvitedRegistrationResolver implements OAuth2AuthorizationRequestRes
     }
 
     private OAuth2AuthorizationRequest customize(HttpServletRequest request, OAuth2AuthorizationRequest resolved) {
+        if (resolved == null) {
+            return resolved;
+        }
+        SessionRestoration.forgetAttempt(request);
         String grant = request.getParameter("invite_grant");
-        if (resolved == null || grant == null) {
+        boolean restoring = "1".equals(request.getParameter("restore"));
+        if (grant != null && restoring) {
+            throw ApiException.invalid("请选择单一登录方式");
+        }
+        if (grant == null) {
+            if (restoring) {
+                // The marker only determines whether the UI offers a one-shot attempt. Even a
+                // forged marker must pass the normal authorization code/state/nonce/PKCE flow.
+                SessionRestoration.rememberAttempt(request, resolved.getState());
+                return OAuth2AuthorizationRequest.from(resolved)
+                        .additionalParameters(parameters -> parameters.put("prompt", "none")).build();
+            }
             return resolved;
         }
         if (!grant.matches("[A-Za-z0-9_-]{32,512}")) {
