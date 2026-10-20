@@ -15,13 +15,17 @@ test('没有有向环；映射的必要先修不晚于其后续册次',()=>{
  const sorted=E.topoSort(M.graph,data.topics.map(t=>t.id));assert.equal(sorted.length,data.topics.length);
  for(const d of data.dependencies){const a=M.graph.byId[d.topicId],b=M.graph.byId[d.prerequisiteId];if(a.grade&&b.grade&&d.strength==='hard')assert.ok(E.gradeRank(M.graph,a.id)>=E.gradeRank(M.graph,b.id),`${a.id}<${b.id}`);}
 });
-test('12册入口，8册PDF目录、1册参考目录、3册待补；所有年级均可浏览',()=>{
- assert.equal(data.books.length,12);assert.equal(data.books.filter(b=>b.catalog_status==='pdf_checked').length,8);
+test('12册入口，7册PDF目录、1册官网目录、1册参考目录、3册待补；所有年级均可浏览',()=>{
+ assert.equal(data.books.length,12);assert.equal(data.books.filter(b=>b.catalog_status==='pdf_checked').length,7);
+ assert.equal(data.books.filter(b=>b.catalog_status==='official_checked').length,1);
+ assert.equal(M.books['6a'].catalog_status,'official_checked');assert.equal(M.books['6a'].evidence.filename,undefined);
+ assert.equal(data.meta.counts.pdf_catalogs,7);assert.equal(data.meta.counts.official_catalogs,1);
  assert.equal(data.books.filter(b=>b.catalog_status==='external_outline').length,1);
  for(let g=1;g<=6;g++)assert.ok(M.topicsFor(g+'a').length);
  for(const bid of ['4b','5b','6b']){assert.equal(M.books[bid].catalog_status,'pending');assert.equal(M.topicsFor(bid).length,0);assert.equal(M.books[bid].units.length,0);}
  assert.ok(M.books['6a'].units.some(u=>u.title.includes('数与运算的再认识')));
  assert.ok(M.books['6a'].units.some(u=>u.title==='七 确定位置'));
+ assert.ok(M.books['6a'].units.some(u=>u.title==='六 比例尺'));
 });
 test('不沿用人教版册次；新旧范围没有混排',()=>{
  assert.equal(M.placements.cnm_p020[0].bookId,'1b');

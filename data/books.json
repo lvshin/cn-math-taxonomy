@@ -828,7 +828,9 @@
       "sha256": "f6865b02488aa2d8bcca81d6edbbb796c290c83fc1ad43dcc6a34bc7ed50cea9",
       "version_evidence": "封面2024审定标识；新版目录以图形的运动开篇，含小数乘法和除法（一）、因数与倍数、用字母表示数量关系（一）；可提取正文页码1至129。未含清晰版权页。",
       "source": "本地已收集教材；不随程序分发PDF",
-      "checked_on": "2026-10-20"
+      "checked_on": "2026-10-20",
+      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=92406f69-3b1b-404a-82c8-95adecae875f&catalogType=tchMaterial&subCatalog=tchMaterial",
+      "quality_note": "已将本地第2页目录与国家平台正式版第7页核对，单元标题及起始页一致。官网140页，本地131页，未含完整前页与清晰版权页；未据此声称全文逐页校审。"
     },
     "units": [
       {
@@ -965,19 +967,21 @@
     "grade": 6,
     "semester": "上",
     "title": "六年级上册",
-    "edition_label": "2026秋新版",
+    "edition_label": "2026年7月第1版（官网目录）",
     "publisher": "江苏凤凰教育出版社",
     "series": "苏教版·2022课标修订系列",
-    "catalog_status": "pdf_checked",
-    "toc_pdf_page": 2,
+    "catalog_status": "official_checked",
+    "toc_pdf_page": 7,
     "evidence": {
-      "filename": "【苏教版】六年级上册数学（2026秋新版双页扫描件）.pdf",
-      "pages": 120,
-      "sha256": "8c0b14bff9a35146f8effe13d562b38ace068f1ae9797625a611ee1c30a79780",
-      "version_evidence": "封面2024审定标识；新版目录以小数乘法和除法（二）开篇，含混合运算和数量关系（三）、数据调查的新认识、比和比例、圆、确定位置；已查看目录、前中后正文及末页。原文件为双页扫描并有重复跨页、部分页码边缘裁切，保留原文件内容；未据此声称逐页校审完整。",
-      "source": "本地已收集教材；不随程序分发PDF",
+      "catalog_status": "official_checked",
+      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=b75ce244-1cf7-4ae7-b256-c6036e4d83e5&catalogType=tchMaterial&subCatalog=tchMaterial",
+      "pages": 132,
+      "edition": "2026年7月第1版",
+      "isbn": "9787574325319",
+      "toc_reader_page": 7,
+      "source": "国家中小学智慧教育平台，江苏凤凰教育出版社正式版在线阅读器",
       "checked_on": "2026-10-20",
-      "quality_note": "双页扫描，重复跨页、部分页码边缘裁切；目录和前中后抽查，未逐页校审。"
+      "quality_note": "目录已与官方阅读器第7页核对，版权页为2026年7月第1版；尚未取得匹配正式版的本地PDF。旧扫描候选第六单元为“放大与缩小”，与正式版“比例尺”不同，不再作为正式版PDF证据。概念映射仍为按单元主题推断。"
     },
     "units": [
       {
@@ -994,7 +998,7 @@
       },
       {
         "id": "6a-u02",
-        "title": "二 混合运算和数量关系（三）",
+        "title": "二 混合运算与数量关系（三）",
         "printed_page": 14,
         "topic_ids": [
           "sj023"
@@ -1071,7 +1075,7 @@
       },
       {
         "id": "6a-u10",
-        "title": "六 放大与缩小",
+        "title": "六 比例尺",
         "printed_page": 92,
         "topic_ids": [
           "sj027"
