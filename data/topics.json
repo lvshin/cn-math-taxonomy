@@ -2421,11 +2421,11 @@
       "original_chapter": "三年级上册 第6单元 多位数乘一位数"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 数字与信息",
+    "question_count": 2
   },
   {
     "id": "cnm_p077",
@@ -3250,11 +3250,11 @@
       "original_chapter": "四年级上册 第4单元 三位数乘两位数"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 三 三位数乘两位数",
+    "question_count": 2
   },
   {
     "id": "cnm_p103",
@@ -3343,11 +3343,11 @@
       "original_chapter": "四年级上册 第5单元 平行四边形和梯形"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 七 三角形、平行四边形和梯形",
+    "question_count": 2
   },
   {
     "id": "cnm_p106",
@@ -3627,11 +3627,11 @@
       "original_chapter": "四年级下册 第3单元 运算定律"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 六 运算律",
+    "question_count": 2
   },
   {
     "id": "cnm_p115",
@@ -3658,11 +3658,11 @@
       "original_chapter": "四年级下册 第3单元 运算定律"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 六 运算律",
+    "question_count": 2
   },
   {
     "id": "cnm_p116",
@@ -3689,11 +3689,11 @@
       "original_chapter": "四年级下册 第3单元 运算定律"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 六 运算律",
+    "question_count": 2
   },
   {
     "id": "cnm_p117",
@@ -3720,11 +3720,11 @@
       "original_chapter": "四年级下册 第3单元 运算定律"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 六 运算律",
+    "question_count": 2
   },
   {
     "id": "cnm_p118",
@@ -3882,11 +3882,11 @@
       "original_chapter": "四年级下册 第5单元 三角形"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 七 三角形、平行四边形和梯形",
+    "question_count": 2
   },
   {
     "id": "cnm_p123",
@@ -3913,11 +3913,11 @@
       "original_chapter": "四年级下册 第5单元 三角形"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 七 三角形、平行四边形和梯形",
+    "question_count": 2
   },
   {
     "id": "cnm_p124",
@@ -3944,11 +3944,11 @@
       "original_chapter": "四年级下册 第5单元 三角形"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 七 三角形、平行四边形和梯形",
+    "question_count": 2
   },
   {
     "id": "cnm_p125",
@@ -4339,9 +4339,9 @@
     },
     "review_status": "ai_draft_not_teacher_reviewed",
     "placement_status": "inferred",
-    "grade": 6,
-    "semester": "上",
-    "chapter": "六年级上册 七 确定位置",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 八 确定位置",
     "question_count": 2
   },
   {
@@ -4571,11 +4571,11 @@
       "original_chapter": "五年级上册 第5单元 简易方程"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 一 简易方程",
+    "question_count": 2
   },
   {
     "id": "cnm_p144",
@@ -4602,11 +4602,11 @@
       "original_chapter": "五年级上册 第5单元 简易方程"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 一 简易方程",
+    "question_count": 2
   },
   {
     "id": "cnm_p145",
@@ -4633,11 +4633,11 @@
       "original_chapter": "五年级上册 第5单元 简易方程"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 一 简易方程",
+    "question_count": 2
   },
   {
     "id": "cnm_p146",
@@ -4668,11 +4668,11 @@
       "original_chapter": "五年级上册 第5单元 简易方程"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 一 简易方程",
+    "question_count": 2
   },
   {
     "id": "cnm_p147",
@@ -5266,11 +5266,11 @@
       "original_chapter": "五年级下册 第4单元 分数的意义和性质"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 四 分数的意义和性质",
+    "question_count": 2
   },
   {
     "id": "cnm_p166",
@@ -5297,11 +5297,11 @@
       "original_chapter": "五年级下册 第4单元 分数的意义和性质"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 四 分数的意义和性质",
+    "question_count": 2
   },
   {
     "id": "cnm_p167",
@@ -5328,11 +5328,11 @@
       "original_chapter": "五年级下册 第4单元 分数的意义和性质"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 四 分数的意义和性质",
+    "question_count": 2
   },
   {
     "id": "cnm_p168",
@@ -5359,11 +5359,11 @@
       "original_chapter": "五年级下册 第4单元 分数的意义和性质"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 四 分数的意义和性质",
+    "question_count": 2
   },
   {
     "id": "cnm_p169",
@@ -5390,11 +5390,11 @@
       "original_chapter": "五年级下册 第4单元 分数的意义和性质"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 四 分数的意义和性质",
+    "question_count": 2
   },
   {
     "id": "cnm_p170",
@@ -5421,11 +5421,11 @@
       "original_chapter": "五年级下册 第4单元 分数的意义和性质"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 四 分数的意义和性质",
+    "question_count": 2
   },
   {
     "id": "cnm_p171",
@@ -5457,9 +5457,9 @@
     },
     "review_status": "ai_draft_not_teacher_reviewed",
     "placement_status": "inferred",
-    "grade": 5,
-    "semester": "上",
-    "chapter": "五年级上册 一 图形的运动",
+    "grade": 4,
+    "semester": "下",
+    "chapter": "四年级下册 一 平移、旋转和轴对称",
     "question_count": 2
   },
   {
@@ -5487,11 +5487,11 @@
       "original_chapter": "五年级下册 第6单元 分数的加法和减法"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 四 分数的意义和性质",
+    "question_count": 2
   },
   {
     "id": "cnm_p173",
@@ -5518,11 +5518,11 @@
       "original_chapter": "五年级下册 第6单元 分数的加法和减法"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 五 分数加法和减法",
+    "question_count": 2
   },
   {
     "id": "cnm_p174",
@@ -5549,11 +5549,11 @@
       "original_chapter": "五年级下册 第6单元 分数的加法和减法"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 五 分数加法和减法",
+    "question_count": 2
   },
   {
     "id": "cnm_p175",
@@ -5580,11 +5580,11 @@
       "original_chapter": "五年级下册 第7单元 折线统计图"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 二 折线统计图",
+    "question_count": 2
   },
   {
     "id": "cnm_p176",
@@ -5997,9 +5997,9 @@
     },
     "review_status": "ai_draft_not_teacher_reviewed",
     "placement_status": "inferred",
-    "grade": 6,
-    "semester": "上",
-    "chapter": "六年级上册 五 圆",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 六 圆",
     "question_count": 2
   },
   {
@@ -6028,9 +6028,9 @@
     },
     "review_status": "ai_draft_not_teacher_reviewed",
     "placement_status": "inferred",
-    "grade": 6,
-    "semester": "上",
-    "chapter": "六年级上册 五 圆",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 六 圆",
     "question_count": 2
   },
   {
@@ -6059,9 +6059,9 @@
     },
     "review_status": "ai_draft_not_teacher_reviewed",
     "placement_status": "inferred",
-    "grade": 6,
-    "semester": "上",
-    "chapter": "六年级上册 五 圆",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 六 圆",
     "question_count": 2
   },
   {
@@ -6090,9 +6090,9 @@
     },
     "review_status": "ai_draft_not_teacher_reviewed",
     "placement_status": "inferred",
-    "grade": 6,
-    "semester": "上",
-    "chapter": "六年级上册 五 圆",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 六 圆",
     "question_count": 2
   },
   {
@@ -6121,9 +6121,9 @@
     },
     "review_status": "ai_draft_not_teacher_reviewed",
     "placement_status": "inferred",
-    "grade": 6,
-    "semester": "上",
-    "chapter": "六年级上册 五 圆",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 六 圆",
     "question_count": 2
   },
   {
@@ -6152,9 +6152,9 @@
     },
     "review_status": "ai_draft_not_teacher_reviewed",
     "placement_status": "inferred",
-    "grade": 6,
-    "semester": "上",
-    "chapter": "六年级上册 五 圆",
+    "grade": 5,
+    "semester": "下",
+    "chapter": "五年级下册 六 圆",
     "question_count": 2
   },
   {
@@ -6343,11 +6343,11 @@
       "original_chapter": "六年级上册 第7单元 扇形统计图"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 6,
+    "semester": "下",
+    "chapter": "六年级下册 一 扇形统计图",
+    "question_count": 2
   },
   {
     "id": "cnm_p200",
@@ -6564,11 +6564,11 @@
       "original_chapter": "六年级下册 第3单元 圆柱与圆锥"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 6,
+    "semester": "下",
+    "chapter": "六年级下册 二 圆柱和圆锥",
+    "question_count": 2
   },
   {
     "id": "cnm_p207",
@@ -6595,11 +6595,11 @@
       "original_chapter": "六年级下册 第3单元 圆柱与圆锥"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 6,
+    "semester": "下",
+    "chapter": "六年级下册 二 圆柱和圆锥",
+    "question_count": 2
   },
   {
     "id": "cnm_p208",
@@ -6626,11 +6626,11 @@
       "original_chapter": "六年级下册 第3单元 圆柱与圆锥"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 6,
+    "semester": "下",
+    "chapter": "六年级下册 二 圆柱和圆锥",
+    "question_count": 2
   },
   {
     "id": "cnm_p209",
@@ -6657,11 +6657,11 @@
       "original_chapter": "六年级下册 第3单元 圆柱与圆锥"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 6,
+    "semester": "下",
+    "chapter": "六年级下册 二 圆柱和圆锥",
+    "question_count": 2
   },
   {
     "id": "cnm_p210",
@@ -6758,11 +6758,11 @@
       "original_chapter": "六年级下册 第4单元 比例"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 6,
+    "semester": "下",
+    "chapter": "六年级下册 四 比例",
+    "question_count": 2
   },
   {
     "id": "cnm_p213",
@@ -6790,11 +6790,11 @@
       "original_chapter": "六年级下册 第4单元 比例"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 6,
+    "semester": "下",
+    "chapter": "六年级下册 六 正比例和反比例",
+    "question_count": 2
   },
   {
     "id": "cnm_p214",
@@ -6822,11 +6822,11 @@
       "original_chapter": "六年级下册 第4单元 比例"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 6,
+    "semester": "下",
+    "chapter": "六年级下册 六 正比例和反比例",
+    "question_count": 2
   },
   {
     "id": "cnm_p215",
@@ -6853,11 +6853,11 @@
       "original_chapter": "六年级下册 第4单元 比例"
     },
     "review_status": "ai_draft_not_teacher_reviewed",
-    "placement_status": "unmapped",
-    "grade": null,
-    "semester": null,
-    "chapter": "教材位置待核",
-    "question_count": 0
+    "placement_status": "inferred",
+    "grade": 6,
+    "semester": "下",
+    "chapter": "六年级下册 六 正比例和反比例",
+    "question_count": 2
   },
   {
     "id": "cnm_p216",
@@ -7486,7 +7486,7 @@
     "placement_status": "inferred",
     "grade": 6,
     "semester": "上",
-    "chapter": "六年级上册 二 混合运算与数量关系（三）",
+    "chapter": "六年级上册 二 混合运算和数量关系（三）",
     "question_count": 2
   },
   {
@@ -7590,7 +7590,7 @@
     "placement_status": "inferred",
     "grade": 6,
     "semester": "上",
-    "chapter": "六年级上册 六 比例尺",
+    "chapter": "六年级上册 六 放大与缩小",
     "question_count": 2
   }
 ]

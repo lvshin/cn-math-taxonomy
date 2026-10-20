@@ -6,7 +6,7 @@
     "title": "一年级上册",
     "edition_label": "2024秋版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
+    "series": "苏教版·修订系列",
     "catalog_status": "pdf_checked",
     "toc_pdf_page": 6,
     "evidence": {
@@ -108,7 +108,7 @@
     "title": "一年级下册",
     "edition_label": "2025春版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
+    "series": "苏教版·修订系列",
     "catalog_status": "pdf_checked",
     "toc_pdf_page": 6,
     "evidence": {
@@ -223,7 +223,7 @@
     "title": "二年级上册",
     "edition_label": "2025秋版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
+    "series": "苏教版·修订系列",
     "catalog_status": "pdf_checked",
     "toc_pdf_page": 7,
     "evidence": {
@@ -331,7 +331,7 @@
     "title": "二年级下册",
     "edition_label": "2026春版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
+    "series": "苏教版·修订系列",
     "catalog_status": "pdf_checked",
     "toc_pdf_page": 3,
     "evidence": {
@@ -449,7 +449,7 @@
     "title": "三年级上册",
     "edition_label": "2025秋版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
+    "series": "苏教版·修订系列",
     "catalog_status": "pdf_checked",
     "toc_pdf_page": 7,
     "evidence": {
@@ -588,7 +588,7 @@
     "title": "三年级下册",
     "edition_label": "2026春版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
+    "series": "苏教版·修订系列",
     "catalog_status": "pdf_checked",
     "toc_pdf_page": 2,
     "evidence": {
@@ -700,23 +700,28 @@
     "grade": 4,
     "semester": "上",
     "title": "四年级上册",
-    "edition_label": "2026秋新版",
+    "edition_label": "26秋资源标签 · 暂选",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
-    "catalog_status": "external_outline",
-    "toc_pdf_page": null,
+    "series": "苏教版·修订系列",
+    "catalog_status": "pdf_provisional",
+    "toc_pdf_page": 2,
     "evidence": {
-      "source": "第三方参考目录（非出版社发布），结合苏州市政府的换版说明交叉核对。",
-      "url": "http://www.dzkbw.com/books/sjb/shuxue/xs4s_2026/",
-      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=07c75bda-7fff-4c4b-a271-9be638af37de&catalogType=tchMaterial&subCatalog=tchMaterial",
+      "catalog_status": "pdf_provisional",
+      "selection_status": "provisional",
+      "filename": "四年级数学上册苏教版26秋电子课本.pdf",
+      "pages": 116,
+      "sha256": "5dd595417e2f463b2c0d0726c2a1e5ebe6f8cc72a492d7b1effca484551a27f8",
+      "source": "已收集的暂选扫描教材；不随程序分发PDF",
       "checked_on": "2026-10-20",
-      "quality_note": "尚未取得PDF；此处不标为PDF目录核定，未核到正文印刷页。"
+      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=07c75bda-7fff-4c4b-a271-9be638af37de&catalogType=tchMaterial&subCatalog=tchMaterial",
+      "version_evidence": "26秋仅为资源标签；出版版次未核定，保持暂选。目录第2页与官网第7页的单元及起始印刷页相符。",
+      "quality_note": "目录及正文首尾抽查；116页，正文印刷1至114页。扫描带水印、目录顶部裁切，无清晰版权页。与官网131页正式版的版次、前页和全文详细比对待完成。"
     },
     "units": [
       {
         "id": "4a-u01",
         "title": "一 两、三位数除以两位数",
-        "printed_page": null,
+        "printed_page": 1,
         "topic_ids": [
           "cnm_p106",
           "cnm_p107"
@@ -726,7 +731,7 @@
       {
         "id": "4a-u02",
         "title": "二 周长与面积",
-        "printed_page": null,
+        "printed_page": 17,
         "topic_ids": [
           "cnm_p088",
           "cnm_p089",
@@ -736,15 +741,15 @@
       },
       {
         "id": "4a-u03",
-        "title": "周长和面积的变化",
-        "printed_page": null,
+        "title": "周长与面积的变化",
+        "printed_page": 42,
         "topic_ids": [],
         "coverage": "not_decomposed"
       },
       {
         "id": "4a-u04",
         "title": "三 乘法数量关系",
-        "printed_page": null,
+        "printed_page": 44,
         "topic_ids": [
           "sj022"
         ],
@@ -753,7 +758,7 @@
       {
         "id": "4a-u05",
         "title": "四 混合运算与数量关系（二）",
-        "printed_page": null,
+        "printed_page": 57,
         "topic_ids": [
           "cnm_p112"
         ],
@@ -762,14 +767,14 @@
       {
         "id": "4a-u06",
         "title": "制订旅游计划",
-        "printed_page": null,
+        "printed_page": 64,
         "topic_ids": [],
         "coverage": "not_decomposed"
       },
       {
         "id": "4a-u07",
         "title": "五 多位数的认识",
-        "printed_page": null,
+        "printed_page": 67,
         "topic_ids": [
           "cnm_p096",
           "cnm_p097"
@@ -779,21 +784,28 @@
       {
         "id": "4a-u08",
         "title": "度量衡的故事",
-        "printed_page": null,
+        "printed_page": 89,
         "topic_ids": [],
         "coverage": "not_decomposed"
       },
       {
         "id": "4a-u09",
-        "title": "六 大数运算",
-        "printed_page": null,
+        "title": "六 大数的运算",
+        "printed_page": 94,
         "topic_ids": [],
         "coverage": "not_decomposed"
       },
       {
         "id": "4a-u10",
         "title": "生活中的大数",
-        "printed_page": null,
+        "printed_page": 104,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "4a-u11",
+        "title": "期末复习",
+        "printed_page": 108,
         "topic_ids": [],
         "coverage": "not_decomposed"
       }
@@ -804,13 +816,135 @@
     "grade": 4,
     "semester": "下",
     "title": "四年级下册",
-    "edition_label": "待核新版目录",
+    "edition_label": "现用2013版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
-    "catalog_status": "pending",
-    "toc_pdf_page": null,
-    "evidence": null,
-    "units": []
+    "series": "苏教版·现用2013系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 3,
+    "evidence": {
+      "catalog_status": "pdf_checked",
+      "filename": "【苏教版】四年级下册数学（2013版）.pdf",
+      "pages": 121,
+      "sha256": "25c67400acbb8a8bd964ab4710648f03ff97d9d35227bae493a08f72195a890b",
+      "series": "苏教版·现用2013系列",
+      "curriculum_standard": 2011,
+      "publication_edition": null,
+      "source": "已收集的现用2013系列教材；不随程序分发PDF",
+      "checked_on": "2026-10-20",
+      "version_evidence": "按现用2013系列采用；后记记载2011年版课标，具体版权版次未核定。系列标签、课标年份与出版版次分别记录。",
+      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=27458ba8-dbf1-4860-a6cc-a0571756292d&catalogType=tchMaterial&subCatalog=tchMaterial",
+      "official_comparison": "本地以平移、旋转和轴对称开篇；已核官网127页，以认识多位数开篇，目录不同。",
+      "quality_note": "目录与本地PDF第3页视觉核对；未作全文逐页校审。按实际收录目录映射，不自动替换成官网另一册次目录。"
+    },
+    "units": [
+      {
+        "id": "4b-u01",
+        "title": "一 平移、旋转和轴对称",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p128",
+          "cnm_p171",
+          "cnm_p127"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4b-u02",
+        "title": "二 认识多位数",
+        "printed_page": 10,
+        "topic_ids": [
+          "cnm_p096",
+          "cnm_p097"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4b-u03",
+        "title": "三 三位数乘两位数",
+        "printed_page": 27,
+        "topic_ids": [
+          "cnm_p102"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4b-u04",
+        "title": "四 用计算器计算",
+        "printed_page": 40,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "4b-u05",
+        "title": "一亿有多大",
+        "printed_page": 46,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "4b-u06",
+        "title": "五 解决问题的策略",
+        "printed_page": 48,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "4b-u07",
+        "title": "六 运算律",
+        "printed_page": 55,
+        "topic_ids": [
+          "cnm_p114",
+          "cnm_p115",
+          "cnm_p116",
+          "cnm_p117"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4b-u08",
+        "title": "七 三角形、平行四边形和梯形",
+        "printed_page": 75,
+        "topic_ids": [
+          "cnm_p122",
+          "cnm_p123",
+          "cnm_p124",
+          "cnm_p105"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4b-u09",
+        "title": "多边形的内角和",
+        "printed_page": 96,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "4b-u10",
+        "title": "八 确定位置",
+        "printed_page": 98,
+        "topic_ids": [
+          "cnm_p136"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4b-u11",
+        "title": "数字与信息",
+        "printed_page": 104,
+        "topic_ids": [
+          "cnm_p076"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "4b-u12",
+        "title": "九 整理与复习",
+        "printed_page": 106,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      }
+    ]
   },
   {
     "id": "5a",
@@ -819,7 +953,7 @@
     "title": "五年级上册",
     "edition_label": "2026秋新版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
+    "series": "苏教版·修订系列",
     "catalog_status": "pdf_checked",
     "toc_pdf_page": 2,
     "evidence": {
@@ -954,34 +1088,160 @@
     "grade": 5,
     "semester": "下",
     "title": "五年级下册",
-    "edition_label": "待核新版目录",
+    "edition_label": "现用2013版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
-    "catalog_status": "pending",
-    "toc_pdf_page": null,
-    "evidence": null,
-    "units": []
+    "series": "苏教版·现用2013系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 3,
+    "evidence": {
+      "catalog_status": "pdf_checked",
+      "filename": "【苏教版】五年级下册数学（2013版）.pdf",
+      "pages": 125,
+      "sha256": "e632d97f5f149cfe9245809461199b32b9e835098ad6a83685a744eef9b354cf",
+      "series": "苏教版·现用2013系列",
+      "curriculum_standard": 2011,
+      "publication_edition": null,
+      "source": "已收集的现用2013系列教材；不随程序分发PDF",
+      "checked_on": "2026-10-20",
+      "version_evidence": "按现用2013系列采用；后记记载2011年版课标，具体版权版次未核定。系列标签、课标年份与出版版次分别记录。",
+      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=14d4c93e-0a6a-4e2f-8b7a-24f0be4c64fc&catalogType=tchMaterial&subCatalog=tchMaterial",
+      "official_comparison": "本地含圆和解决问题的策略；已核官网131页，含长方体和正方体、分数乘法，目录不同。",
+      "quality_note": "目录与本地PDF第3页视觉核对；未作全文逐页校审。按实际收录目录映射，不自动替换成官网另一册次目录。"
+    },
+    "units": [
+      {
+        "id": "5b-u01",
+        "title": "一 简易方程",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p143",
+          "cnm_p144",
+          "cnm_p145",
+          "cnm_p146"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5b-u02",
+        "title": "二 折线统计图",
+        "printed_page": 21,
+        "topic_ids": [
+          "cnm_p175"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5b-u03",
+        "title": "蒜叶的生长",
+        "printed_page": 28,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "5b-u04",
+        "title": "三 因数与倍数",
+        "printed_page": 30,
+        "topic_ids": [
+          "cnm_p153",
+          "cnm_p154",
+          "cnm_p155",
+          "cnm_p156",
+          "cnm_p157",
+          "cnm_p158",
+          "cnm_p159"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5b-u05",
+        "title": "和与积的奇偶性",
+        "printed_page": 50,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "5b-u06",
+        "title": "四 分数的意义和性质",
+        "printed_page": 52,
+        "topic_ids": [
+          "cnm_p165",
+          "cnm_p166",
+          "cnm_p167",
+          "cnm_p168",
+          "cnm_p172",
+          "cnm_p169",
+          "cnm_p170"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5b-u07",
+        "title": "球的反弹高度",
+        "printed_page": 78,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "5b-u08",
+        "title": "五 分数加法和减法",
+        "printed_page": 80,
+        "topic_ids": [
+          "cnm_p173",
+          "cnm_p174"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5b-u09",
+        "title": "六 圆",
+        "printed_page": 85,
+        "topic_ids": [
+          "cnm_p188",
+          "cnm_p189",
+          "cnm_p190",
+          "cnm_p191",
+          "cnm_p192",
+          "cnm_p193"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "5b-u10",
+        "title": "七 解决问题的策略",
+        "printed_page": 105,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "5b-u11",
+        "title": "八 整理与复习",
+        "printed_page": 112,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      }
+    ]
   },
   {
     "id": "6a",
     "grade": 6,
     "semester": "上",
     "title": "六年级上册",
-    "edition_label": "2026年7月第1版（官网目录）",
+    "edition_label": "2026秋资源标签 · 双页扫描",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
-    "catalog_status": "official_checked",
-    "toc_pdf_page": 7,
+    "series": "苏教版·修订系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 2,
     "evidence": {
-      "catalog_status": "official_checked",
-      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=b75ce244-1cf7-4ae7-b256-c6036e4d83e5&catalogType=tchMaterial&subCatalog=tchMaterial",
-      "pages": 132,
-      "edition": "2026年7月第1版",
-      "isbn": "9787574325319",
-      "toc_reader_page": 7,
-      "source": "国家中小学智慧教育平台，江苏凤凰教育出版社正式版在线阅读器",
+      "catalog_status": "pdf_checked",
+      "filename": "【苏教版】六年级上册数学（2026秋新版双页扫描件）.pdf",
+      "pages": 120,
+      "sha256": "8c0b14bff9a35146f8effe13d562b38ace068f1ae9797625a611ee1c30a79780",
+      "source": "已收集的双页扫描教材；不随程序分发PDF",
       "checked_on": "2026-10-20",
-      "quality_note": "目录已与官方阅读器第7页核对，版权页为2026年7月第1版；尚未取得匹配正式版的本地PDF。旧扫描候选第六单元为“放大与缩小”，与正式版“比例尺”不同，不再作为正式版PDF证据。概念映射仍为按单元主题推断。"
+      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=b75ce244-1cf7-4ae7-b256-c6036e4d83e5&catalogType=tchMaterial&subCatalog=tchMaterial",
+      "version_evidence": "按已收录扫描件第2页目录组织；2026秋是资源标签，未核得清晰版权页，不当作已核实的出版版次。",
+      "official_comparison": "官网正式版132页，2026年7月第1版，第7页目录第六单元为比例尺；本扫描件第六单元为放大与缩小，第二单元用和而非与。保留差异，不认定为相同正式文件。",
+      "quality_note": "目录已与此120页文件核对，含重复跨页和部分页码边缘裁切。阅读可用不等于全文逐页校审或出版社正式PDF认证；本轮应用切换至此文件目录。"
     },
     "units": [
       {
@@ -998,7 +1258,7 @@
       },
       {
         "id": "6a-u02",
-        "title": "二 混合运算与数量关系（三）",
+        "title": "二 混合运算和数量关系（三）",
         "printed_page": 14,
         "topic_ids": [
           "sj023"
@@ -1075,7 +1335,7 @@
       },
       {
         "id": "6a-u10",
-        "title": "六 比例尺",
+        "title": "六 放大与缩小",
         "printed_page": 92,
         "topic_ids": [
           "sj027"
@@ -1092,6 +1352,13 @@
           "cnm_p181"
         ],
         "coverage": "partial"
+      },
+      {
+        "id": "6a-u12",
+        "title": "期末复习",
+        "printed_page": 112,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
       }
     ]
   },
@@ -1100,12 +1367,145 @@
     "grade": 6,
     "semester": "下",
     "title": "六年级下册",
-    "edition_label": "待核新版目录",
+    "edition_label": "现用2013版",
     "publisher": "江苏凤凰教育出版社",
-    "series": "苏教版·2022课标修订系列",
-    "catalog_status": "pending",
-    "toc_pdf_page": null,
-    "evidence": null,
-    "units": []
+    "series": "苏教版·现用2013系列",
+    "catalog_status": "pdf_checked",
+    "toc_pdf_page": 3,
+    "evidence": {
+      "catalog_status": "pdf_checked",
+      "filename": "【苏教版】六年级下册数学（2013版）.pdf",
+      "pages": 121,
+      "sha256": "e0ce34574a223184b951257bd18f19c13186ed92d2fbc764b0968119e79b235f",
+      "series": "苏教版·现用2013系列",
+      "curriculum_standard": 2011,
+      "publication_edition": null,
+      "source": "已收集的现用2013系列教材；不随程序分发PDF",
+      "checked_on": "2026-10-20",
+      "version_evidence": "按现用2013系列采用；后记记载2011年版课标，具体版权版次未核定。系列标签、课标年份与出版版次分别记录。",
+      "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=5ed4f298-793d-4502-a4e3-f53bbf493deb&catalogType=tchMaterial&subCatalog=tchMaterial",
+      "official_comparison": "目录标题和起始页与已核官网一致；本地后记和官网末尾附页、版权页不同，不认定全文或版次相同。",
+      "quality_note": "目录与本地PDF第3页视觉核对；未作全文逐页校审。按实际收录目录映射，不自动替换成官网另一册次目录。"
+    },
+    "units": [
+      {
+        "id": "6b-u01",
+        "title": "一 扇形统计图",
+        "printed_page": 1,
+        "topic_ids": [
+          "cnm_p199"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6b-u02",
+        "title": "二 圆柱和圆锥",
+        "printed_page": 9,
+        "topic_ids": [
+          "cnm_p206",
+          "cnm_p208",
+          "cnm_p207",
+          "cnm_p209"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6b-u03",
+        "title": "三 解决问题的策略",
+        "printed_page": 27,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "6b-u04",
+        "title": "四 比例",
+        "printed_page": 33,
+        "topic_ids": [
+          "cnm_p210",
+          "cnm_p211",
+          "cnm_p212"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6b-u05",
+        "title": "面积的变化",
+        "printed_page": 48,
+        "topic_ids": [
+          "sj027"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6b-u06",
+        "title": "五 确定位置",
+        "printed_page": 50,
+        "topic_ids": [
+          "cnm_p180",
+          "cnm_p181"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6b-u07",
+        "title": "六 正比例和反比例",
+        "printed_page": 56,
+        "topic_ids": [
+          "cnm_p213",
+          "cnm_p214",
+          "cnm_p215"
+        ],
+        "coverage": "partial"
+      },
+      {
+        "id": "6b-u08",
+        "title": "大树有多高",
+        "printed_page": 66,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "6b-u09",
+        "title": "七 总复习",
+        "printed_page": 68,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "6b-u10",
+        "title": "数与代数",
+        "printed_page": 68,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "6b-u11",
+        "title": "图形与几何",
+        "printed_page": 86,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "6b-u12",
+        "title": "统计与可能性",
+        "printed_page": 101,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "6b-u13",
+        "title": "制订旅游计划",
+        "printed_page": 107,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      },
+      {
+        "id": "6b-u14",
+        "title": "绘制平面图",
+        "printed_page": 110,
+        "topic_ids": [],
+        "coverage": "not_decomposed"
+      }
+    ]
   }
 ]

@@ -864,6 +864,134 @@
     "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
   },
   {
+    "topicId": "cnm_p128",
+    "bookId": "4b",
+    "unitId": "4b-u01",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p171",
+    "bookId": "4b",
+    "unitId": "4b-u01",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p127",
+    "bookId": "4b",
+    "unitId": "4b-u01",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p096",
+    "bookId": "4b",
+    "unitId": "4b-u02",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p097",
+    "bookId": "4b",
+    "unitId": "4b-u02",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p102",
+    "bookId": "4b",
+    "unitId": "4b-u03",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p114",
+    "bookId": "4b",
+    "unitId": "4b-u07",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p115",
+    "bookId": "4b",
+    "unitId": "4b-u07",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p116",
+    "bookId": "4b",
+    "unitId": "4b-u07",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p117",
+    "bookId": "4b",
+    "unitId": "4b-u07",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p122",
+    "bookId": "4b",
+    "unitId": "4b-u08",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p123",
+    "bookId": "4b",
+    "unitId": "4b-u08",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p124",
+    "bookId": "4b",
+    "unitId": "4b-u08",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p105",
+    "bookId": "4b",
+    "unitId": "4b-u08",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p136",
+    "bookId": "4b",
+    "unitId": "4b-u10",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p076",
+    "bookId": "4b",
+    "unitId": "4b-u11",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
     "topicId": "cnm_p127",
     "bookId": "5a",
     "unitId": "5a-u01",
@@ -1035,6 +1163,222 @@
     "topicId": "cnm_p152",
     "bookId": "5a",
     "unitId": "5a-u12",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p143",
+    "bookId": "5b",
+    "unitId": "5b-u01",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p144",
+    "bookId": "5b",
+    "unitId": "5b-u01",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p145",
+    "bookId": "5b",
+    "unitId": "5b-u01",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p146",
+    "bookId": "5b",
+    "unitId": "5b-u01",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p175",
+    "bookId": "5b",
+    "unitId": "5b-u02",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p153",
+    "bookId": "5b",
+    "unitId": "5b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p154",
+    "bookId": "5b",
+    "unitId": "5b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p155",
+    "bookId": "5b",
+    "unitId": "5b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p156",
+    "bookId": "5b",
+    "unitId": "5b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p157",
+    "bookId": "5b",
+    "unitId": "5b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p158",
+    "bookId": "5b",
+    "unitId": "5b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p159",
+    "bookId": "5b",
+    "unitId": "5b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p165",
+    "bookId": "5b",
+    "unitId": "5b-u06",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p166",
+    "bookId": "5b",
+    "unitId": "5b-u06",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p167",
+    "bookId": "5b",
+    "unitId": "5b-u06",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p168",
+    "bookId": "5b",
+    "unitId": "5b-u06",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p172",
+    "bookId": "5b",
+    "unitId": "5b-u06",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p169",
+    "bookId": "5b",
+    "unitId": "5b-u06",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p170",
+    "bookId": "5b",
+    "unitId": "5b-u06",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p173",
+    "bookId": "5b",
+    "unitId": "5b-u08",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p174",
+    "bookId": "5b",
+    "unitId": "5b-u08",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p188",
+    "bookId": "5b",
+    "unitId": "5b-u09",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p189",
+    "bookId": "5b",
+    "unitId": "5b-u09",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p190",
+    "bookId": "5b",
+    "unitId": "5b-u09",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p191",
+    "bookId": "5b",
+    "unitId": "5b-u09",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p192",
+    "bookId": "5b",
+    "unitId": "5b-u09",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p193",
+    "bookId": "5b",
+    "unitId": "5b-u09",
     "status": "inferred",
     "evidence_level": "unit_title",
     "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
@@ -1219,6 +1563,118 @@
     "topicId": "cnm_p181",
     "bookId": "6a",
     "unitId": "6a-u11",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p199",
+    "bookId": "6b",
+    "unitId": "6b-u01",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p206",
+    "bookId": "6b",
+    "unitId": "6b-u02",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p208",
+    "bookId": "6b",
+    "unitId": "6b-u02",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p207",
+    "bookId": "6b",
+    "unitId": "6b-u02",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p209",
+    "bookId": "6b",
+    "unitId": "6b-u02",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p210",
+    "bookId": "6b",
+    "unitId": "6b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p211",
+    "bookId": "6b",
+    "unitId": "6b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p212",
+    "bookId": "6b",
+    "unitId": "6b-u04",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "sj027",
+    "bookId": "6b",
+    "unitId": "6b-u05",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p180",
+    "bookId": "6b",
+    "unitId": "6b-u06",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p181",
+    "bookId": "6b",
+    "unitId": "6b-u06",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p213",
+    "bookId": "6b",
+    "unitId": "6b-u07",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p214",
+    "bookId": "6b",
+    "unitId": "6b-u07",
+    "status": "inferred",
+    "evidence_level": "unit_title",
+    "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"
+  },
+  {
+    "topicId": "cnm_p215",
+    "bookId": "6b",
+    "unitId": "6b-u07",
     "status": "inferred",
     "evidence_level": "unit_title",
     "note": "按已收集目录的主题作概念映射，尚未逐节逐页或由教师核定。"

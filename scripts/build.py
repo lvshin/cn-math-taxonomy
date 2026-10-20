@@ -30,7 +30,7 @@ def build():
         grade, semester = int(bid[0]), '上' if bid[1] == 'a' else '下'
         book = dict(id=bid, grade=grade, semester=semester,
                     title=f'{"一二三四五六"[grade-1]}年级{semester}册', edition_label=edition,
-                    publisher='江苏凤凰教育出版社', series='苏教版·2022课标修订系列',
+                    publisher='江苏凤凰教育出版社', series=evidence.get(bid, {}).get('series', '苏教版·修订系列'),
                     catalog_status=evidence.get(bid, {}).get('catalog_status') or ('pdf_checked' if toc_page else ('external_outline' if units else 'pending')),
                     toc_pdf_page=toc_page, evidence=evidence.get(bid), units=[])
         for index, (title, page, concept_ids) in enumerate(units):
@@ -104,18 +104,21 @@ def build():
     for t in topics:
         t['question_count'] = sum(q['topicId']==t['id'] for q in questions)
     catalog_counts = Counter(b['catalog_status'] for b in books)
-    meta = dict(schema_version=1, data_version='2026-10-20-suzhou-v2', as_of='2026-10-20',
-                title='苏州小学数学知识地图', scope='苏教新版小学1—6年级；目录与概念映射分开标注',
+    meta = dict(schema_version=1, data_version='2026-10-20-suzhou-v3', as_of='2026-10-20',
+                title='苏州小学数学知识地图', scope='现用苏教小学1—6年级十二册；四上暂选，四至六下采用2013系列',
                 upstream=dict(url='https://github.com/xiaoyang111222/cn-math-taxonomy',
                               commit='10a0f562b32433b785729661c2164756cb933154',license='CC BY-NC 4.0'),
                 counts=dict(concepts=len(topics), mapped_concepts=len(assigned), questions=len(questions),
                             dependencies=len(deps), pdf_catalogs=catalog_counts['pdf_checked'],
                             official_catalogs=catalog_counts['official_checked'],
+                            provisional_catalogs=catalog_counts['pdf_provisional'],
                             external_catalogs=catalog_counts['external_outline'], pending_catalogs=catalog_counts['pending'],
                             rewritten_questions=sum(q['origin']=='suzhou-rewritten' for q in questions)),
                 limitations=['知识点拆分、落册和先修关系为AI整理稿，未经教师审核。',
                              '目录核对不等于逐节内容核定；有目录的单元也可能尚未拆分知识点。',
-                             '四上仅有第三方参考目录；四下、五下、六下新版目录待补。',
+                             '四上116页扫描本保持暂选；目录及首尾已抽查，详细版次与全文仍待比对。',
+                             '四至六下按现用2013系列组织，课标年份和具体出版版次分别记录。',
+                             '六上按已收录扫描件的放大与缩小目录组织，保留与官网比例尺单元的差异。',
                              '原项目课标小学条文来自公开转写，尚未与教育部PDF逐页核对。',
                              '练习结果是局部线索，不能作为完整掌握程度或学习能力的结论。'])
     for path,value in [('topics.json',topics),('dependencies.json',deps),('questions.json',questions),

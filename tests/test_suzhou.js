@@ -15,17 +15,18 @@ test('没有有向环；映射的必要先修不晚于其后续册次',()=>{
  const sorted=E.topoSort(M.graph,data.topics.map(t=>t.id));assert.equal(sorted.length,data.topics.length);
  for(const d of data.dependencies){const a=M.graph.byId[d.topicId],b=M.graph.byId[d.prerequisiteId];if(a.grade&&b.grade&&d.strength==='hard')assert.ok(E.gradeRank(M.graph,a.id)>=E.gradeRank(M.graph,b.id),`${a.id}<${b.id}`);}
 });
-test('12册入口，7册PDF目录、1册官网目录、1册参考目录、3册待补；所有年级均可浏览',()=>{
- assert.equal(data.books.length,12);assert.equal(data.books.filter(b=>b.catalog_status==='pdf_checked').length,7);
- assert.equal(data.books.filter(b=>b.catalog_status==='official_checked').length,1);
- assert.equal(M.books['6a'].catalog_status,'official_checked');assert.equal(M.books['6a'].evidence.filename,undefined);
- assert.equal(data.meta.counts.pdf_catalogs,7);assert.equal(data.meta.counts.official_catalogs,1);
- assert.equal(data.books.filter(b=>b.catalog_status==='external_outline').length,1);
- for(let g=1;g<=6;g++)assert.ok(M.topicsFor(g+'a').length);
- for(const bid of ['4b','5b','6b']){assert.equal(M.books[bid].catalog_status,'pending');assert.equal(M.topicsFor(bid).length,0);assert.equal(M.books[bid].units.length,0);}
+test('十二册有目录与练习，四上保留暂选，采用文件及官网差异可追溯',()=>{
+ assert.equal(data.books.length,12);assert.equal(data.books.filter(b=>b.catalog_status==='pdf_checked').length,11);
+ assert.equal(data.meta.counts.pdf_catalogs,11);assert.equal(data.meta.counts.provisional_catalogs,1);assert.equal(data.meta.counts.pending_catalogs,0);
+ for(const b of data.books){assert.ok(M.topicsFor(b.id).length);assert.ok(b.units.length);assert.match(b.evidence.filename,/\.pdf$/);assert.match(b.evidence.sha256,/^[a-f0-9]{64}$/);assert.ok(b.toc_pdf_page<=b.evidence.pages);}
+ assert.equal(M.books['4a'].catalog_status,'pdf_provisional');assert.equal(M.books['4a'].evidence.selection_status,'provisional');assert.equal(M.books['4a'].evidence.pages,116);
+ assert.equal(M.books['6a'].evidence.pages,120);assert.equal(M.books['6a'].toc_pdf_page,2);assert.match(M.books['6a'].evidence.official_comparison,/比例尺/);
+ for(const bid of ['4b','5b','6b']){assert.equal(M.books[bid].catalog_status,'pdf_checked');assert.equal(M.books[bid].edition_label,'现用2013版');assert.equal(M.books[bid].evidence.curriculum_standard,2011);assert.equal(M.books[bid].evidence.publication_edition,null);assert.equal(M.books[bid].toc_pdf_page,3);}
  assert.ok(M.books['6a'].units.some(u=>u.title.includes('数与运算的再认识')));
  assert.ok(M.books['6a'].units.some(u=>u.title==='七 确定位置'));
- assert.ok(M.books['6a'].units.some(u=>u.title==='六 比例尺'));
+ assert.ok(M.books['6a'].units.some(u=>u.title==='六 放大与缩小'));
+ assert.ok(!M.books['6a'].units.some(u=>u.title==='六 比例尺'));
+ assert.equal(M.books['4a'].units.find(u=>u.title==='六 大数的运算').printed_page,94);
 });
 test('不沿用人教版册次；新旧范围没有混排',()=>{
  assert.equal(M.placements.cnm_p020[0].bookId,'1b');
@@ -35,9 +36,20 @@ test('不沿用人教版册次；新旧范围没有混排',()=>{
  assert.equal(M.placements.cnm_p016,undefined); // 11—20的题不冒充11—19。
  assert.equal(M.placements.cnm_p028,undefined); // 100以内的整套概念不冒充20—99。
  for(const t of M.topicsFor('1a'))if(t.id==='sj003'||t.id==='sj004')for(const q of M.graph.bank[t.id])assert.ok(!/20/.test(q.prompt));
- assert.equal(M.topicsFor('4b','', '乘法').length,0);
+ assert.ok(M.topicsFor('4b','', '三位数乘两位数').some(t=>t.id==='cnm_p102'));
  assert.equal(M.topicsFor('5a')[0].id,'cnm_p127');
  assert.equal(M.topicsFor('1a').findIndex(t=>t.id==='sj001')<M.topicsFor('1a').findIndex(t=>t.id==='cnm_p008'),true);
+});
+test('高年级按实际目录落位，同一概念跨册复现且不冒充整册覆盖',()=>{
+ for(const [bid,id] of [['4b','cnm_p116'],['5b','cnm_p145'],['5b','cnm_p173'],['6b','cnm_p209'],['6b','cnm_p212'],['6b','cnm_p214']])assert.ok(M.topicsFor(bid).some(t=>t.id===id));
+ assert.equal(M.placements.cnm_p143[0].bookId,'5b');assert.equal(M.placements.cnm_p188[0].bookId,'5b');assert.equal(M.placements.cnm_p136[0].bookId,'4b');
+ assert.deepEqual(M.placements.cnm_p188.map(p=>p.bookId),['5b','6a']);
+ for(const bid of ['4b','5b','6b']){const review=M.books[bid].units.find(u=>/整理与复习|总复习/.test(u.title));assert.equal(review.coverage,'not_decomposed');assert.deepEqual(review.topic_ids,[]);}
+ assert.ok(!M.topicsFor('5b').some(t=>t.id==='cnm_p160')); // 不把官网过渡本的长方体单元混入所选2013目录。
+ for(const bid of ['4b','5b','6b']){
+  const ids=M.topicsFor(bid).map(t=>t.id);let s=M.start(ids,{mode:'screen',seed:bid,limit:12}),n=0;
+  while(E.nextItem(M.graph,s)){const q=E.nextItem(M.graph,s);assert.ok(ids.includes(q.topicId));s=E.applyAnswer(M.graph,s,q.topicId,'wrong');assert.ok(++n<=12);}
+ }
 });
 test('每道题的标准答案可判为正确；选项不重样，引用准确',()=>{
  for(const q of data.questions){assert.ok(M.graph.byId[q.topicId]);assert.ok(q.explanation);assert.equal(E.judgeQuestion(q,q.answer).verdict,'correct',q.id);

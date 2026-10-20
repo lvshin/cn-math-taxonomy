@@ -952,13 +952,6 @@
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
-    "topicId": "cnm_p122",
-    "prerequisiteId": "cnm_p105",
-    "strength": "hard",
-    "reason": "学习「三角形的分类」需要先掌握「平行四边形和梯形的特征」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
     "topicId": "cnm_p123",
     "prerequisiteId": "cnm_p122",
     "strength": "hard",
@@ -1092,13 +1085,6 @@
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
-    "topicId": "cnm_p136",
-    "prerequisiteId": "cnm_p082",
-    "strength": "hard",
-    "reason": "学习「用数对确定位置」需要先掌握「东北、东南、西北、西南」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
     "topicId": "cnm_p138",
     "prerequisiteId": "cnm_p137",
     "strength": "hard",
@@ -1152,20 +1138,6 @@
     "prerequisiteId": "cnm_p143",
     "strength": "hard",
     "reason": "学习「等式的性质」需要先掌握「方程的意义」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
-    "topicId": "cnm_p145",
-    "prerequisiteId": "cnm_p144",
-    "strength": "hard",
-    "reason": "学习「解简易方程」需要先掌握「等式的性质」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
-    "topicId": "cnm_p145",
-    "prerequisiteId": "cnm_p125",
-    "strength": "hard",
-    "reason": "学习「解简易方程」需要先掌握「小数加减法」。",
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
@@ -1386,13 +1358,6 @@
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
-    "topicId": "cnm_p169",
-    "prerequisiteId": "cnm_p168",
-    "strength": "hard",
-    "reason": "学习「分数的大小比较」需要先掌握「约分」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
     "topicId": "cnm_p170",
     "prerequisiteId": "cnm_p165",
     "strength": "hard",
@@ -1460,13 +1425,6 @@
     "prerequisiteId": "cnm_p058",
     "strength": "hard",
     "reason": "学习「分数加减混合」需要先掌握「带小括号的两步运算」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
-    "topicId": "cnm_p175",
-    "prerequisiteId": "cnm_p129",
-    "strength": "hard",
-    "reason": "学习「折线统计图」需要先掌握「平均数」。",
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
@@ -1593,20 +1551,6 @@
     "prerequisiteId": "cnm_p099",
     "strength": "hard",
     "reason": "学习「圆的认识」需要先掌握「线段、直线和射线」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
-    "topicId": "cnm_p189",
-    "prerequisiteId": "cnm_p188",
-    "strength": "hard",
-    "reason": "学习「圆周率」需要先掌握「圆的认识」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
-    "topicId": "cnm_p189",
-    "prerequisiteId": "cnm_p185",
-    "strength": "hard",
-    "reason": "学习「圆周率」需要先掌握「比的意义」。",
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
@@ -1834,13 +1778,6 @@
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
-    "topicId": "cnm_p208",
-    "prerequisiteId": "cnm_p207",
-    "strength": "hard",
-    "reason": "学习「圆柱的表面积」需要先掌握「圆柱的体积」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
     "topicId": "cnm_p209",
     "prerequisiteId": "cnm_p207",
     "strength": "hard",
@@ -1880,13 +1817,6 @@
     "prerequisiteId": "cnm_p111",
     "strength": "hard",
     "reason": "学习「正比例」需要先掌握「常见数量关系」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
-  },
-  {
-    "topicId": "cnm_p214",
-    "prerequisiteId": "cnm_p213",
-    "strength": "hard",
-    "reason": "学习「反比例」需要先掌握「正比例」。",
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
@@ -2429,6 +2359,14 @@
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
+    "topicId": "cnm_p122",
+    "prerequisiteId": "cnm_p101",
+    "strength": "hard",
+    "reason": "三角形按角分类依赖锐角、直角、钝角的认识，不以四边形分类为必要先修。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
     "topicId": "cnm_p113",
     "prerequisiteId": "sj008",
     "strength": "hard",
@@ -2477,6 +2415,14 @@
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
+    "topicId": "cnm_p136",
+    "prerequisiteId": "cnm_p015",
+    "strength": "hard",
+    "reason": "先理解位置语言，再按列和行用数对描述位置。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
     "topicId": "cnm_p142",
     "prerequisiteId": "sj022",
     "strength": "hard",
@@ -2485,10 +2431,42 @@
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
+    "topicId": "cnm_p145",
+    "prerequisiteId": "cnm_p144",
+    "strength": "hard",
+    "reason": "按概念关系调整，供后续教师审核。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p145",
+    "prerequisiteId": "cnm_p112",
+    "strength": "hard",
+    "reason": "整数方程的解法依赖等式性质与整数运算；小数加减不是所有简易方程的必要先修。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
     "topicId": "cnm_p153",
     "prerequisiteId": "cnm_p044",
     "strength": "hard",
     "reason": "利用整数乘除关系理解因数与倍数。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p169",
+    "prerequisiteId": "cnm_p172",
+    "strength": "hard",
+    "reason": "异分母分数先通分，再比较分子大小。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p175",
+    "prerequisiteId": "cnm_p108",
+    "strength": "hard",
+    "reason": "先读懂统计图的数量信息，再用折线表示变化；平均数不是必要先修。",
     "source": "suzhou-ai-draft",
     "review_status": "ai_draft_not_teacher_reviewed"
   },
@@ -2517,10 +2495,74 @@
     "review_status": "ai_draft_not_teacher_reviewed"
   },
   {
+    "topicId": "cnm_p189",
+    "prerequisiteId": "cnm_p188",
+    "strength": "hard",
+    "reason": "按概念关系调整，供后续教师审核。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p189",
+    "prerequisiteId": "cnm_p137",
+    "strength": "hard",
+    "reason": "通过周长除以直径理解圆周率；正式的比可作后续联系，不作为五下本单元的必要先修。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p189",
+    "prerequisiteId": "cnm_p185",
+    "strength": "soft",
+    "reason": "按概念关系调整，供后续教师审核。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
     "topicId": "cnm_p211",
     "prerequisiteId": "cnm_p210",
     "strength": "hard",
     "reason": "用比例的基本性质求未知项。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p208",
+    "prerequisiteId": "cnm_p206",
+    "strength": "hard",
+    "reason": "按概念关系调整，供后续教师审核。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p208",
+    "prerequisiteId": "cnm_p190",
+    "strength": "hard",
+    "reason": "按概念关系调整，供后续教师审核。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p208",
+    "prerequisiteId": "cnm_p089",
+    "strength": "hard",
+    "reason": "圆柱侧面展开为长方形，表面积由侧面积与底面积组成，不依赖体积公式。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p214",
+    "prerequisiteId": "cnm_p210",
+    "strength": "hard",
+    "reason": "按概念关系调整，供后续教师审核。",
+    "source": "suzhou-ai-draft",
+    "review_status": "ai_draft_not_teacher_reviewed"
+  },
+  {
+    "topicId": "cnm_p214",
+    "prerequisiteId": "sj022",
+    "strength": "hard",
+    "reason": "从两种量的乘积一定理解反比例，不要求先掌握正比例。",
     "source": "suzhou-ai-draft",
     "review_status": "ai_draft_not_teacher_reviewed"
   }

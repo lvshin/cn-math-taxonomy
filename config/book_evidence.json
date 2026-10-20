@@ -15,23 +15,6 @@
     "source": "本地已收集教材；不随程序分发PDF",
     "checked_on": "2026-10-20"
   },
-  "3a": {
-    "filename": "【苏教版】三年级上册(2025秋版)数学电子课本.pdf",
-    "pages": 132,
-    "sha256": "886066f42b10b96c17c5ef6839489d41e5c7c9e45b2542f7d501c59b2cce7226",
-    "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
-    "source": "本地已收集教材；不随程序分发PDF",
-    "checked_on": "2026-10-20"
-  },
-  "3b": {
-    "filename": "【苏教版】三年级下册(2026春版)数学电子课本.pdf",
-    "pages": 122,
-    "sha256": "06220361177373a5430d873e8c91863c8e03ceaf47f797bc61beeebf5ba76fc4",
-    "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
-    "source": "本地已收集教材；不随程序分发PDF",
-    "checked_on": "2026-10-20",
-    "quality_note": "扫描件，目录页通过视觉转录，文本层只有扫描水印。"
-  },
   "2a": {
     "filename": "【苏教版】二年级上册(2025秋版)数学电子课本.pdf",
     "pages": 120,
@@ -49,6 +32,50 @@
     "checked_on": "2026-10-20",
     "quality_note": "扫描件，目录页通过视觉转录，未见清晰版权页。"
   },
+  "3a": {
+    "filename": "【苏教版】三年级上册(2025秋版)数学电子课本.pdf",
+    "pages": 132,
+    "sha256": "886066f42b10b96c17c5ef6839489d41e5c7c9e45b2542f7d501c59b2cce7226",
+    "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20"
+  },
+  "3b": {
+    "filename": "【苏教版】三年级下册(2026春版)数学电子课本.pdf",
+    "pages": 122,
+    "sha256": "06220361177373a5430d873e8c91863c8e03ceaf47f797bc61beeebf5ba76fc4",
+    "version_evidence": "已视觉核对封面或扉页、结合新课标标识或目录判断新版；按本地学校公开使用信息匹配版本",
+    "source": "本地已收集教材；不随程序分发PDF",
+    "checked_on": "2026-10-20",
+    "quality_note": "扫描件，目录页通过视觉转录，文本层只有扫描水印。"
+  },
+  "4a": {
+    "catalog_status": "pdf_provisional",
+    "selection_status": "provisional",
+    "filename": "四年级数学上册苏教版26秋电子课本.pdf",
+    "pages": 116,
+    "sha256": "5dd595417e2f463b2c0d0726c2a1e5ebe6f8cc72a492d7b1effca484551a27f8",
+    "source": "已收集的暂选扫描教材；不随程序分发PDF",
+    "checked_on": "2026-10-20",
+    "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=07c75bda-7fff-4c4b-a271-9be638af37de&catalogType=tchMaterial&subCatalog=tchMaterial",
+    "version_evidence": "26秋仅为资源标签；出版版次未核定，保持暂选。目录第2页与官网第7页的单元及起始印刷页相符。",
+    "quality_note": "目录及正文首尾抽查；116页，正文印刷1至114页。扫描带水印、目录顶部裁切，无清晰版权页。与官网131页正式版的版次、前页和全文详细比对待完成。"
+  },
+  "4b": {
+    "catalog_status": "pdf_checked",
+    "filename": "【苏教版】四年级下册数学（2013版）.pdf",
+    "pages": 121,
+    "sha256": "25c67400acbb8a8bd964ab4710648f03ff97d9d35227bae493a08f72195a890b",
+    "series": "苏教版·现用2013系列",
+    "curriculum_standard": 2011,
+    "publication_edition": null,
+    "source": "已收集的现用2013系列教材；不随程序分发PDF",
+    "checked_on": "2026-10-20",
+    "version_evidence": "按现用2013系列采用；后记记载2011年版课标，具体版权版次未核定。系列标签、课标年份与出版版次分别记录。",
+    "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=27458ba8-dbf1-4860-a6cc-a0571756292d&catalogType=tchMaterial&subCatalog=tchMaterial",
+    "official_comparison": "本地以平移、旋转和轴对称开篇；已核官网127页，以认识多位数开篇，目录不同。",
+    "quality_note": "目录与本地PDF第3页视觉核对；未作全文逐页校审。按实际收录目录映射，不自动替换成官网另一册次目录。"
+  },
   "5a": {
     "filename": "【苏教版】五年级上册数学（2026秋新版）.pdf",
     "pages": 131,
@@ -59,22 +86,46 @@
     "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=92406f69-3b1b-404a-82c8-95adecae875f&catalogType=tchMaterial&subCatalog=tchMaterial",
     "quality_note": "已将本地第2页目录与国家平台正式版第7页核对，单元标题及起始页一致。官网140页，本地131页，未含完整前页与清晰版权页；未据此声称全文逐页校审。"
   },
-  "6a": {
-    "catalog_status": "official_checked",
-    "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=b75ce244-1cf7-4ae7-b256-c6036e4d83e5&catalogType=tchMaterial&subCatalog=tchMaterial",
-    "pages": 132,
-    "edition": "2026年7月第1版",
-    "isbn": "9787574325319",
-    "toc_reader_page": 7,
-    "source": "国家中小学智慧教育平台，江苏凤凰教育出版社正式版在线阅读器",
+  "5b": {
+    "catalog_status": "pdf_checked",
+    "filename": "【苏教版】五年级下册数学（2013版）.pdf",
+    "pages": 125,
+    "sha256": "e632d97f5f149cfe9245809461199b32b9e835098ad6a83685a744eef9b354cf",
+    "series": "苏教版·现用2013系列",
+    "curriculum_standard": 2011,
+    "publication_edition": null,
+    "source": "已收集的现用2013系列教材；不随程序分发PDF",
     "checked_on": "2026-10-20",
-    "quality_note": "目录已与官方阅读器第7页核对，版权页为2026年7月第1版；尚未取得匹配正式版的本地PDF。旧扫描候选第六单元为“放大与缩小”，与正式版“比例尺”不同，不再作为正式版PDF证据。概念映射仍为按单元主题推断。"
+    "version_evidence": "按现用2013系列采用；后记记载2011年版课标，具体版权版次未核定。系列标签、课标年份与出版版次分别记录。",
+    "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=14d4c93e-0a6a-4e2f-8b7a-24f0be4c64fc&catalogType=tchMaterial&subCatalog=tchMaterial",
+    "official_comparison": "本地含圆和解决问题的策略；已核官网131页，含长方体和正方体、分数乘法，目录不同。",
+    "quality_note": "目录与本地PDF第3页视觉核对；未作全文逐页校审。按实际收录目录映射，不自动替换成官网另一册次目录。"
   },
-  "4a": {
-    "source": "第三方参考目录（非出版社发布），结合苏州市政府的换版说明交叉核对。",
-    "url": "http://www.dzkbw.com/books/sjb/shuxue/xs4s_2026/",
-    "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=07c75bda-7fff-4c4b-a271-9be638af37de&catalogType=tchMaterial&subCatalog=tchMaterial",
+  "6a": {
+    "catalog_status": "pdf_checked",
+    "filename": "【苏教版】六年级上册数学（2026秋新版双页扫描件）.pdf",
+    "pages": 120,
+    "sha256": "8c0b14bff9a35146f8effe13d562b38ace068f1ae9797625a611ee1c30a79780",
+    "source": "已收集的双页扫描教材；不随程序分发PDF",
     "checked_on": "2026-10-20",
-    "quality_note": "尚未取得PDF；此处不标为PDF目录核定，未核到正文印刷页。"
+    "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=b75ce244-1cf7-4ae7-b256-c6036e4d83e5&catalogType=tchMaterial&subCatalog=tchMaterial",
+    "version_evidence": "按已收录扫描件第2页目录组织；2026秋是资源标签，未核得清晰版权页，不当作已核实的出版版次。",
+    "official_comparison": "官网正式版132页，2026年7月第1版，第7页目录第六单元为比例尺；本扫描件第六单元为放大与缩小，第二单元用和而非与。保留差异，不认定为相同正式文件。",
+    "quality_note": "目录已与此120页文件核对，含重复跨页和部分页码边缘裁切。阅读可用不等于全文逐页校审或出版社正式PDF认证；本轮应用切换至此文件目录。"
+  },
+  "6b": {
+    "catalog_status": "pdf_checked",
+    "filename": "【苏教版】六年级下册数学（2013版）.pdf",
+    "pages": 121,
+    "sha256": "e0ce34574a223184b951257bd18f19c13186ed92d2fbc764b0968119e79b235f",
+    "series": "苏教版·现用2013系列",
+    "curriculum_standard": 2011,
+    "publication_edition": null,
+    "source": "已收集的现用2013系列教材；不随程序分发PDF",
+    "checked_on": "2026-10-20",
+    "version_evidence": "按现用2013系列采用；后记记载2011年版课标，具体版权版次未核定。系列标签、课标年份与出版版次分别记录。",
+    "official_reader": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=5ed4f298-793d-4502-a4e3-f53bbf493deb&catalogType=tchMaterial&subCatalog=tchMaterial",
+    "official_comparison": "目录标题和起始页与已核官网一致；本地后记和官网末尾附页、版权页不同，不认定全文或版次相同。",
+    "quality_note": "目录与本地PDF第3页视觉核对；未作全文逐页校审。按实际收录目录映射，不自动替换成官网另一册次目录。"
   }
 }
