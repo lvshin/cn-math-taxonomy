@@ -20,6 +20,7 @@ import java.util.UUID;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.http.HttpStatus;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -165,6 +166,7 @@ public class LearningService {
 
     public Map<String, Object> createFamily(OidcUser principal, JsonNode request) {
         Actor actor = actor(principal);
+        requireNoFamily(actor);
         boolean allowed = Boolean.TRUE.equals(store.one("SELECT create_allowed FROM learning.users WHERE id=?", actor.id()).get("createAllowed"));
         if (!actor.operator() && !allowed) {
             throw new ApiException(HttpStatus.FORBIDDEN, "INVITATION_REQUIRED", "请先接受开户邀请");
@@ -173,9 +175,35 @@ public class LearningService {
         String name = text(request, "name", 100, true);
         contextFamily(id, "OWNER");
         store.update("INSERT INTO learning.families(id,name,created_by) VALUES(?,?,?)", id, name, actor.id());
-        store.update("INSERT INTO learning.members(family_id,user_id,role) VALUES(?,?,'OWNER')", id, actor.id());
+        writeMembership("INSERT INTO learning.members(family_id,user_id,role) VALUES(?,?,'OWNER')", id, actor.id());
         store.audit(id, actor.id(), "FAMILY_CREATED", id);
         return Map.of("id", id, "name", name, "role", "OWNER");
+    }
+
+    private void requireNoFamily(Actor actor) {
+        // identity() has already locked this user's row through its upsert for the transaction.
+        // The fresh read is visible under RLS and serializes create/join across tabs and devices.
+        if (hasFamily(actor)) {
+            throw alreadyJoined();
+        }
+    }
+
+    private boolean hasFamily(Actor actor) {
+        return store.optional("SELECT family_id FROM learning.members WHERE user_id=? AND active", actor.id()) != null;
+    }
+
+    private int writeMembership(String sql, Object... arguments) {
+        try {
+            return store.update(sql, arguments);
+        } catch (DuplicateKeyException exception) {
+            // The unique active-membership index also covers a former member reactivated by
+            // an administrator who cannot read the member's other family under RLS.
+            throw alreadyJoined();
+        }
+    }
+
+    private ApiException alreadyJoined() {
+        return new ApiException(HttpStatus.CONFLICT, "FAMILY_ALREADY_JOINED", "该账号已加入家庭，不能同时加入多个家庭");
     }
 
     public List<Map<String, Object>> children(OidcUser principal, UUID familyId) {
@@ -227,7 +255,7 @@ public class LearningService {
                 throw ApiException.conflict("LAST_OWNER");
             }
         }
-        if (store.update("UPDATE learning.members SET role=?,active=?,version=version+1 WHERE family_id=? AND user_id=? AND version=?", role, active, familyId, userId, version(request)) == 0) {
+        if (writeMembership("UPDATE learning.members SET role=?,active=?,version=version+1 WHERE family_id=? AND user_id=? AND version=?", role, active, familyId, userId, version(request)) == 0) {
             throw ApiException.conflict("VERSION_CONFLICT");
         }
         store.audit(familyId, actor.id(), "MEMBERSHIP_UPDATED", userId);
@@ -344,7 +372,7 @@ public class LearningService {
         var invitation = validInvite(text(request, "token", 200, true), true);
         if (invitation.get("acceptedBy") != null) {
             if (actor.id().equals(invitation.get("acceptedBy"))) {
-                return acceptance(invitation);
+                return acceptance(invitation, actor);
             }
             throw ApiException.conflict("INVITATION_USED");
         }
@@ -352,6 +380,7 @@ public class LearningService {
         if (reservation != null && (!principal.getIssuer().toString().equals(reservation.get("boundIssuer")) || !principal.getSubject().equals(reservation.get("boundSubject")))) {
             throw ApiException.conflict("INVITATION_BOUND_TO_OTHER_IDENTITY");
         }
+        requireNoFamily(actor);
         UUID familyId = (UUID) invitation.get("familyId");
         if (familyId == null) {
             store.update("UPDATE learning.users SET create_allowed=true WHERE id=?", actor.id());
@@ -359,21 +388,21 @@ public class LearningService {
             contextFamily(familyId, "OWNER");
             var existing = store.optional("SELECT active FROM learning.members WHERE family_id=? AND user_id=?", familyId, actor.id());
             if (existing == null) {
-                store.update("INSERT INTO learning.members(family_id,user_id,role) VALUES(?,?,?)", familyId, actor.id(), invitation.get("role"));
+                writeMembership("INSERT INTO learning.members(family_id,user_id,role) VALUES(?,?,?)", familyId, actor.id(), invitation.get("role"));
             } else if (!Boolean.TRUE.equals(existing.get("active"))) {
-                store.update("UPDATE learning.members SET active=true,role=?,version=version+1 WHERE family_id=? AND user_id=?", invitation.get("role"), familyId, actor.id());
+                writeMembership("UPDATE learning.members SET active=true,role=?,version=version+1 WHERE family_id=? AND user_id=?", invitation.get("role"), familyId, actor.id());
             }
             store.audit(familyId, actor.id(), "INVITATION_ACCEPTED", (UUID) invitation.get("id"));
         }
         store.update("UPDATE learning.invitations SET accepted_by=?,accepted_at=now() WHERE id=?", actor.id(), invitation.get("id"));
-        return acceptance(invitation);
+        return acceptance(invitation, actor);
     }
 
-    private Map<String, Object> acceptance(Map<String, Object> invitation) {
+    private Map<String, Object> acceptance(Map<String, Object> invitation, Actor actor) {
         Map<String, Object> value = new LinkedHashMap<>();
         value.put("accepted", true);
         value.put("familyId", invitation.get("familyId"));
-        value.put("canCreateFamily", invitation.get("familyId") == null);
+        value.put("canCreateFamily", invitation.get("familyId") == null && !hasFamily(actor));
         return value;
     }
 

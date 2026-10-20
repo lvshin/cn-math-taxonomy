@@ -36,20 +36,20 @@
    }catch(e){state.mode='unavailable';state.notice='学习服务暂时无法连接。教材仍可浏览，请稍后重试。';}
    emit('ready');
   }
-  async function refresh(){
+  async function refresh({notify=true}={}){
    state.families=array(await request('families'));
    const family=state.families.find(f=>f.id===state.family?.id)||state.families[0]||null;
-   await selectFamily(family?.id);return state;
+   await selectFamily(family?.id,{notify});return state;
   }
-  async function selectFamily(id){
+  async function selectFamily(id,{notify=true}={}){
    const seq=++generation,family=state.families.find(f=>f.id===id)||null,previousChildId=state.family?.id===id?state.child?.id:null;
-   state.family=family;state.children=[];state.child=null;emit('context');
+   state.family=family;state.children=[];state.child=null;if(notify)emit('context');
    if(!family)return;
    const children=array(await request(`families/${encodeURIComponent(id)}/children`));if(seq!==generation)return;
-   state.children=children;state.child=children.find(c=>c.id===previousChildId)||children.find(c=>!c.archived)||children[0]||null;emit('context');
+   state.children=children;state.child=children.find(c=>c.id===previousChildId)||children.find(c=>!c.archived)||children[0]||null;if(notify)emit('context');
   }
   function selectChild(id){state.child=state.children.find(c=>c.id===id)||null;emit('context');}
-  function context(){if(state.mode!=='cloud'||!state.me)throw new Error('请先登录云端家庭入口。');if(!state.family||!state.child)throw new Error('请先选择家庭和孩子档案。');if(state.family.role==='VIEWER')throw new Error('当前为只读成员，可查看历史，不能新增记录。');if(state.child.archived)throw new Error('这个孩子档案已归档，请选择使用中的档案。');return {familyId:state.family.id,childId:state.child.id,familyName:state.family.name,childName:state.child.nickname};}
+  function context(){if(state.mode!=='cloud'||!state.me)throw new Error('请先登录云端家庭入口。');if(!state.family||!state.child)throw new Error('请先建立或加入家庭，再选择孩子档案。');if(state.family.role==='VIEWER')throw new Error('当前为只读成员，可查看历史，不能新增记录。');if(state.child.archived)throw new Error('这个孩子档案已归档，请选择使用中的档案。');return {familyId:state.family.id,childId:state.child.id,familyName:state.family.name,childName:state.child.nickname};}
   const childPath=ctx=>`families/${encodeURIComponent(ctx.familyId)}/children/${encodeURIComponent(ctx.childId)}`;
   function contentSnapshot(model,session){
    const ids=new Set(session.answers.map(a=>a.qid)),item=globalThis.DiagEngine?.nextItem(model.graph,session);if(item)ids.add(item.question.id);

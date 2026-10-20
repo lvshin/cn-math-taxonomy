@@ -198,10 +198,170 @@ class LearningIntegrationTest {
             assertThrows(org.springframework.dao.DataIntegrityViolationException.class, () -> store.update("INSERT INTO learning.sessions(id,family_id,child_id,author_id,data_version,content_snapshot,snapshot,initial_fingerprint) VALUES(?,?,?,?,?,'{}','{}',?)", UUID.randomUUID(), fa, b1, actor.id(), "synthetic", "synthetic"));
             status.setRollbackOnly();
         });
-        join(bob, fb, alice, "VIEWER");
-        assertEquals(2, learning.families(alice).size());
-        assertEquals(2, learning.children(alice, fb).size());
-        assertThrows(ApiException.class, () -> child(alice, fb, "禁止创建"));
+        OidcUser viewer = user("family-b-viewer");
+        join(bob, fb, viewer, "VIEWER");
+        assertEquals(1, learning.families(viewer).size());
+        assertEquals(2, learning.children(viewer, fb).size());
+        assertThrows(ApiException.class, () -> child(viewer, fb, "禁止创建"));
+        assertEquals("NOT_FOUND", assertThrows(ApiException.class, () -> learning.children(viewer, fa)).code());
+    }
+
+    @Test
+    void creatingOrJoiningBlocksAnotherFamilyWithoutConsumingInvitations() {
+        OidcUser owner = user("operator");
+        OidcUser otherOwner = user("other-owner");
+        UUID first = family("合成家庭甲", owner);
+        UUID second = family("合成家庭乙", otherOwner);
+        assertEquals("FAMILY_ALREADY_JOINED", assertThrows(ApiException.class,
+                () -> learning.createFamily(owner, json("name", "不应创建"))).code());
+        String invite = learning.invite(otherOwner, second, json("role", "EDITOR")).get("token").toString();
+        assertEquals("FAMILY_ALREADY_JOINED", assertThrows(ApiException.class,
+                () -> learning.accept(owner, json("token", invite))).code());
+        assertEquals(second, learning.preview(json("token", invite)).get("familyId"));
+        assertEquals(first, learning.families(owner).getFirst().get("id"));
+        assertEquals(true, learning.accept(user("new-member"), json("token", invite)).get("accepted"));
+
+        String onboarding = learning.invite(owner, null, json()).get("token").toString();
+        assertEquals("FAMILY_ALREADY_JOINED", assertThrows(ApiException.class,
+                () -> learning.accept(owner, json("token", onboarding))).code());
+        assertEquals("ONBOARDING", learning.preview(json("token", onboarding)).get("kind"));
+        OidcUser creator = user("invited-creator");
+        assertEquals(true, learning.accept(creator, json("token", onboarding)).get("canCreateFamily"));
+        learning.createFamily(creator, json("name", "合成家庭丙"));
+        assertEquals(false, learning.accept(creator, json("token", onboarding)).get("canCreateFamily"));
+    }
+
+    @Test
+    void leavingAllowsAnotherFamilyAndAcceptedRetryDoesNotRestoreOldAccess() {
+        OidcUser owner = user("operator");
+        OidcUser otherOwner = user("other-owner");
+        OidcUser member = user("moving-member");
+        UUID first = family("合成家庭甲", owner);
+        UUID second = family("合成家庭乙", otherOwner);
+        UUID child = child(owner, first, "合成孩子");
+        String original = learning.invite(owner, first, json("role", "EDITOR")).get("token").toString();
+        learning.accept(member, json("token", original));
+        records.createSession(member, first, child, sessionRequest());
+        assertEquals("FAMILY_ALREADY_JOINED", assertThrows(ApiException.class,
+                () -> learning.createFamily(member, json("name", "不应创建"))).code());
+        String next = learning.invite(otherOwner, second, json("role", "VIEWER")).get("token").toString();
+        assertEquals("FAMILY_ALREADY_JOINED", assertThrows(ApiException.class,
+                () -> learning.accept(member, json("token", next))).code());
+        assertEquals(true, learning.accept(member, json("token", original)).get("accepted"));
+        learning.leave(member, first);
+        assertEquals(true, learning.accept(member, json("token", next)).get("accepted"));
+        // Retrying a previously successful request reports its result without reinstating membership.
+        assertEquals(first, learning.accept(member, json("token", original)).get("familyId"));
+        assertEquals(1, learning.families(member).size());
+        assertEquals(second, learning.families(member).getFirst().get("id"));
+        assertEquals("NOT_FOUND", assertThrows(ApiException.class, () -> learning.children(member, first)).code());
+        assertEquals(1, records.sessions(owner, first, child).size());
+        assertEquals(learning.me(member).get("id"), records.sessions(owner, first, child).getFirst().get("authorId"));
+    }
+
+    @Test
+    void reactivatingAFormerMemberCannotBypassTheFamilyLimitUnderRls() {
+        OidcUser owner = user("operator");
+        OidcUser otherOwner = user("other-owner");
+        OidcUser member = user("former-member");
+        UUID first = family("合成家庭甲", owner);
+        UUID second = family("合成家庭乙", otherOwner);
+        join(owner, first, member, "EDITOR");
+        UUID memberId = (UUID) learning.me(member).get("id");
+        learning.leave(member, first);
+        join(otherOwner, second, member, "VIEWER");
+        assertEquals("FAMILY_ALREADY_JOINED", assertThrows(ApiException.class,
+                () -> learning.updateMember(owner, first, memberId, json("role", "EDITOR", "active", true, "version", 1))).code());
+        assertEquals(second, learning.families(member).getFirst().get("id"));
+        assertEquals(false, learning.members(owner, first).stream().filter(value -> memberId.equals(value.get("userId"))).findFirst().orElseThrow().get("active"));
+        learning.leave(member, second);
+        assertEquals(true, learning.updateMember(owner, first, memberId,
+                json("role", "EDITOR", "active", true, "version", 1)).get("active"));
+        assertEquals(first, learning.families(member).getFirst().get("id"));
+    }
+
+    @Test
+    void concurrentCreatesAndJoinsForOneIdentityHaveExactlyOneWinner() throws Exception {
+        OidcUser operator = user("operator");
+        OidcUser otherOwner = user("other-owner");
+        UUID first = family("合成家庭甲", operator);
+        UUID second = family("合成家庭乙", otherOwner);
+        OidcUser creator = user("concurrent-creator");
+        String onboarding = learning.invite(operator, null, json()).get("token").toString();
+        learning.accept(creator, json("token", onboarding));
+        assertOneFamilyWinner(creator,
+                () -> learning.createFamily(creator, json("name", "并发甲")),
+                () -> learning.createFamily(creator, json("name", "并发乙")));
+
+        OidcUser mixed = user("concurrent-create-join");
+        String mixedOnboarding = learning.invite(operator, null, json()).get("token").toString();
+        learning.accept(mixed, json("token", mixedOnboarding));
+        String mixedInvite = learning.invite(operator, first, json("role", "EDITOR")).get("token").toString();
+        assertOneFamilyWinner(mixed,
+                () -> learning.createFamily(mixed, json("name", "并发创建")),
+                () -> learning.accept(mixed, json("token", mixedInvite)));
+
+        OidcUser joiner = user("concurrent-joiner");
+        String inviteA = learning.invite(operator, first, json("role", "EDITOR")).get("token").toString();
+        String inviteB = learning.invite(otherOwner, second, json("role", "VIEWER")).get("token").toString();
+        assertOneFamilyWinner(joiner,
+                () -> learning.accept(joiner, json("token", inviteA)),
+                () -> learning.accept(joiner, json("token", inviteB)));
+        UUID joined = (UUID) learning.families(joiner).getFirst().get("id");
+        String unused = joined.equals(first) ? inviteB : inviteA;
+        assertNotNull(learning.preview(json("token", unused)).get("familyId"));
+    }
+
+    @Test
+    void uniqueIndexMigrationRejectsLegacyMultipleFamiliesTransactionally() throws Exception {
+        OidcUser owner = user("operator");
+        OidcUser otherOwner = user("other-owner");
+        OidcUser member = user("legacy-member");
+        UUID first = family("合成家庭甲", owner);
+        UUID second = family("合成家庭乙", otherOwner);
+        join(owner, first, member, "EDITOR");
+        UUID memberId = (UUID) learning.me(member).get("id");
+        String migrationSql = new org.springframework.core.io.ClassPathResource("db/migration/V7__one_active_family_per_user.sql")
+                .getContentAsString(StandardCharsets.UTF_8);
+        var migrationTransaction = new TransactionTemplate(new DataSourceTransactionManager(migration));
+        JdbcTemplate jdbc = new JdbcTemplate(migration);
+        migrationTransaction.executeWithoutResult(status -> {
+            jdbc.execute("DROP INDEX learning.members_one_active_family");
+            jdbc.queryForObject("SELECT set_config('learning.family',?,true)", String.class, second.toString());
+            jdbc.queryForObject("SELECT set_config('learning.role','OWNER',true)", String.class);
+            // Simulate the previously supported state without weakening FORCE RLS.
+            jdbc.update("INSERT INTO learning.members(family_id,user_id,role) VALUES(?,?,'VIEWER')", second, memberId);
+            assertThrows(org.springframework.dao.DuplicateKeyException.class, () -> jdbc.execute(migrationSql));
+            status.setRollbackOnly();
+        });
+        // Failed DDL rolls the whole migration back; it never chooses or deletes a membership.
+        new DatabaseSafety(store.jdbc).verify();
+        assertEquals(1, learning.families(member).size());
+        assertEquals(first, learning.families(member).getFirst().get("id"));
+    }
+
+    static void assertOneFamilyWinner(OidcUser user, Callable<?> first, Callable<?> second) throws Exception {
+        var ready = new java.util.concurrent.CountDownLatch(2);
+        var start = new java.util.concurrent.CountDownLatch(1);
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            var operations = List.of(first, second).stream().map(operation -> executor.submit(() -> {
+                ready.countDown();
+                assertTrue(start.await(5, java.util.concurrent.TimeUnit.SECONDS));
+                try {
+                    operation.call();
+                    return "OK";
+                } catch (ApiException exception) {
+                    return exception.code();
+                }
+            })).toList();
+            assertTrue(ready.await(5, java.util.concurrent.TimeUnit.SECONDS));
+            start.countDown();
+            var outcomes = List.of(operations.get(0).get(5, java.util.concurrent.TimeUnit.SECONDS),
+                    operations.get(1).get(5, java.util.concurrent.TimeUnit.SECONDS));
+            assertEquals(1, outcomes.stream().filter("OK"::equals).count());
+            assertEquals(1, outcomes.stream().filter("FAMILY_ALREADY_JOINED"::equals).count());
+        }
+        assertEquals(1, learning.families(user).size());
     }
 
     static ObjectNode sessionRequest() {
