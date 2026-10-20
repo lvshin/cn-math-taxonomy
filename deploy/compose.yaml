@@ -1,0 +1,38 @@
+name: family-learning
+services:
+  app:
+    image: ${APP_IMAGE:?Set a tested immutable application image}
+    env_file:
+      - ${APP_ENV_FILE:?Set the protected application environment file}
+    environment:
+      BIND_ADDRESS: 0.0.0.0
+      PORT: "8080"
+      SPRING_FLYWAY_ENABLED: "false"
+    ports:
+      - "127.0.0.1:${APP_HTTP_PORT:?Set a free loopback port}:8080"
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=67108864,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 768m
+    cpus: 1.0
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      proxy:
+        aliases: [learning-app]
+      identity:
+        aliases: [learning-app]
+networks:
+  proxy:
+    external: true
+    name: ${PROXY_NETWORK:?Set the existing reverse-proxy network}
+  identity:
+    external: true
+    name: ${IDENTITY_NETWORK:?Set the private identity callback network}

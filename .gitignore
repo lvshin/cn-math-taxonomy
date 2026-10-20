@@ -13,3 +13,7 @@ chain.sh
 .local/
 *.local.*
 docs/screenshots/
+**/target/
+**/.idea/
+*.iml
+deploy/.build/

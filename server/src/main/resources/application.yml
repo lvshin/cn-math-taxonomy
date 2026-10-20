@@ -1,0 +1,55 @@
+server:
+  address: ${BIND_ADDRESS:127.0.0.1}
+  port: ${PORT:8080}
+  servlet:
+    context-path: /edu/math
+    session:
+      timeout: 60m
+      cookie:
+        name: LEARNING_SESSION
+        http-only: true
+        secure: true
+        same-site: lax
+  forward-headers-strategy: framework
+  error:
+    include-message: never
+spring:
+  application:
+    name: family-learning
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER:learning_app}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 10000
+  flyway:
+    url: ${DB_URL}
+    user: ${DB_MIGRATION_USER}
+    password: ${DB_MIGRATION_PASSWORD}
+  security:
+    oauth2:
+      client:
+        registration:
+          learning:
+            client-id: ${OIDC_CLIENT_ID}
+            client-secret: ${OIDC_CLIENT_SECRET}
+            scope: openid,profile
+            authorization-grant-type: authorization_code
+            redirect-uri: ${REGISTRATION_REDIRECT_URI}
+        provider:
+          learning:
+            issuer-uri: ${OIDC_ISSUER}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+learning:
+  registration-key: ${REGISTRATION_KEY}
+  oidc-issuer: ${OIDC_ISSUER}
+  oidc-client-id: ${OIDC_CLIENT_ID}
+  operator-issuer: ${OPERATOR_ISSUER:}
+  operator-subject: ${OPERATOR_SUBJECT:}
+logging:
+  level:
+    org.springframework.security: WARN
+    org.springframework.web: WARN

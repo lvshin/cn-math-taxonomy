@@ -1,0 +1,10 @@
+[Unit]
+Description=Learning readiness check
+After=docker.service network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/learning/operations.env
+ExecStart=/usr/bin/python3 /opt/learning/ops/health.py
+NoNewPrivileges=true
+PrivateTmp=true

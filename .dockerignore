@@ -1,0 +1,9 @@
+**
+!deploy/
+!deploy/Dockerfile
+!deploy/HealthCheck.java
+!deploy/.build/
+!deploy/.build/HealthCheck.class
+!server/
+!server/target/
+!server/target/family-learning-server.jar
