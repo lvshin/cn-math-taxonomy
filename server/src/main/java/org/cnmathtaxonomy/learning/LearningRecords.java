@@ -28,11 +28,13 @@ public class LearningRecords {
     private final LearningService learning;
     private final LearningStore store;
     private final ObjectMapper mapper;
+    private final PracticeProfile practice;
 
     LearningRecords(LearningService learning, LearningStore store, ObjectMapper mapper) {
         this.learning = learning;
         this.store = store;
         this.mapper = mapper;
+        this.practice = new PracticeProfile(mapper);
     }
 
     public JsonNode activities() {
@@ -104,6 +106,27 @@ public class LearningRecords {
         return store.list("SELECT " + SESSION_COLUMNS + " FROM learning.sessions WHERE family_id=? AND child_id=? ORDER BY occurred_at DESC,id DESC LIMIT 1000", family, child);
     }
 
+    public Map<String, Object> practiceProfile(OidcUser principal, UUID family, UUID child) {
+        scope(principal, family, child, false);
+        var profile = practice.accumulator(Instant.now());
+        // This query intentionally has no history-list LIMIT and reads each session's latest persisted snapshot once.
+        store.jdbc.query(connection -> {
+            var statement = connection.prepareStatement("SELECT id,snapshot,content_snapshot,occurred_at,updated_at FROM learning.sessions WHERE family_id=? AND child_id=?");
+            statement.setObject(1, family);
+            statement.setObject(2, child);
+            statement.setFetchSize(128);
+            return statement;
+        }, (org.springframework.jdbc.core.RowCallbackHandler) row -> {
+            try {
+                profile.add(row.getString("id"), mapper.readTree(row.getString("snapshot")), mapper.readTree(row.getString("content_snapshot")),
+                        row.getTimestamp("occurred_at").toInstant(), row.getTimestamp("updated_at").toInstant());
+            } catch (JsonProcessingException exception) {
+                throw new java.sql.SQLException("Stored practice snapshot is invalid", exception);
+            }
+        });
+        return profile.result();
+    }
+
     public Map<String, Object> session(OidcUser principal, UUID family, UUID child, UUID id) {
         scope(principal, family, child, false);
         return storedSession(family, child, id);
@@ -121,6 +144,14 @@ public class LearningRecords {
         JsonNode content = object(request, "contentSnapshot");
         checkDataVersion(snapshot, content, version);
         String fingerprint = fingerprint(request);
+        var existing = store.optional("SELECT " + SESSION_COLUMNS + ",initial_fingerprint FROM learning.sessions WHERE family_id=? AND child_id=? AND id=?", family, child, id);
+        if (existing != null) {
+            if (!actor.id().equals(existing.get("authorId")) || !fingerprint.equals(existing.remove("initialFingerprint"))) {
+                throw ApiException.conflict("IDEMPOTENCY_CONFLICT");
+            }
+            return existing;
+        }
+        practice.validateSnapshot(snapshot, content);
         store.update("INSERT INTO learning.sessions(id,family_id,child_id,author_id,data_version,content_snapshot,snapshot,initial_fingerprint) VALUES(?,?,?,?,?,?::jsonb,?::jsonb,?) ON CONFLICT(id) DO NOTHING", id, family, child, actor.id(), version, content.toString(), snapshot.toString(), fingerprint);
         var stored = store.one("SELECT " + SESSION_COLUMNS + ",initial_fingerprint FROM learning.sessions WHERE family_id=? AND child_id=? AND id=?", family, child, id);
         if (!actor.id().equals(stored.get("authorId")) || !fingerprint.equals(stored.remove("initialFingerprint"))) {
@@ -139,6 +170,9 @@ public class LearningRecords {
         JsonNode snapshot = object(request, "snapshot");
         JsonNode content = object(request, "contentSnapshot");
         checkDataVersion(snapshot, content, old.get("dataVersion").toString());
+        if (snapshot.path("schema").asInt(1) != ((JsonNode) old.get("snapshot")).path("schema").asInt(1)) {
+            throw ApiException.invalid("练习快照类型不能改变");
+        }
         boolean finished = LearningService.bool(request, "finished");
         long version = LearningService.version(request);
         if (Boolean.TRUE.equals(old.get("finished"))) {
@@ -147,6 +181,13 @@ public class LearningRecords {
             }
             throw ApiException.conflict("SESSION_FINISHED");
         }
+        if (version != ((Number) old.get("version")).longValue()) {
+            if (snapshot.equals(old.get("snapshot")) && content.equals(old.get("contentSnapshot")) && finished == Boolean.TRUE.equals(old.get("finished"))) {
+                return old;
+            }
+            throw ApiException.conflict("VERSION_CONFLICT");
+        }
+        practice.validateSnapshot(snapshot, content, (JsonNode) old.get("snapshot"));
         int changed = store.update("UPDATE learning.sessions SET snapshot=?::jsonb,content_snapshot=?::jsonb,finished=?,version=version+1,updated_at=now() WHERE family_id=? AND child_id=? AND id=? AND version=?", snapshot.toString(), content.toString(), finished, family, child, id, version);
         if (changed == 0) {
             // A retry of the exact completed save is safe; a competing edit remains visible as a conflict.
@@ -268,7 +309,7 @@ public class LearningRecords {
 
     private JsonNode object(JsonNode request, String field) {
         JsonNode value = request == null ? null : request.get(field);
-        if (value == null || !value.isObject() || value.toString().length() > 500_000) {
+        if (value == null || !value.isObject() || value.toString().getBytes(StandardCharsets.UTF_8).length > 500_000) {
             throw ApiException.invalid("字段需要不超过500KB的JSON对象：" + field);
         }
         return value;

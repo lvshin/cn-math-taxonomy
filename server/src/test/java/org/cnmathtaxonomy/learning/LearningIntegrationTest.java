@@ -394,6 +394,145 @@ class LearningIntegrationTest {
         assertEquals("original", ((JsonNode) item.get("contentSnapshot")).path("questions").get(0).path("prompt").asText());
     }
 
+    static JsonNode currentPracticeQuestion() {
+        try (var stream = new org.springframework.core.io.ClassPathResource("static/data/questions.json").getInputStream()) {
+            return mapper.readTree(stream).get(0);
+        } catch (java.io.IOException exception) {
+            throw new AssertionError(exception);
+        }
+    }
+
+    static ObjectNode practiceRequest(JsonNode question, String result) {
+        return json("id", UUID.randomUUID(), "dataVersion", "compatible-legacy-version",
+                "snapshot", Map.of("schema", 1, "answers", List.of(Map.of("id", question.path("topicId").asText(), "qid", question.path("id").asText(), "result", result, "text", "private-original-answer"))),
+                "contentSnapshot", Map.of("questions", List.of(question)));
+    }
+
+    static Map<String, Object> practiceFamily(Map<String, Object> profile, String key) {
+        return (Map<String, Object>) ((Map<?, ?>) profile.get("families")).get(key);
+    }
+
+    @Test
+    void practiceProfileIsChildScopedReadableByViewerAndRevokedImmediately() {
+        OidcUser owner = user("operator"), otherOwner = user("profile-other-owner"), viewer = user("profile-viewer");
+        UUID family = family("合成练习家庭甲", owner), first = child(owner, family, "甲一"), second = child(owner, family, "甲二");
+        UUID otherFamily = family("合成练习家庭乙", otherOwner), otherChild = child(otherOwner, otherFamily, "乙一");
+        JsonNode question = currentPracticeQuestion();
+        records.createSession(owner, family, first, practiceRequest(question, "correct"));
+        records.createSession(owner, family, second, practiceRequest(question, "wrong"));
+        join(owner, family, viewer, "VIEWER");
+        String key = "fixed:" + question.path("id").asText();
+        assertEquals(1, practiceFamily(records.practiceProfile(viewer, family, first), key).get("correct"));
+        assertEquals(0, practiceFamily(records.practiceProfile(viewer, family, second), key).get("correct"));
+        assertEquals("NOT_FOUND", assertThrows(ApiException.class, () -> records.practiceProfile(owner, otherFamily, otherChild)).code());
+        assertThrows(ApiException.class, () -> records.practiceProfile(owner, family, otherChild));
+        assertThrows(ApiException.class, () -> records.createSession(viewer, family, first, practiceRequest(question, "correct")));
+        UUID viewerId = (UUID) learning.me(viewer).get("id");
+        learning.updateMember(owner, family, viewerId, json("role", "VIEWER", "active", false, "version", 0));
+        assertEquals("NOT_FOUND", assertThrows(ApiException.class, () -> records.practiceProfile(viewer, family, first)).code());
+    }
+
+    @Test
+    void practiceProfileReadsBeyondThousandSessionsAndCountsLatestSnapshotOnly() {
+        OidcUser owner = user("operator");
+        UUID family = family("合成练习家庭", owner), child = child(owner, family, "合成孩子");
+        JsonNode question = currentPracticeQuestion();
+        ObjectNode initial = practiceRequest(question, "wrong");
+        UUID session = UUID.fromString(initial.path("id").asText());
+        records.createSession(owner, family, child, initial);
+        records.createSession(owner, family, child, initial);
+        ObjectNode updated = practiceRequest(question, "correct");
+        ObjectNode save = json("version", 0, "finished", false, "snapshot", updated.path("snapshot"), "contentSnapshot", updated.path("contentSnapshot"));
+        records.updateSession(owner, family, child, session, save);
+        records.updateSession(owner, family, child, session, save);
+        transaction.executeWithoutResult(status -> {
+            var actor = learning.actor(owner);
+            learning.family(actor, family, true, false);
+            store.update("INSERT INTO learning.sessions(id,family_id,child_id,author_id,data_version,content_snapshot,snapshot,initial_fingerprint) "
+                    + "SELECT gen_random_uuid(),?,?,?,'compatible-legacy-version',?::jsonb,?::jsonb,'synthetic-direct-history' FROM generate_series(1,1001)",
+                    family, child, actor.id(), initial.path("contentSnapshot").toString(), initial.path("snapshot").toString());
+        });
+        assertEquals(1000, records.sessions(owner, family, child).size());
+        var profile = records.practiceProfile(owner, family, child);
+        var stats = practiceFamily(profile, "fixed:" + question.path("id").asText());
+        assertEquals(1, stats.get("correct"));
+        assertEquals(1001, stats.get("wrong"));
+        assertEquals(1, ((List<?>) profile.get("reviewQuestions")).size());
+        assertFalse(mapper.valueToTree(profile).toString().contains("private-original-answer"));
+        assertEquals(List.of(question.path("topicId").asText()), profile.get("topicIds"));
+    }
+
+    @Test
+    void practiceProfileExcludesImportsObservationInferredAndChangedQuestionSemantics() {
+        OidcUser owner = user("operator");
+        UUID family = family("合成练习家庭", owner), child = child(owner, family, "合成孩子");
+        JsonNode question = currentPracticeQuestion();
+        ObjectNode record = json("schema", 1, "dataVersion", "legacy", "targets", List.of(question.path("topicId").asText()), "options", Map.of(),
+                "answers", List.of(Map.of("id", question.path("topicId").asText(), "qid", question.path("id").asText(), "result", "correct")));
+        records.importRecord(owner, family, child, json("id", UUID.randomUUID(), "record", record));
+        var activity = records.activities().get(0);
+        records.observe(owner, family, child, json("id", UUID.randomUUID(), "activityId", activity.path("id").asText(), "activityVersion", activity.path("version").asText(),
+                "outcome", "INDEPENDENT", "note", "合成观察", "occurredAt", Instant.now().toString()));
+        ObjectNode inferred = practiceRequest(question, "correct");
+        ((ObjectNode) inferred.path("snapshot").path("answers").get(0)).put("gradeSource", "inferred");
+        records.createSession(owner, family, child, inferred);
+        ObjectNode changedQuestion = question.deepCopy();
+        changedQuestion.put("prompt", "旧版含义已改变");
+        records.createSession(owner, family, child, practiceRequest(changedQuestion, "correct"));
+        var empty = records.practiceProfile(owner, family, child);
+        assertTrue(((Map<?, ?>) empty.get("families")).isEmpty());
+        assertTrue(((List<?>) empty.get("topicIds")).isEmpty());
+        records.createSession(owner, family, child, practiceRequest(question, "skip"));
+        assertEquals(1, practiceFamily(records.practiceProfile(owner, family, child), "fixed:" + question.path("id").asText()).get("skip"));
+    }
+
+    @Test
+    void schemaTwoSessionsFreezePlanAndAppendDirectAnswersWithSafeRetries() {
+        OidcUser owner = user("operator");
+        UUID family = family("合成练习家庭", owner), child = child(owner, family, "合成孩子");
+        JsonNode question = currentPracticeQuestion();
+        ObjectNode snapshot = json("schema", 2, "mode", "practice", "seed", "synthetic-seed", "startedAt", Instant.now().toString(), "dataVersion", "legacy-compatible", "targets", List.of(question.path("topicId").asText()),
+                "limit", 5, "plan", List.of(question), "answers", List.of(), "selection", Map.of("strategyVersion", "1", "catalogVersion", "1", "asOf", Instant.now().toString(), "weights", Map.of()));
+        ObjectNode content = json("questions", List.of(question));
+        UUID id = UUID.randomUUID();
+        ObjectNode request = json("id", id, "dataVersion", "legacy-compatible", "snapshot", snapshot, "contentSnapshot", content);
+        var created = records.createSession(owner, family, child, request);
+        assertEquals(0L, created.get("version"));
+        ObjectNode answered = snapshot.deepCopy();
+        answered.set("answers", mapper.valueToTree(List.of(Map.of("id", question.path("topicId").asText(), "qid", question.path("id").asText(), "result", "correct", "answeredAt", Instant.now().toString(),
+                "gradeSource", "auto", "familyKey", "fixed:" + question.path("id").asText()))));
+        ObjectNode update = json("version", 0, "finished", false, "snapshot", answered, "contentSnapshot", content);
+        assertEquals(1L, records.updateSession(owner, family, child, id, update).get("version"));
+        assertEquals(1L, records.updateSession(owner, family, child, id, update).get("version"));
+        assertEquals(1, practiceFamily(records.practiceProfile(owner, family, child), "fixed:" + question.path("id").asText()).get("correct"));
+        ObjectNode competingAnswer = update.deepCopy();
+        ((ObjectNode) competingAnswer.path("snapshot").path("answers").get(0)).put("result", "wrong");
+        assertEquals("VERSION_CONFLICT", assertThrows(ApiException.class, () -> records.updateSession(owner, family, child, id, competingAnswer)).code());
+        ObjectNode mutated = update.deepCopy().put("version", 1);
+        ((ObjectNode) mutated.path("snapshot")).put("seed", "changed");
+        assertThrows(ApiException.class, () -> records.updateSession(owner, family, child, id, mutated));
+        ObjectNode deleteAnswer = update.deepCopy().put("version", 1);
+        ((ObjectNode) deleteAnswer.path("snapshot")).set("answers", mapper.createArrayNode());
+        assertThrows(ApiException.class, () -> records.updateSession(owner, family, child, id, deleteAnswer));
+        ObjectNode mismatched = request.deepCopy();
+        mismatched.put("id", UUID.randomUUID().toString());
+        ((ObjectNode) mismatched.path("contentSnapshot")).set("questions", mapper.createArrayNode());
+        assertThrows(ApiException.class, () -> records.createSession(owner, family, child, mismatched));
+    }
+
+    @Test
+    void sessionSnapshotBoundaryCountsUtf8Bytes() {
+        OidcUser owner = user("operator");
+        UUID family = family("合成练习家庭", owner), child = child(owner, family, "合成孩子");
+        ObjectNode request = sessionRequest();
+        ((ObjectNode) request.path("snapshot")).put("oversized", "汉".repeat(170_000));
+        assertEquals("INVALID_REQUEST", assertThrows(ApiException.class, () -> records.createSession(owner, family, child, request)).code());
+        ObjectNode content = sessionRequest();
+        ((ObjectNode) content.path("contentSnapshot")).put("oversized", "汉".repeat(170_000));
+        assertThrows(ApiException.class, () -> records.createSession(owner, family, child, content));
+        assertTrue(records.sessions(owner, family, child).isEmpty());
+    }
+
     @Test
     void memberRemovalTakesEffectAndLastOwnerIsProtected() {
         OidcUser owner = user("operator");

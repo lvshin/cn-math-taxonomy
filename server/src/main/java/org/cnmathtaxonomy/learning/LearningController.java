@@ -34,7 +34,7 @@ class LearningController {
 
     @GetMapping("/capabilities")
     ResponseEntity<Map<String, Object>> capabilities(HttpServletRequest request) {
-        Map<String, Object> capabilities = new LinkedHashMap<>(Map.of("cloud", true, "apiVersion", 1,
+        Map<String, Object> capabilities = new LinkedHashMap<>(Map.of("cloud", true, "adaptivePractice", true, "apiVersion", 1,
                 "loginUrl", "oauth2/authorization/learning"));
         if (SessionRestoration.hasMarker(request)) {
             capabilities.put("sessionRestoreUrl", "oauth2/authorization/learning?restore=1");
@@ -155,6 +155,11 @@ class LearningController {
     @GetMapping("/families/{family}/children/{child}/sessions")
     List<Map<String, Object>> sessions(@AuthenticationPrincipal OidcUser user, @PathVariable UUID family, @PathVariable UUID child) {
         return records.sessions(user, family, child);
+    }
+
+    @GetMapping("/families/{family}/children/{child}/practice-profile")
+    ResponseEntity<Map<String, Object>> practiceProfile(@AuthenticationPrincipal OidcUser user, @PathVariable UUID family, @PathVariable UUID child) {
+        return ResponseEntity.ok().header("Cache-Control", "no-store").body(records.practiceProfile(user, family, child));
     }
 
     @GetMapping("/families/{family}/children/{child}/sessions/{id}")

@@ -125,6 +125,17 @@ def build():
                        ('books.json',books),('placements.json',placements),('meta.json',meta)]:
         write('data/'+path,value)
     write('data/cn-curriculum-standards.json',read('sources/upstream/cn-curriculum-standards.json'))
+    # 规则变式单独版本化；不能为新练习改变教材及固定题库的历史版本。
+    templates = read('config/practice_templates.json')
+    if templates.get('schema') != 1 or not templates.get('version') or not isinstance(templates.get('templates'), list):
+        raise ValueError('无效的规则变式目录')
+    seen_templates = set()
+    for template in templates['templates']:
+        if template['id'] in seen_templates or template['topicId'] not in assigned or not isinstance(template['version'], int) or template['version'] < 1:
+            raise ValueError('变式ID重复、知识点未落册或版本无效：' + template['id'])
+        seen_templates.add(template['id'])
+    # 保留配置字节，便于审阅生成产物与来源完全一致。
+    (ROOT / 'data/practice_templates.json').write_bytes((ROOT / 'config/practice_templates.json').read_bytes())
     print(json.dumps(meta['counts'],ensure_ascii=False))
 
 if __name__ == '__main__':

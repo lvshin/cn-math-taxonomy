@@ -32,7 +32,7 @@
    try{const r=await fetcher(url('capabilities'),{credentials:'same-origin',headers:{Accept:'application/json'}});
     if(r.status===404){state.mode='static';state.notice='教材浏览模式 · 学习记录请使用云端家庭入口';emit('ready');return;}
     if(!r.ok)throw new ApiError(r.status,{});const cap=await r.json();if(!cap.cloud)throw new Error('服务未启用云端功能。');
-    state.mode='cloud';state.loginUrl=cap.loginUrl||'oauth2/authorization/learning';
+    state.mode='cloud';state.adaptivePractice=cap.adaptivePractice===true;state.loginUrl=cap.loginUrl||'oauth2/authorization/learning';
     let identityLoaded=false;
     try{state.me=await request('me');identityLoaded=true;await refresh();}catch(e){
      if(e.status!==401)throw e;
@@ -57,16 +57,22 @@
    const children=array(await request(`families/${encodeURIComponent(id)}/children`));if(seq!==generation)return;
    state.children=children;state.child=children.find(c=>c.id===previousChildId)||children.find(c=>!c.archived)||children[0]||null;if(notify)emit('context');
   }
-  function selectChild(id){state.child=state.children.find(c=>c.id===id)||null;emit('context');}
+  function selectChild(id){++generation;state.child=state.children.find(c=>c.id===id)||null;emit('context');}
   function context(){if(state.mode!=='cloud'||!state.me)throw new Error('请先登录云端家庭入口。');if(!state.family||!state.child)throw new Error('请先建立或加入家庭，再选择孩子档案。');if(state.family.role==='VIEWER')throw new Error('当前为只读成员，可查看历史，不能新增记录。');if(state.child.archived)throw new Error('这个孩子档案已归档，请选择使用中的档案。');return {familyId:state.family.id,childId:state.child.id,familyName:state.family.name,childName:state.child.nickname};}
   const childPath=ctx=>`families/${encodeURIComponent(ctx.familyId)}/children/${encodeURIComponent(ctx.childId)}`;
   function contentSnapshot(model,session){
-   const ids=new Set(session.answers.map(a=>a.qid)),item=globalThis.DiagEngine?.nextItem(model.graph,session);if(item)ids.add(item.question.id);
+   const saved=model.frozenContent?.(session);if(saved)return clone(saved);
+   if(session.schema===2){
+    const questions=session.plan.map(entry=>entry.question||entry),ids=[...new Set(questions.map(q=>q.topicId))];
+    return {dataVersion:session.dataVersion,catalogVersion:session.selection.catalogVersion,topics:ids.map(id=>({id,name:model.graph.byId[id]?.name||id,label:model.label(id)})),questions:questions.map(clone)};
+   }
+   const ids=new Set(session.answers.map(a=>a.qid)),item=model.next?model.next(session):globalThis.DiagEngine?.nextItem(model.graph,session);if(item)ids.add(item.question.id);
    return {dataVersion:model.data.meta.data_version,topics:session.order.map(id=>({id,name:model.graph.byId[id]?.name,label:model.label(id)})),questions:model.data.questions.filter(q=>ids.has(q.id)).map(clone)};
   }
-  function begin(snapshot,content){
+  function begin(snapshot,content,targetContext){
    if(state.pending)throw new Error('上一轮还有待保存内容，请先重试保存或导出。');
-   state.active={...context(),id:uuid(),version:null,initial:{snapshot:clone(snapshot),contentSnapshot:clone(content)},finished:false,closing:false};
+   const current=context();if(targetContext&&(targetContext.familyId!==current.familyId||targetContext.childId!==current.childId))throw new Error('孩子档案已切换，请重新开始。');
+   state.active={...(targetContext||current),id:uuid(),version:null,initial:{snapshot:clone(snapshot),contentSnapshot:clone(content)},finished:false,closing:false};
    return save(snapshot,content,false);
   }
   function resume(resource,ctx){
@@ -98,8 +104,15 @@
    }catch(e){state.pending=true;emit('save');return false;}finally{running=null;}})();return running;
   }
   async function clear(){if(state.pending){await flush();if(state.pending)throw new Error('还有待保存内容，结束前请重试保存或导出。');}state.active=null;latest=null;emit('session');}
+  async function practiceProfile(ctx,{signal}={}){
+   if(!state.adaptivePractice)throw new Error('当前服务尚未启用随机变式练习，请稍后刷新重试。');
+   const profile=await request(childPath(ctx)+'/practice-profile',{signal});
+   if(!profile||profile.schema!==1||typeof profile.dataVersion!=='string'||!Array.isArray(profile.topicIds)||!profile.families||typeof profile.families!=='object'||Array.isArray(profile.families)||!Array.isArray(profile.reviewQuestions))throw new Error('练习画像暂时无法读取，请重试。');
+   return profile;
+  }
+  function contextRevision(){return generation;}
   function subscribe(fn){listeners.push(fn);return()=>{listeners=listeners.filter(x=>x!==fn);};}
-  return {state,init,request,refresh,selectFamily,selectChild,context,childPath,contentSnapshot,begin,resume,save,flush,clear,subscribe,uuid,array,OUTCOMES,ROLES};
+  return {state,init,request,refresh,selectFamily,selectChild,context,childPath,contentSnapshot,practiceProfile,contextRevision,begin,resume,save,flush,clear,subscribe,uuid,array,OUTCOMES,ROLES};
  }
  return {create,ApiError,OUTCOMES,ROLES};
 });

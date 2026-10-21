@@ -94,7 +94,7 @@ class SecurityIntegrationTest {
     @BeforeEach
     void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        reset(learning);
+        reset(learning, context.getBean(LearningRecords.class));
     }
 
     @Test
@@ -108,6 +108,18 @@ class SecurityIntegrationTest {
         mvc.perform(post("/api/v1/families").with(oidcLogin()).with(csrf()).contentType("application/json").content("{\"name\":\"synthetic\"}"))
                 .andExpect(status().isOk());
         mvc.perform(get("/private-configuration").with(oidcLogin())).andExpect(status().isForbidden());
+    }
+
+    @Test
+    void practiceProfileRequiresLoginAndReturnsNoncacheableChildResource() throws Exception {
+        var family = java.util.UUID.randomUUID();
+        var child = java.util.UUID.randomUUID();
+        String path = "/api/v1/families/" + family + "/children/" + child + "/practice-profile";
+        mvc.perform(get(path)).andExpect(status().isUnauthorized());
+        when(context.getBean(LearningRecords.class).practiceProfile(any(), eq(family), eq(child))).thenReturn(Map.of("schema", 1, "topicIds", java.util.List.of()));
+        mvc.perform(get(path).with(oidcLogin())).andExpect(status().isOk()).andExpect(header().string("Cache-Control", "no-store"))
+                .andExpect(jsonPath("$.schema").value(1)).andExpect(jsonPath("$.topicIds").isEmpty());
+        mvc.perform(get("/api/v1/capabilities")).andExpect(status().isOk()).andExpect(jsonPath("$.adaptivePractice").value(true));
     }
 
     @Test

@@ -1,0 +1,661 @@
+{
+  "schema": 1,
+  "version": "2026-10-21-practice-v1",
+  "reviewStatus": "ai_draft_not_teacher_reviewed",
+  "arithmetic": "safe_integer_and_rational",
+  "templates": [
+    {
+      "id": "cnm_p001-neighbor",
+      "version": 1,
+      "topicId": "cnm_p001",
+      "kind": "neighbor",
+      "label": "后一个数",
+      "min": 1,
+      "max": 4
+    },
+    {
+      "id": "cnm_p008-neighbor",
+      "version": 1,
+      "topicId": "cnm_p008",
+      "kind": "neighbor",
+      "label": "后一个数",
+      "min": 6,
+      "max": 9
+    },
+    {
+      "id": "sj001-neighbor",
+      "version": 1,
+      "topicId": "sj001",
+      "kind": "neighbor",
+      "label": "后一个数",
+      "min": 6,
+      "max": 8
+    },
+    {
+      "id": "sj003-neighbor",
+      "version": 1,
+      "topicId": "sj003",
+      "kind": "neighbor",
+      "label": "后一个数",
+      "min": 11,
+      "max": 18
+    },
+    {
+      "id": "sj006-neighbor",
+      "version": 1,
+      "topicId": "sj006",
+      "kind": "neighbor",
+      "label": "后一个数",
+      "min": 20,
+      "max": 98
+    },
+    {
+      "id": "cnm_p002-compare",
+      "version": 1,
+      "topicId": "cnm_p002",
+      "kind": "compare",
+      "label": "比较大小",
+      "min": 0,
+      "max": 5
+    },
+    {
+      "id": "cnm_p009-compare",
+      "version": 1,
+      "topicId": "cnm_p009",
+      "kind": "compare",
+      "label": "比较大小",
+      "min": 0,
+      "max": 10
+    },
+    {
+      "id": "cnm_p029-compare",
+      "version": 1,
+      "topicId": "cnm_p029",
+      "kind": "compare",
+      "label": "比较大小",
+      "min": 20,
+      "max": 99
+    },
+    {
+      "id": "cnm_p054-compare",
+      "version": 1,
+      "topicId": "cnm_p054",
+      "kind": "compare",
+      "label": "比较大小",
+      "min": 1000,
+      "max": 9999
+    },
+    {
+      "id": "sj010-compare",
+      "version": 1,
+      "topicId": "sj010",
+      "kind": "compare",
+      "label": "比较大小",
+      "min": 100,
+      "max": 999
+    },
+    {
+      "id": "sj004-compose",
+      "version": 1,
+      "topicId": "sj004",
+      "kind": "compose",
+      "label": "数的组成",
+      "min": 11,
+      "max": 19,
+      "place": 10
+    },
+    {
+      "id": "sj009-compose",
+      "version": 1,
+      "topicId": "sj009",
+      "kind": "compose",
+      "label": "数的组成",
+      "min": 100,
+      "max": 999,
+      "place": 100
+    },
+    {
+      "id": "cnm_p055-compose",
+      "version": 1,
+      "topicId": "cnm_p055",
+      "kind": "compose",
+      "label": "数的组成",
+      "min": 1000,
+      "max": 9999,
+      "place": 1000
+    },
+    {
+      "id": "cnm_p006-add",
+      "version": 1,
+      "topicId": "cnm_p006",
+      "kind": "add",
+      "label": "有界加法",
+      "min": 0,
+      "max": 5
+    },
+    {
+      "id": "cnm_p010-add",
+      "version": 1,
+      "topicId": "cnm_p010",
+      "kind": "add",
+      "label": "有界加法",
+      "min": 0,
+      "max": 10
+    },
+    {
+      "id": "sj002-add",
+      "version": 1,
+      "topicId": "sj002",
+      "kind": "add",
+      "label": "有界加法",
+      "min": 0,
+      "max": 9
+    },
+    {
+      "id": "cnm_p031-add",
+      "version": 1,
+      "topicId": "cnm_p031",
+      "kind": "add",
+      "label": "有界加法",
+      "min": 0,
+      "max": 99
+    },
+    {
+      "id": "cnm_p033-add",
+      "version": 1,
+      "topicId": "cnm_p033",
+      "kind": "add",
+      "label": "有界加法",
+      "min": 10,
+      "max": 99
+    },
+    {
+      "id": "cnm_p071-add",
+      "version": 1,
+      "topicId": "cnm_p071",
+      "kind": "add",
+      "label": "有界加法",
+      "min": 100,
+      "max": 999
+    },
+    {
+      "id": "cnm_p007-subtract",
+      "version": 1,
+      "topicId": "cnm_p007",
+      "kind": "subtract",
+      "label": "非负减法",
+      "min": 0,
+      "max": 5
+    },
+    {
+      "id": "cnm_p011-subtract",
+      "version": 1,
+      "topicId": "cnm_p011",
+      "kind": "subtract",
+      "label": "非负减法",
+      "min": 0,
+      "max": 10
+    },
+    {
+      "id": "sj002-subtract",
+      "version": 1,
+      "topicId": "sj002",
+      "kind": "subtract",
+      "label": "非负减法",
+      "min": 0,
+      "max": 9
+    },
+    {
+      "id": "cnm_p032-subtract",
+      "version": 1,
+      "topicId": "cnm_p032",
+      "kind": "subtract",
+      "label": "非负减法",
+      "min": 0,
+      "max": 99
+    },
+    {
+      "id": "cnm_p034-subtract",
+      "version": 1,
+      "topicId": "cnm_p034",
+      "kind": "subtract",
+      "label": "非负减法",
+      "min": 10,
+      "max": 99
+    },
+    {
+      "id": "cnm_p072-subtract",
+      "version": 1,
+      "topicId": "cnm_p072",
+      "kind": "subtract",
+      "label": "非负减法",
+      "min": 100,
+      "max": 999
+    },
+    {
+      "id": "cnm_p039-multiply",
+      "version": 1,
+      "topicId": "cnm_p039",
+      "kind": "multiply",
+      "label": "整数乘法",
+      "aMin": 2,
+      "aMax": 6,
+      "bMin": 1,
+      "bMax": 6
+    },
+    {
+      "id": "cnm_p042-multiply",
+      "version": 1,
+      "topicId": "cnm_p042",
+      "kind": "multiply",
+      "label": "整数乘法",
+      "aMin": 7,
+      "aMax": 9,
+      "bMin": 1,
+      "bMax": 9
+    },
+    {
+      "id": "sj013-multiply",
+      "version": 1,
+      "topicId": "sj013",
+      "kind": "multiply",
+      "label": "整数乘法",
+      "aMin": 10,
+      "aMax": 99,
+      "bMin": 2,
+      "bMax": 9
+    },
+    {
+      "id": "cnm_p074-multiply",
+      "version": 1,
+      "topicId": "cnm_p074",
+      "kind": "multiply",
+      "label": "整数乘法",
+      "aMin": 100,
+      "aMax": 999,
+      "bMin": 2,
+      "bMax": 9
+    },
+    {
+      "id": "cnm_p086-multiply",
+      "version": 1,
+      "topicId": "cnm_p086",
+      "kind": "multiply",
+      "label": "整数乘法",
+      "aMin": 10,
+      "aMax": 99,
+      "bMin": 10,
+      "bMax": 99
+    },
+    {
+      "id": "cnm_p102-multiply",
+      "version": 1,
+      "topicId": "cnm_p102",
+      "kind": "multiply",
+      "label": "整数乘法",
+      "aMin": 100,
+      "aMax": 999,
+      "bMin": 10,
+      "bMax": 99
+    },
+    {
+      "id": "cnm_p044-divide",
+      "version": 1,
+      "topicId": "cnm_p044",
+      "kind": "divide",
+      "label": "整除",
+      "qMax": 9,
+      "dMax": 9,
+      "dMin": 7
+    },
+    {
+      "id": "cnm_p046-divide",
+      "version": 1,
+      "topicId": "cnm_p046",
+      "kind": "divide",
+      "label": "整除",
+      "qMax": 6,
+      "dMax": 6,
+      "dMin": 1
+    },
+    {
+      "id": "sj014-divide",
+      "version": 1,
+      "topicId": "sj014",
+      "kind": "divide",
+      "label": "整除",
+      "qMax": 99,
+      "dMax": 9,
+      "dMin": 2,
+      "dividendMin": 10,
+      "dividendMax": 99
+    },
+    {
+      "id": "cnm_p083-divide",
+      "version": 1,
+      "topicId": "cnm_p083",
+      "kind": "divide",
+      "label": "整除",
+      "qMax": 999,
+      "dMax": 9,
+      "dMin": 2,
+      "dividendMin": 10,
+      "dividendMax": 999
+    },
+    {
+      "id": "cnm_p106-divide",
+      "version": 1,
+      "topicId": "cnm_p106",
+      "kind": "divide",
+      "label": "整除",
+      "qMax": 99,
+      "dMax": 99,
+      "dMin": 10,
+      "dividendMin": 10,
+      "dividendMax": 999
+    },
+    {
+      "id": "cnm_p057-mixed",
+      "version": 1,
+      "topicId": "cnm_p057",
+      "kind": "mixed",
+      "label": "先括号后乘法",
+      "max": 20,
+      "brackets": false
+    },
+    {
+      "id": "cnm_p058-mixed",
+      "version": 1,
+      "topicId": "cnm_p058",
+      "kind": "mixed",
+      "label": "先括号后乘法",
+      "max": 20
+    },
+    {
+      "id": "cnm_p112-mixed",
+      "version": 1,
+      "topicId": "cnm_p112",
+      "kind": "mixed",
+      "label": "先括号后乘法",
+      "max": 20
+    },
+    {
+      "id": "cnm_p080-fraction-add",
+      "version": 1,
+      "topicId": "cnm_p080",
+      "kind": "fraction-add",
+      "label": "同分母分数加法",
+      "max": 12
+    },
+    {
+      "id": "cnm_p080-fraction-subtract",
+      "version": 1,
+      "topicId": "cnm_p080",
+      "kind": "fraction-subtract",
+      "label": "同分母分数减法",
+      "max": 12
+    },
+    {
+      "id": "cnm_p173-fraction-unlike",
+      "version": 1,
+      "topicId": "cnm_p173",
+      "kind": "fraction-unlike",
+      "label": "异分母分数加法"
+    },
+    {
+      "id": "cnm_p168-fraction-reduce",
+      "version": 1,
+      "topicId": "cnm_p168",
+      "kind": "fraction-reduce",
+      "label": "约分",
+      "max": 12
+    },
+    {
+      "id": "cnm_p170-decimal-fraction",
+      "version": 1,
+      "topicId": "cnm_p170",
+      "kind": "decimal-fraction",
+      "label": "小数化分数"
+    },
+    {
+      "id": "cnm_p132-decimal-multiply",
+      "version": 1,
+      "topicId": "cnm_p132",
+      "kind": "decimal-multiply",
+      "label": "小数乘整数",
+      "max": 999,
+      "bMax": 9,
+      "aScale": 2,
+      "bScale": 0
+    },
+    {
+      "id": "cnm_p133-decimal-multiply",
+      "version": 1,
+      "topicId": "cnm_p133",
+      "kind": "decimal-multiply",
+      "label": "小数乘小数",
+      "max": 99,
+      "bMax": 99,
+      "aScale": 1,
+      "bScale": 1
+    },
+    {
+      "id": "cnm_p137-decimal-divide",
+      "version": 1,
+      "topicId": "cnm_p137",
+      "kind": "decimal-divide",
+      "label": "小数除以整数",
+      "max": 999,
+      "dMax": 9,
+      "qScale": 2,
+      "dScale": 0
+    },
+    {
+      "id": "cnm_p138-decimal-divide",
+      "version": 1,
+      "topicId": "cnm_p138",
+      "kind": "decimal-divide",
+      "label": "除数为小数的除法",
+      "max": 999,
+      "dMax": 9,
+      "qScale": 2,
+      "dScale": 1
+    },
+    {
+      "id": "cnm_p036-unit",
+      "version": 1,
+      "topicId": "cnm_p036",
+      "kind": "unit",
+      "label": "单位换算",
+      "from": "元",
+      "to": "角",
+      "factor": 10,
+      "max": 20
+    },
+    {
+      "id": "cnm_p041-unit",
+      "version": 1,
+      "topicId": "cnm_p041",
+      "kind": "unit",
+      "label": "单位换算",
+      "from": "米",
+      "to": "厘米",
+      "factor": 100,
+      "max": 20
+    },
+    {
+      "id": "cnm_p067-unit",
+      "version": 1,
+      "topicId": "cnm_p067",
+      "kind": "unit",
+      "label": "单位换算",
+      "from": "厘米",
+      "to": "毫米",
+      "factor": 10,
+      "max": 50
+    },
+    {
+      "id": "cnm_p068-unit",
+      "version": 1,
+      "topicId": "cnm_p068",
+      "kind": "unit",
+      "label": "单位换算",
+      "from": "分米",
+      "to": "厘米",
+      "factor": 10,
+      "max": 50
+    },
+    {
+      "id": "cnm_p069-unit",
+      "version": 1,
+      "topicId": "cnm_p069",
+      "kind": "unit",
+      "label": "单位换算",
+      "from": "千米",
+      "to": "米",
+      "factor": 1000,
+      "max": 20
+    },
+    {
+      "id": "cnm_p090-unit",
+      "version": 1,
+      "topicId": "cnm_p090",
+      "kind": "unit",
+      "label": "单位换算",
+      "from": "平方米",
+      "to": "平方分米",
+      "factor": 100,
+      "max": 20
+    },
+    {
+      "id": "sj012-unit",
+      "version": 1,
+      "topicId": "sj012",
+      "kind": "unit",
+      "label": "单位换算",
+      "from": "时",
+      "to": "分",
+      "factor": 60,
+      "max": 12
+    },
+    {
+      "id": "sj012-elapsed",
+      "version": 1,
+      "topicId": "sj012",
+      "kind": "elapsed",
+      "label": "经过时间"
+    },
+    {
+      "id": "cnm_p092-clock24",
+      "version": 1,
+      "topicId": "cnm_p092",
+      "kind": "clock24",
+      "label": "24时记时法"
+    },
+    {
+      "id": "cnm_p145-equation",
+      "version": 1,
+      "topicId": "cnm_p145",
+      "kind": "equation",
+      "label": "加法方程",
+      "max": 99,
+      "operation": "add"
+    },
+    {
+      "id": "cnm_p145-equation-multiply",
+      "version": 1,
+      "topicId": "cnm_p145",
+      "kind": "equation",
+      "label": "乘法方程",
+      "max": 30,
+      "operation": "multiply"
+    },
+    {
+      "id": "cnm_p078-rectangle-perimeter",
+      "version": 1,
+      "topicId": "cnm_p078",
+      "kind": "rectangle-perimeter",
+      "label": "长方形周长",
+      "max": 20
+    },
+    {
+      "id": "cnm_p089-rectangle-area",
+      "version": 1,
+      "topicId": "cnm_p089",
+      "kind": "rectangle-area",
+      "label": "长方形面积",
+      "max": 20
+    },
+    {
+      "id": "cnm_p147-parallelogram-area",
+      "version": 1,
+      "topicId": "cnm_p147",
+      "kind": "parallelogram-area",
+      "label": "平行四边形面积",
+      "max": 20
+    },
+    {
+      "id": "cnm_p148-triangle-area",
+      "version": 1,
+      "topicId": "cnm_p148",
+      "kind": "triangle-area",
+      "label": "三角形面积",
+      "max": 20
+    },
+    {
+      "id": "cnm_p149-trapezoid-area",
+      "version": 1,
+      "topicId": "cnm_p149",
+      "kind": "trapezoid-area",
+      "label": "梯形面积",
+      "max": 20
+    },
+    {
+      "id": "cnm_p190-circle-perimeter",
+      "version": 1,
+      "topicId": "cnm_p190",
+      "kind": "circle-perimeter",
+      "label": "圆周长",
+      "max": 20
+    },
+    {
+      "id": "cnm_p192-circle-area",
+      "version": 1,
+      "topicId": "cnm_p192",
+      "kind": "circle-area",
+      "label": "圆面积",
+      "max": 20
+    },
+    {
+      "id": "cnm_p207-cylinder-volume",
+      "version": 1,
+      "topicId": "cnm_p207",
+      "kind": "cylinder-volume",
+      "label": "圆柱体积",
+      "max": 10
+    },
+    {
+      "id": "cnm_p209-cone-volume",
+      "version": 1,
+      "topicId": "cnm_p209",
+      "kind": "cone-volume",
+      "label": "圆锥体积",
+      "max": 10
+    },
+    {
+      "id": "cnm_p174-fraction-mixed",
+      "version": 1,
+      "topicId": "cnm_p174",
+      "kind": "fraction-mixed",
+      "label": "分数加减混合"
+    },
+    {
+      "id": "sj023-decimal-mixed",
+      "version": 1,
+      "topicId": "sj023",
+      "kind": "decimal-mixed",
+      "label": "小数混合运算",
+      "max": 99
+    }
+  ]
+}

@@ -3,18 +3,19 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),Cloud=require('../assets/cloud.js');
 let passed=0;
 const clone=x=>JSON.parse(JSON.stringify(x));
-function fixture({staticMode=false,role='OWNER',archived=false,signedIn=true,sessionRestoreUrl,capabilityStatus=200}={}){
+function fixture({staticMode=false,role='OWNER',archived=false,signedIn=true,sessionRestoreUrl,capabilityStatus=200,adaptive=false,profileStatus=200,profileOverride}={}){
  const calls=[],sessions=new Map(),navigations=[];let loseCreate=false,conflict=false,barrier=null;
  const familyOptions=[{id:'family-a',name:'合成家庭甲',role},{id:'family-b',name:'合成家庭乙',role:'EDITOR'}];let families=[familyOptions[0]];
  const children={'family-a':[{id:'child-a',nickname:'样例甲',archived,version:0},{id:'child-aa',nickname:'样例乙',archived:false,version:0}],'family-b':[{id:'child-b',nickname:'样例丙',archived:false,version:0}]};
  const res=(status,data)=>({ok:status>=200&&status<300,status,json:async()=>clone(data)});
  async function fetcher(path,options={}){
   const method=options.method||'GET',body=options.body?JSON.parse(options.body):null;calls.push({path,method,body,options});
-  if(path.endsWith('capabilities'))return res(staticMode?404:capabilityStatus,{cloud:true,loginUrl:'oauth2/authorization/learning',sessionRestoreUrl});
+  if(path.endsWith('capabilities'))return res(staticMode?404:capabilityStatus,{cloud:true,loginUrl:'oauth2/authorization/learning',sessionRestoreUrl,...(adaptive?{adaptivePractice:true}:{})});
   if(path.endsWith('/csrf'))return res(200,{token:'synthetic-csrf',headerName:'X-CSRF-TOKEN'});
   if(path.endsWith('/me'))return signedIn?res(200,{id:'user-a',name:'合成成人'}):res(401,{code:'UNAUTHENTICATED'});
   if(path.endsWith('/families'))return res(200,families);
   const match=path.match(/families\/(family-[ab])\/children$/);if(match)return res(200,children[match[1]]);
+  if(path.endsWith('/practice-profile'))return res(profileStatus,profileOverride||{schema:1,dataVersion:'synthetic-v1',asOf:'2026-01-01T00:00:00Z',topicIds:['concept-a'],families:{},reviewQuestions:[]});
   if(path.endsWith('/sessions')&&method==='POST'){
    if(!signedIn)return res(401,{code:'UNAUTHENTICATED'});
    if(barrier)await barrier;
@@ -33,7 +34,7 @@ function fixture({staticMode=false,role='OWNER',archived=false,signedIn=true,ses
  return {cloud,calls,sessions,navigations,setSignedIn:value=>signedIn=value,setLoseCreate:()=>loseCreate=true,setConflict:()=>conflict=true,setBarrier:p=>barrier=p,setFamily:id=>families=id?[familyOptions.find(f=>f.id===id)]:[]};
 }
 // 只模拟本模块使用的DOM接口，运行实际条件渲染与事件处理；浏览器布局另行验证。
-function uiFixture(cloud,{previewFamily='family-b',used=false}={}){
+function uiFixture(cloud,{previewFamily='family-b',used=false,historyItems=[]}={}){
  const nodes=new Map(),calls=[],messages=[],submittedForms=[];let routeCount=0;
  class Element{
   constructor(id){this.id=id;this.html='';this.ids=[];this.handlers={};this.children=[];}
@@ -46,7 +47,7 @@ function uiFixture(cloud,{previewFamily='family-b',used=false}={}){
   submit(){submittedForms.push(this);}
  }
  const root=new Element('root'),bar=new Element('family-context');nodes.set('root',root);nodes.set('family-context',bar);
- const original=cloud.request;cloud.request=async(path,options={})=>{calls.push({path,...options});if(path==='invitations/preview'){if(used)throw new Cloud.ApiError(409,{code:'INVITATION_USED'});return {familyId:previewFamily,familyName:previewFamily?'受邀合成家庭':null,role:previewFamily?'EDITOR':null,expiresAt:'2099-01-01T00:00:00Z'};}if(path.endsWith('/members')||path.endsWith('/invitations'))return [];return original(path,options);};
+ const original=cloud.request;cloud.request=async(path,options={})=>{calls.push({path,...options});if(path.endsWith('/history'))return {items:historyItems};if(path==='invitations/preview'){if(used)throw new Cloud.ApiError(409,{code:'INVITATION_USED'});return {familyId:previewFamily,familyName:previewFamily?'受邀合成家庭':null,role:previewFamily?'EDITOR':null,expiresAt:'2099-01-01T00:00:00Z'};}if(path.endsWith('/members')||path.endsWith('/invitations'))return [];return original(path,options);};
  const document={getElementById:id=>nodes.get(id)||null,querySelector:selector=>nodes.get(selector.slice(1))||null,createElement:tag=>Object.assign(new Element(''),{tagName:tag.toUpperCase()}),body:new Element('body')};
  const window={addEventListener(){}};vm.runInNewContext(fs.readFileSync('assets/cloud-ui.js','utf8'),{window,document,LearningCloud:Cloud,URL,URLSearchParams,history:{replaceState(){}},location:{href:'https://example.test/edu/math/'},CSS:{escape:x=>x},FormData,console});
  const ui=window.LearningCloudUI.create(cloud,{root,toast:message=>messages.push(message),onRoute(){routeCount++;},onResume(){}});
@@ -130,6 +131,21 @@ async function test(name,fn){await fn();passed++;console.log('✓ '+name);}
  });
  await test('已结束或正在结束的快照不会因重复结束时间变化而重写',async()=>{
   const f=fixture();await f.cloud.init();await f.cloud.begin(initial,{});let release;const first={...initial,savedAt:'2026-01-01T00:00:00Z',answers:[{qid:'q1'}]};const finish=f.cloud.save(first,{},true);f.cloud.save({...first,savedAt:'2026-01-01T00:00:01Z'}, {},true);await finish;const writes=f.calls.filter(c=>c.method==='PUT').length;await f.cloud.save({...first,savedAt:'2026-01-01T00:00:02Z'}, {},true);assert.equal(f.calls.filter(c=>c.method==='PUT').length,writes);assert.equal(f.sessions.get('session-1').snapshot.savedAt,first.savedAt);await f.cloud.clear();assert.equal(f.cloud.state.active,null);
+ });
+ await test('随机练习只在新后端启用，画像请求固定家庭孩子且失败不降级为空历史',async()=>{
+  const old=fixture();await old.cloud.init();assert.equal(old.cloud.state.adaptivePractice,false);await assert.rejects(()=>old.cloud.practiceProfile(old.cloud.context()),/尚未启用/);assert.ok(!old.calls.some(c=>c.path.endsWith('/practice-profile')));
+  const f=fixture({adaptive:true});await f.cloud.init();const ctx=f.cloud.context();f.cloud.selectChild('child-aa');const profile=await f.cloud.practiceProfile(ctx);assert.deepEqual(profile.topicIds,['concept-a']);assert.ok(f.calls.at(-1).path.includes('/family-a/children/child-a/practice-profile'));
+  const failed=fixture({adaptive:true,profileStatus:503});await failed.cloud.init();await assert.rejects(()=>failed.cloud.practiceProfile(failed.cloud.context()),e=>e.status===503);
+  const malformed=fixture({adaptive:true,profileOverride:{schema:1,dataVersion:'synthetic-v1',topicIds:[],families:[],reviewQuestions:[]}});await malformed.cloud.init();await assert.rejects(()=>malformed.cloud.practiceProfile(malformed.cloud.context()),/暂时无法读取/);
+ });
+ await test('指定开始上下文发生切换时拒绝新建，切回也保留revision变化',async()=>{
+  const f=fixture();await f.cloud.init();const ctx=f.cloud.context(),rev=f.cloud.contextRevision();f.cloud.selectChild('child-aa');assert.throws(()=>f.cloud.begin(initial,{},ctx),/已切换/);assert.equal(f.sessions.size,0);f.cloud.selectChild('child-a');assert.notEqual(f.cloud.contextRevision(),rev);
+ });
+ await test('动态题历史显示当时题干、参考答案解析和人工记录，不引用新版题库',async()=>{
+  const f=fixture();await f.cloud.init();const snap={schema:2,mode:'review',dataVersion:'frozen-content',answers:[{id:'concept-a',qid:'dynamic-q',result:'correct',text:'<当时回答>',gradeSource:'manual',answeredAt:'2026-01-01T01:00:00Z'}]},content={topics:[{id:'concept-a',name:'原知识点'}],questions:[{id:'dynamic-q',topicId:'concept-a',type:'numeric',prompt:'当时随机题：6+8',answer:'14',explanation:'当时解析，不用当前模板补猜'}]};const view=uiFixture(f.cloud,{historyItems:[{id:'history-a',kind:'SESSION',snapshot:snap,contentSnapshot:content,finished:true,authorId:'user-a'}]});await view.route('history');const html=view.nodes.get('history-list').innerHTML;assert.match(html,/复习 · 1次直接作答/);assert.match(html,/当时随机题：6\+8/);assert.match(html,/当时参考答案：14/);assert.match(html,/当时解析/);assert.match(html,/人工记录/);assert.match(html,/&lt;当时回答&gt;/);assert.ok(!html.includes('<当时回答>'));
+ });
+ await test('schema2完整导出副本拒绝走旧JSON导入，避免重复作答统计',async()=>{
+  const f=fixture();await f.cloud.init();const view=uiFixture(f.cloud);await view.route('history');await view.nodes.get('import-file').onchange({target:{files:[{size:100,text:async()=>JSON.stringify({schema:2,dataVersion:'synthetic-v1',plan:[],answers:[]})}]}});assert.ok(view.messages.some(m=>/不适用旧JSON导入/.test(m)));assert.ok(!view.calls.some(c=>c.path.includes('/imports/preview')));
  });
  await test('12张活动卡六类各2张，包含玩法、观察和简化变化',async()=>{
   const cards=JSON.parse(fs.readFileSync('data/activities.json'));assert.equal(cards.length,12);assert.equal(new Set(cards.map(a=>a.id)).size,12);const counts={};for(const a of cards){counts[a.domain]=(counts[a.domain]||0)+1;for(const k of ['materials','steps','parentPrompts','observe'])assert.ok(Array.isArray(a[k])&&a[k].length>0);assert.ok(a.easier&&a.variation&&a.version);}assert.equal(Object.keys(counts).length,6);assert.ok(Object.values(counts).every(n=>n===2));
