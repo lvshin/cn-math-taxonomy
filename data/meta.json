@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "data_version": "2026-10-20-suzhou-v3",
-  "as_of": "2026-10-20",
+  "data_version": "2026-10-21-suzhou-v4",
+  "as_of": "2026-10-21",
   "title": "苏州小学数学知识地图",
   "scope": "现用苏教小学1—6年级十二册；四上暂选，四至六下采用2013系列",
   "upstream": {
@@ -12,14 +12,15 @@
   "counts": {
     "concepts": 243,
     "mapped_concepts": 184,
-    "questions": 458,
+    "questions": 898,
     "dependencies": 354,
     "pdf_catalogs": 11,
     "official_catalogs": 0,
     "provisional_catalogs": 1,
     "external_catalogs": 0,
     "pending_catalogs": 0,
-    "rewritten_questions": 278
+    "rewritten_questions": 278,
+    "supplemented_questions": 440
   },
   "limitations": [
     "知识点拆分、落册和先修关系为AI整理稿，未经教师审核。",

@@ -63,9 +63,10 @@ mvn -f identity-provider/pom.xml verify
 | 已映射概念 | 184个（按单元主题推断，尚未逐节核定；较v2新增33个） |
 | 全图概念 | 243个，其中59个未落册，只作基础参考，不出题 |
 | 先修关系 | 354条，AI整理稿 |
-| 固定题库 | 458道，其中278道针对概念重写，180道复用上游 |
+| 固定题库 | 898道：180道复用上游、278道原概念重写、440道新增知识点练习 |
+| 本次扩充 | 118个只用固定题库的知识点，每点至少6题；“几和第几”10题，包含概念辨析、应用和易错检查 |
 | 随机变式 | 70个规则模板，覆盖66个已映射知识点；其余使用固定题库 |
-| 数据版本 | `2026-10-20-suzhou-v3`；旧版练习记录不直接混入新题库 |
+| 数据版本 | `2026-10-21-suzhou-v4`；原458题的ID和内容保留，旧记录不重新判分 |
 | 独立模板版本 | `2026-10-21-practice-v1`；不改原题库版本或旧记录判分 |
 
 **这是可使用的第一版资料整理工具，知识点、先修关系、题目均未经教师审核。** 目录核对不等于教学内容全覆盖。有目录但未拆分的单元和活动保留空列表；不按人教版原顺序补齐苏教版空缺。结果区分直接作答、推断跳过、第二题通过、两题未通过和待确认，不据几题推断完整掌握或学习能力。
@@ -86,6 +87,7 @@ node tests/test_cloud.js
 node tests/test_practice.js
 node tests/test_practice_ui.js
 python3 scripts/audit_questions.py
+python3 -m unittest discover -s tests -p test_question_bank.py
 python3 -m unittest discover -s tests -p test_public_boundary.py
 python3 scripts/check_public_boundary.py
 python3 scripts/check_public_boundary.py --history HEAD
@@ -100,6 +102,7 @@ python3 scripts/check_public_boundary.py --history HEAD
 - `config/curriculum.py`：苏教目录、单元起始印刷页、概念映射、新概念与先修调整。
 - `config/book_evidence.json`：逐册目录证据和质量限制；没有家庭隐私台账或本地绝对路径。
 - `config/question_overrides.py`：重写练习与解释；正确选项构建时轮换位置。
+- `config/question_supplements_{lower,middle,upper}.json`：新增固定题的题干、答案、解析、检查目标；数值题另有独立核算式。构建时追加稳定ID，不替换原题。
 - `sources/upstream/`：原项目小学数据快照及原说明。原人教册次只留在来源元数据中，不作苏教版教学顺序。
 - `scripts/build.py`：无网络、无 Vault 依赖的可重复构建；产物在 `data/`。
 - `assets/model.js`：教材适配、先修顺序和版本化记录恢复。
@@ -115,7 +118,9 @@ python3 scripts/check_public_boundary.py --history HEAD
 
 巩固与复习采用 `weighted-families-v1`：未练权重1，最近答错或暂时不会为3；最近答对为 `max(0.2, 1/(连续答对次数+1))`，7天内逐步回到1。候选充足时约80%用于未练或待巩固题型，20%用于已答对内容，不足时补齐。同一轮不重复相同题目。统计仅采用已保存的直接作答，排除观察、推断和旧JSON导入；它用于选题，不表示已经掌握。
 
-版本2快照保存随机种子、策略与模板版本、权重及完整题序（含参数、题干、标准答案和解析）。刷新或换设备后从学习历史继续，不重新抽题；已有版本1诊断记录保持兼容。接口不可用时明确提示重试，不绕过孩子画像另开一轮。
+版本2快照保存随机种子、策略与模板版本、权重及完整题序（含参数、题干、标准答案和解析）。刷新或换设备后从学习历史继续，不重新抽题；版本1诊断历史继续保留。接口不可用时明确提示重试，不绕过孩子画像另开一轮。
+
+固定题库扩充不会把测试时生成的样本计入页面题量。首页分别显示898道实际固定题与70个变式模板；7万次生成核验只属于测试次数，其中包含重复变式。版本2的旧轮次仍按冻结题目继续，新题从新一轮开始使用；数据版本不同的版本1诊断保留历史查看，不按扩充后的题库重放。
 
 ## 来源和许可
 

@@ -91,7 +91,7 @@
     "grade": 1,
     "semester": "上",
     "chapter": "一年级上册 一 0～5的认识和加减法",
-    "question_count": 2
+    "question_count": 10
   },
   {
     "id": "cnm_p004",
@@ -122,7 +122,7 @@
     "grade": 1,
     "semester": "上",
     "chapter": "一年级上册 一 0～5的认识和加减法",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p005",
@@ -153,7 +153,7 @@
     "grade": 1,
     "semester": "上",
     "chapter": "一年级上册 一 0～5的认识和加减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p006",
@@ -378,7 +378,7 @@
     "grade": 1,
     "semester": "上",
     "chapter": "一年级上册 四 10的认识和加减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p013",
@@ -413,7 +413,7 @@
     "grade": 1,
     "semester": "上",
     "chapter": "一年级上册 四 10的认识和加减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p014",
@@ -444,7 +444,7 @@
     "grade": 1,
     "semester": "上",
     "chapter": "一年级上册 三 图形的初步认识（一）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p015",
@@ -475,7 +475,7 @@
     "grade": 1,
     "semester": "上",
     "chapter": "一年级上册 生活中的位置",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p016",
@@ -599,7 +599,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 一 进位加法和退位减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p020",
@@ -630,7 +630,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 一 进位加法和退位减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p021",
@@ -665,7 +665,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 一 进位加法和退位减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p022",
@@ -731,7 +731,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 二 图形的初步认识（二）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p024",
@@ -762,7 +762,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 图形的拼组",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p025",
@@ -793,7 +793,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 一 进位加法和退位减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p026",
@@ -824,7 +824,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 一 进位加法和退位减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p027",
@@ -859,7 +859,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 一 进位加法和退位减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p028",
@@ -952,7 +952,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 五 两位数加、减整十数和一位数",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p031",
@@ -1212,7 +1212,7 @@
     "grade": 2,
     "semester": "上",
     "chapter": "二年级上册 一 1～6的表内乘法",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p039",
@@ -1274,7 +1274,7 @@
     "grade": 2,
     "semester": "下",
     "chapter": "二年级下册 一 厘米和米",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p041",
@@ -1371,7 +1371,7 @@
     "grade": 2,
     "semester": "上",
     "chapter": "二年级上册 二 1～6的表内除法",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p044",
@@ -1433,7 +1433,7 @@
     "grade": 2,
     "semester": "下",
     "chapter": "二年级下册 我们的“身体尺”",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p046",
@@ -1499,7 +1499,7 @@
     "grade": 2,
     "semester": "上",
     "chapter": "二年级上册 三 7～9的表内乘除法",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p048",
@@ -1534,7 +1534,7 @@
     "grade": 2,
     "semester": "下",
     "chapter": "二年级下册 二 简单的数量关系（二）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p049",
@@ -1565,7 +1565,7 @@
     "grade": 2,
     "semester": "上",
     "chapter": "二年级上册 生活中的方向",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p050",
@@ -1596,7 +1596,7 @@
     "grade": 2,
     "semester": "上",
     "chapter": "二年级上册 六 有余数的除法",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p051",
@@ -1627,7 +1627,7 @@
     "grade": 2,
     "semester": "上",
     "chapter": "二年级上册 六 有余数的除法",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p052",
@@ -1658,7 +1658,7 @@
     "grade": 2,
     "semester": "上",
     "chapter": "二年级上册 六 有余数的除法",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p053",
@@ -1689,7 +1689,7 @@
     "grade": 2,
     "semester": "下",
     "chapter": "二年级下册 五 认识四位数",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p054",
@@ -1912,7 +1912,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 简单的周期",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p061",
@@ -2043,7 +2043,7 @@
     "grade": 2,
     "semester": "下",
     "chapter": "二年级下册 六 两、三位数的加法和减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p065",
@@ -2074,7 +2074,7 @@
     "grade": 2,
     "semester": "下",
     "chapter": "二年级下册 六 两、三位数的加法和减法",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p066",
@@ -2331,7 +2331,7 @@
     "grade": 3,
     "semester": "上",
     "chapter": "三年级上册 附录 倍的认识",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p074",
@@ -2393,7 +2393,7 @@
     "grade": 3,
     "semester": "上",
     "chapter": "三年级上册 二 两、三位数乘一位数",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p076",
@@ -2425,7 +2425,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 数字与信息",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p077",
@@ -2460,7 +2460,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 五 长方形和正方形",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p078",
@@ -2522,7 +2522,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 六 分数的初步认识",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p080",
@@ -2682,7 +2682,7 @@
     "grade": 3,
     "semester": "上",
     "chapter": "三年级上册 六 两、三位数除以一位数",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p085",
@@ -2717,7 +2717,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 二 统计表和条形统计图（二）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p086",
@@ -2779,7 +2779,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 三 两位数乘两位数",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p088",
@@ -2810,7 +2810,7 @@
     "grade": 4,
     "semester": "上",
     "chapter": "四年级上册 二 周长与面积",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p089",
@@ -2903,7 +2903,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 年、月、日的秘密",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p092",
@@ -3059,7 +3059,7 @@
     "grade": 4,
     "semester": "上",
     "chapter": "四年级上册 五 多位数的认识",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p097",
@@ -3094,7 +3094,7 @@
     "grade": 4,
     "semester": "上",
     "chapter": "四年级上册 五 多位数的认识",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p098",
@@ -3157,7 +3157,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 一 角",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p100",
@@ -3188,7 +3188,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 一 角",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p101",
@@ -3223,7 +3223,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 一 角",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p102",
@@ -3347,7 +3347,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 七 三角形、平行四边形和梯形",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p106",
@@ -3413,7 +3413,7 @@
     "grade": 4,
     "semester": "上",
     "chapter": "四年级上册 一 两、三位数除以两位数",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p108",
@@ -3444,7 +3444,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 四 统计表和条形统计图（一）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p109",
@@ -3600,7 +3600,7 @@
     "grade": 3,
     "semester": "上",
     "chapter": "三年级上册 八 观察物体（二）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p114",
@@ -3631,7 +3631,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 六 运算律",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p115",
@@ -3662,7 +3662,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 六 运算律",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p116",
@@ -3693,7 +3693,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 六 运算律",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p117",
@@ -3724,7 +3724,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 六 运算律",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p118",
@@ -3886,7 +3886,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 七 三角形、平行四边形和梯形",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p123",
@@ -3917,7 +3917,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 七 三角形、平行四边形和梯形",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p124",
@@ -3948,7 +3948,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 七 三角形、平行四边形和梯形",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p125",
@@ -4053,7 +4053,7 @@
     "grade": 3,
     "semester": "上",
     "chapter": "三年级上册 五 平移、旋转和轴对称",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p128",
@@ -4088,7 +4088,7 @@
     "grade": 3,
     "semester": "上",
     "chapter": "三年级上册 五 平移、旋转和轴对称",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p129",
@@ -4150,7 +4150,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 二 统计表和条形统计图（二）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p131",
@@ -4311,7 +4311,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 一 小数乘法和除法（二）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p136",
@@ -4342,7 +4342,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 八 确定位置",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p137",
@@ -4439,7 +4439,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 一 小数乘法和除法（二）",
-    "question_count": 4
+    "question_count": 6
   },
   {
     "id": "cnm_p140",
@@ -4474,7 +4474,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 五 可能性",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p141",
@@ -4505,7 +4505,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 五 可能性",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p142",
@@ -4540,7 +4540,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 七 用字母表示数量关系（一）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p143",
@@ -4575,7 +4575,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 一 简易方程",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p144",
@@ -4606,7 +4606,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 一 简易方程",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p145",
@@ -4672,7 +4672,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 一 简易方程",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p147",
@@ -4796,7 +4796,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 三 多边形的面积",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p151",
@@ -4859,7 +4859,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 八 观察物体（三）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p153",
@@ -4890,7 +4890,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 六 因数与倍数",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p154",
@@ -4921,7 +4921,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 六 因数与倍数",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p155",
@@ -4952,7 +4952,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 六 因数与倍数",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p156",
@@ -4983,7 +4983,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 六 因数与倍数",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p157",
@@ -5014,7 +5014,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 六 因数与倍数",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p158",
@@ -5045,7 +5045,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 六 因数与倍数",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p159",
@@ -5076,7 +5076,7 @@
     "grade": 5,
     "semester": "上",
     "chapter": "五年级上册 六 因数与倍数",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p160",
@@ -5270,7 +5270,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 四 分数的意义和性质",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p166",
@@ -5301,7 +5301,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 四 分数的意义和性质",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p167",
@@ -5332,7 +5332,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 四 分数的意义和性质",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p168",
@@ -5394,7 +5394,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 四 分数的意义和性质",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p170",
@@ -5460,7 +5460,7 @@
     "grade": 4,
     "semester": "下",
     "chapter": "四年级下册 一 平移、旋转和轴对称",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p172",
@@ -5491,7 +5491,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 四 分数的意义和性质",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p173",
@@ -5584,7 +5584,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 二 折线统计图",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p176",
@@ -5744,7 +5744,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 七 确定位置",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p181",
@@ -5775,7 +5775,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 七 确定位置",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p182",
@@ -5907,7 +5907,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 四 比和比例",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p186",
@@ -5938,7 +5938,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 四 比和比例",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p187",
@@ -5969,7 +5969,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 四 比和比例",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p188",
@@ -6000,7 +6000,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 六 圆",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p189",
@@ -6031,7 +6031,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 六 圆",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p190",
@@ -6093,7 +6093,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 六 圆",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p192",
@@ -6155,7 +6155,7 @@
     "grade": 5,
     "semester": "下",
     "chapter": "五年级下册 六 圆",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p194",
@@ -6347,7 +6347,7 @@
     "grade": 6,
     "semester": "下",
     "chapter": "六年级下册 一 扇形统计图",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p200",
@@ -6568,7 +6568,7 @@
     "grade": 6,
     "semester": "下",
     "chapter": "六年级下册 二 圆柱和圆锥",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p207",
@@ -6630,7 +6630,7 @@
     "grade": 6,
     "semester": "下",
     "chapter": "六年级下册 二 圆柱和圆锥",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p209",
@@ -6692,7 +6692,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 四 比和比例",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p211",
@@ -6727,7 +6727,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 四 比和比例",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p212",
@@ -6762,7 +6762,7 @@
     "grade": 6,
     "semester": "下",
     "chapter": "六年级下册 四 比例",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p213",
@@ -6794,7 +6794,7 @@
     "grade": 6,
     "semester": "下",
     "chapter": "六年级下册 六 正比例和反比例",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p214",
@@ -6826,7 +6826,7 @@
     "grade": 6,
     "semester": "下",
     "chapter": "六年级下册 六 正比例和反比例",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p215",
@@ -6857,7 +6857,7 @@
     "grade": 6,
     "semester": "下",
     "chapter": "六年级下册 六 正比例和反比例",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "cnm_p216",
@@ -7019,7 +7019,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 三 数据分类（一）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj006",
@@ -7071,7 +7071,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 六 简单的数量关系（一）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj008",
@@ -7097,7 +7097,7 @@
     "grade": 1,
     "semester": "下",
     "chapter": "一年级下册 七 观察物体（一）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj009",
@@ -7175,7 +7175,7 @@
     "grade": 2,
     "semester": "下",
     "chapter": "二年级下册 二 简单的数量关系（二）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj012",
@@ -7279,7 +7279,7 @@
     "grade": 2,
     "semester": "下",
     "chapter": "二年级下册 四 数据分类（二）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj016",
@@ -7305,7 +7305,7 @@
     "grade": 2,
     "semester": "下",
     "chapter": "二年级下册 七 图形的初步认识（三）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj017",
@@ -7331,7 +7331,7 @@
     "grade": 3,
     "semester": "上",
     "chapter": "三年级上册 三 数据的收集与整理",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj018",
@@ -7357,7 +7357,7 @@
     "grade": 3,
     "semester": "上",
     "chapter": "三年级上册 五 平移、旋转和轴对称",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj019",
@@ -7383,7 +7383,7 @@
     "grade": 3,
     "semester": "上",
     "chapter": "三年级上册 七 数量关系的分析（一）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj020",
@@ -7409,7 +7409,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 二 加法数量关系",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj021",
@@ -7435,7 +7435,7 @@
     "grade": 3,
     "semester": "下",
     "chapter": "三年级下册 四 统计表和条形统计图（一）",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj022",
@@ -7461,7 +7461,7 @@
     "grade": 4,
     "semester": "上",
     "chapter": "四年级上册 三 乘法数量关系",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj023",
@@ -7513,7 +7513,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 生活中的分段计费",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj025",
@@ -7539,7 +7539,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 三 数与运算的再认识",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj026",
@@ -7565,7 +7565,7 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 二进制的秘密",
-    "question_count": 2
+    "question_count": 6
   },
   {
     "id": "sj027",
@@ -7591,6 +7591,6 @@
     "grade": 6,
     "semester": "上",
     "chapter": "六年级上册 六 放大与缩小",
-    "question_count": 2
+    "question_count": 6
   }
 ]

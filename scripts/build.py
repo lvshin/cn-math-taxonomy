@@ -5,6 +5,7 @@ import hashlib
 import json
 import sys
 from collections import Counter
+from fractions import Fraction
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +21,40 @@ def write(path, value):
 
 def tid(value):
     return f'cnm_p{value:03}' if isinstance(value, int) else value
+
+def append_supplements(questions, assigned):
+    """Append original concept questions without renumbering or editing the existing bank."""
+    seen_topics = set()
+    for level in ('lower', 'middle', 'upper'):
+        source = read(f'config/question_supplements_{level}.json')
+        if source.get('schema') != 1 or not isinstance(source.get('topics'), dict):
+            raise ValueError('补充题库格式不正确：' + level)
+        for key, rows in source['topics'].items():
+            if key not in assigned or key in seen_topics or not rows:
+                raise ValueError('补充知识点重复或未落册：' + key)
+            seen_topics.add(key)
+            for i, row in enumerate(rows, 1):
+                if not all(isinstance(row.get(field), str) and row[field].strip() for field in ('prompt', 'explanation', 'focus')):
+                    raise ValueError('补充题缺少题干、解析或检查目标：' + key)
+                if row.get('difficulty') not in ('basic', 'standard'):
+                    raise ValueError('补充题难度无效：' + key)
+                q = dict(id=f'{key}_extra_{i:03}', topicId=key, prompt=row['prompt'], explanation=row['explanation'],
+                         difficulty=row['difficulty'], practice_focus=row['focus'], origin='suzhou-supplement',
+                         review_status='ai_draft_not_teacher_reviewed')
+                answer = row.get('answer')
+                if isinstance(answer, list):
+                    if len(answer) < 3 or any(not isinstance(x, str) or not x.strip() for x in answer) or len(set(answer)) != len(answer):
+                        raise ValueError('补充题选项无效：' + q['id'])
+                    offset = int(hashlib.sha256(q['id'].encode()).hexdigest()[:4], 16) % len(answer)
+                    choices = answer[offset:] + answer[:offset]
+                    q.update(type='choice', choices=[dict(key=chr(65+j), text=x) for j, x in enumerate(choices)],
+                             answer=chr(65+choices.index(answer[0])))
+                else:
+                    if not isinstance(answer, str) or not isinstance(row.get('verify'), str) or not row['verify'].strip():
+                        raise ValueError('数值补充题缺少标准答案或独立算式：' + q['id'])
+                    Fraction(answer)
+                    q.update(type='numeric', answer=answer, verify=row['verify'])
+                questions.append(q)
 
 def build():
     topics = copy.deepcopy(read('sources/upstream/topics.json'))
@@ -100,11 +135,14 @@ def build():
             else:
                 q.update(type='numeric', answer=answer)
             questions.append(q)
+    append_supplements(questions, assigned)
+    if len({q['id'] for q in questions}) != len(questions):
+        raise ValueError('题目ID重复')
     questions.sort(key=lambda q:q['id'])
     for t in topics:
         t['question_count'] = sum(q['topicId']==t['id'] for q in questions)
     catalog_counts = Counter(b['catalog_status'] for b in books)
-    meta = dict(schema_version=1, data_version='2026-10-20-suzhou-v3', as_of='2026-10-20',
+    meta = dict(schema_version=1, data_version='2026-10-21-suzhou-v4', as_of='2026-10-21',
                 title='苏州小学数学知识地图', scope='现用苏教小学1—6年级十二册；四上暂选，四至六下采用2013系列',
                 upstream=dict(url='https://github.com/xiaoyang111222/cn-math-taxonomy',
                               commit='10a0f562b32433b785729661c2164756cb933154',license='CC BY-NC 4.0'),
@@ -113,7 +151,8 @@ def build():
                             official_catalogs=catalog_counts['official_checked'],
                             provisional_catalogs=catalog_counts['pdf_provisional'],
                             external_catalogs=catalog_counts['external_outline'], pending_catalogs=catalog_counts['pending'],
-                            rewritten_questions=sum(q['origin']=='suzhou-rewritten' for q in questions)),
+                            rewritten_questions=sum(q['origin']=='suzhou-rewritten' for q in questions),
+                            supplemented_questions=sum(q['origin']=='suzhou-supplement' for q in questions)),
                 limitations=['知识点拆分、落册和先修关系为AI整理稿，未经教师审核。',
                              '目录核对不等于逐节内容核定；有目录的单元也可能尚未拆分知识点。',
                              '四上116页扫描本保持暂选；目录及首尾已抽查，详细版次与全文仍待比对。',
@@ -125,7 +164,7 @@ def build():
                        ('books.json',books),('placements.json',placements),('meta.json',meta)]:
         write('data/'+path,value)
     write('data/cn-curriculum-standards.json',read('sources/upstream/cn-curriculum-standards.json'))
-    # 规则变式单独版本化；不能为新练习改变教材及固定题库的历史版本。
+    # 规则模板独立版本化；固定题扩充提升数据版本，不顺带改变模板版本。
     templates = read('config/practice_templates.json')
     if templates.get('schema') != 1 or not templates.get('version') or not isinstance(templates.get('templates'), list):
         raise ValueError('无效的规则变式目录')

@@ -41,10 +41,10 @@ function expected(q,t){
   default:throw new Error('缺少独立核算：'+t.kind);
  }
 }
-test('模板独立版本，全部准确引用已落册知识点；教材与题库版本不变',()=>{
+test('模板独立版本，全部准确引用已落册知识点；模板版本保持，固定题库按独立数据版本扩充',()=>{
  assert.equal(catalog.schema,1);assert.ok(catalog.version);assert.equal(new Set(catalog.templates.map(t=>t.id)).size,catalog.templates.length);
  const mapped=new Set(data.placements.map(p=>p.topicId));for(const t of catalog.templates){assert.ok(mapped.has(t.topicId),t.topicId);assert.equal(t.version,1);}
- assert.equal(data.meta.data_version,'2026-10-20-suzhou-v3');assert.equal(data.questions.length,458);
+ assert.equal(data.meta.data_version,'2026-10-21-suzhou-v4');assert.equal(data.questions.length,898);
  assert.equal(fs.readFileSync(path.join(__dirname,'../config/practice_templates.json'),'utf8'),fs.readFileSync(path.join(__dirname,'../data/practice_templates.json'),'utf8'));
  assert.deepEqual(new Set(catalog.templates.map(t=>data.topics.find(x=>x.id===t.topicId).grade)),new Set([1,2,3,4,5,6]));
 });
@@ -94,6 +94,10 @@ test('未覆盖点仅固定题，候选不足提前结束，review没有历史�
  assert.throws(()=>M.start([],{mode:'review',profile:empty()}),/先选择知识点/);
  const p=empty();p.topicIds=['cnm_p133'];const r=M.start(['cnm_p145'],{mode:'review',profile:p});assert.ok(r.plan.every(q=>q.topicId==='cnm_p133'));
 });
+test('扩充后的118个固定题库知识点均能用尽不同题目并正常结束',()=>{
+ const points=data.topics.filter(t=>data.placements.some(p=>p.topicId===t.id)&&!M.support(t.id).generated);assert.equal(points.length,118);
+ for(const topic of points){let s=M.start([topic.id],{seed:'expanded-'+topic.id,limit:20,now:NOW,profile:empty()});const available=data.questions.filter(q=>q.topicId===topic.id);assert.equal(s.plan.length,available.length,topic.id);assert.equal(new Set(s.plan.map(q=>q.id)).size,available.length);while(M.next(s))s=M.apply(s,'correct',{answeredAt:new Date(NOW).toISOString(),gradeSource:'auto'});assert.equal(M.summary(s).completed,true);}
+});
 test('答对降整个题型族权重，连续答对更低；7天线性恢复，答错/跳过权重3',()=>{
  const h=(result,streak=1,last=NOW)=>({lastResult:result,streak,lastAt:new Date(last).toISOString()});
  assert.equal(P.weight(null,NOW),1);assert.equal(P.weight(h('correct'),NOW),.5);assert.equal(P.weight(h('correct',3),NOW),.25);assert.equal(P.weight(h('correct',20),NOW),.2);
@@ -128,4 +132,4 @@ test('损坏/不合法/错序记录拒绝，恢复不接受schema1并由原适�
  const raw=M.snapshot(M.start(['cnm_p133'],{profile:empty(),seed:'invalid',now:NOW}));const bad=fn=>{const x=JSON.parse(JSON.stringify(raw));fn(x);assert.equal(M.restore(x),null);};
  bad(x=>x.schema=1);bad(x=>x.plan.push(x.plan[0]));bad(x=>x.plan[0].topicId='unknown');bad(x=>x.plan[0].answer=null);bad(x=>x.limit=1000);bad(x=>x.answers=[{id:x.plan[1].topicId,qid:x.plan[1].id,result:'correct'}]);assert.equal(M.restore('{bad'),null);
 });
-console.log(`${passed}组规则变式与复习检查通过；${generatedCount}道生成题按题干独立核算通过。`);
+console.log(`${passed}组规则变式与复习检查通过；${generatedCount}次生成与题干独立核算通过（含重复变式，不计为固定题量）。`);

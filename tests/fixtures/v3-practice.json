@@ -1,0 +1,125 @@
+{
+  "id": "synthetic-old-round",
+  "version": 2,
+  "snapshot": {
+    "schema": 2,
+    "dataVersion": "2026-10-20-suzhou-v3",
+    "mode": "practice",
+    "seed": "synthetic-v3-fixed-round",
+    "targets": [
+      "cnm_p003"
+    ],
+    "limit": 10,
+    "startedAt": "2026-10-21T00:00:00.000Z",
+    "plan": [
+      {
+        "id": "cnm_p003_q1",
+        "topicId": "cnm_p003",
+        "prompt": "从左边数，小红排第3，她前面有几人？",
+        "explanation": "前面有第1和第2两人。",
+        "difficulty": "standard",
+        "origin": "suzhou-rewritten",
+        "review_status": "ai_draft_not_teacher_reviewed",
+        "type": "numeric",
+        "answer": "2",
+        "familyKey": "fixed:cnm_p003_q1"
+      },
+      {
+        "id": "cnm_p003_q2",
+        "topicId": "cnm_p003",
+        "prompt": "“一共有5个”和“第5个”意思相同吗？",
+        "explanation": "一个表示数量，一个表示次序。",
+        "difficulty": "basic",
+        "origin": "suzhou-rewritten",
+        "review_status": "ai_draft_not_teacher_reviewed",
+        "type": "choice",
+        "choices": [
+          {
+            "key": "A",
+            "text": "都表示4个"
+          },
+          {
+            "key": "B",
+            "text": "不同"
+          },
+          {
+            "key": "C",
+            "text": "相同"
+          }
+        ],
+        "answer": "B",
+        "familyKey": "fixed:cnm_p003_q2"
+      }
+    ],
+    "answers": [],
+    "selection": {
+      "strategyVersion": "weighted-families-v1",
+      "catalogVersion": "2026-10-21-practice-v1",
+      "asOf": "2026-10-21T00:00:00Z",
+      "weights": {
+        "fixed:cnm_p003_q1": {
+          "topicId": "cnm_p003",
+          "weight": 1,
+          "bucket": "practice"
+        },
+        "fixed:cnm_p003_q2": {
+          "topicId": "cnm_p003",
+          "weight": 1,
+          "bucket": "practice"
+        }
+      }
+    },
+    "savedAt": "2026-10-21T00:00:00Z"
+  },
+  "contentSnapshot": {
+    "dataVersion": "2026-10-20-suzhou-v3",
+    "catalogVersion": "2026-10-21-practice-v1",
+    "topics": [
+      {
+        "id": "cnm_p003",
+        "name": "几和第几",
+        "label": "一年级上册 · 一 0～5的认识和加减法"
+      }
+    ],
+    "questions": [
+      {
+        "id": "cnm_p003_q1",
+        "topicId": "cnm_p003",
+        "prompt": "从左边数，小红排第3，她前面有几人？",
+        "explanation": "前面有第1和第2两人。",
+        "difficulty": "standard",
+        "origin": "suzhou-rewritten",
+        "review_status": "ai_draft_not_teacher_reviewed",
+        "type": "numeric",
+        "answer": "2",
+        "familyKey": "fixed:cnm_p003_q1"
+      },
+      {
+        "id": "cnm_p003_q2",
+        "topicId": "cnm_p003",
+        "prompt": "“一共有5个”和“第5个”意思相同吗？",
+        "explanation": "一个表示数量，一个表示次序。",
+        "difficulty": "basic",
+        "origin": "suzhou-rewritten",
+        "review_status": "ai_draft_not_teacher_reviewed",
+        "type": "choice",
+        "choices": [
+          {
+            "key": "A",
+            "text": "都表示4个"
+          },
+          {
+            "key": "B",
+            "text": "不同"
+          },
+          {
+            "key": "C",
+            "text": "相同"
+          }
+        ],
+        "answer": "B",
+        "familyKey": "fixed:cnm_p003_q2"
+      }
+    ]
+  }
+}
