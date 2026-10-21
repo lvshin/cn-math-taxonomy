@@ -12,12 +12,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 class LearningStore {
-    final JdbcTemplate jdbc;
+    private final JdbcTemplate jdbc;
     private final ObjectMapper mapper;
 
     LearningStore(JdbcTemplate jdbc, ObjectMapper mapper) {
@@ -31,6 +32,22 @@ class LearningStore {
 
     List<Map<String, Object>> list(String sql, Object... args) {
         return jdbc.query(sql, this::mapRow, args);
+    }
+
+    /** Consume rows on the target bean so JDBC state is never read from an AOP proxy instance. */
+    void forEachRow(String sql, Consumer<Map<String, Object>> consumer, Object... args) {
+        jdbc.query(connection -> {
+            var statement = connection.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                statement.setObject(i + 1, args[i]);
+            }
+            statement.setFetchSize(128);
+            return statement;
+        }, (org.springframework.jdbc.core.RowCallbackHandler) row -> consumer.accept(mapRow(row, 0)));
+    }
+
+    int count(String sql, Object... args) {
+        return jdbc.queryForObject(sql, Integer.class, args);
     }
 
     Map<String, Object> one(String sql, Object... args) {

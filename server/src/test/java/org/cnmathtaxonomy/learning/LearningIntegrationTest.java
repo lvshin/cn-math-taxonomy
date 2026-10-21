@@ -52,6 +52,13 @@ class LearningIntegrationTest {
     @Configuration
     @EnableTransactionManagement
     static class Config {
+        // Match Boot's repository exception-translation proxy instead of testing a raw DAO instance.
+        @Bean
+        static org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor repositoryProxies() {
+            var processor = new org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor();
+            processor.setProxyTargetClass(true);
+            return processor;
+        }
         @Bean(destroyMethod = "close")
         DataSource dataSource() {
             return source("learning_app", "LEARNING_TEST_APP_PASSWORD");
@@ -86,6 +93,26 @@ class LearningIntegrationTest {
         }
     }
 
+    @Configuration
+    @org.springframework.web.servlet.config.annotation.EnableWebMvc
+    @org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+    @org.springframework.context.annotation.Import({SecurityConfiguration.class, LearningController.class, ApiErrors.class})
+    static class WebConfig {
+        @Bean
+        org.springframework.security.oauth2.client.registration.ClientRegistrationRepository clients() {
+            return new org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository(
+                    org.springframework.security.oauth2.client.registration.ClientRegistration.withRegistrationId("learning")
+                            .clientId("learning-test").clientSecret("synthetic-test-client-secret").scope("openid", "profile")
+                            .authorizationGrantType(org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE)
+                            .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+                            .authorizationUri(ISSUER + "/protocol/openid-connect/auth")
+                            .tokenUri(ISSUER + "/protocol/openid-connect/token")
+                            .jwkSetUri(ISSUER + "/protocol/openid-connect/certs")
+                            .providerConfigurationMetadata(Map.of("end_session_endpoint", ISSUER + "/protocol/openid-connect/logout"))
+                            .issuerUri(ISSUER).userNameAttributeName("sub").build());
+        }
+    }
+
     static HikariDataSource source(String user, String passwordVariable) {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(System.getenv("LEARNING_TEST_JDBC_URL"));
@@ -103,6 +130,7 @@ class LearningIntegrationTest {
         learning = context.getBean(LearningService.class);
         records = context.getBean(LearningRecords.class);
         store = context.getBean(LearningStore.class);
+        assertTrue(org.springframework.aop.support.AopUtils.isCglibProxy(store), "Tests must exercise the production repository proxy");
         mapper = context.getBean(ObjectMapper.class);
         transaction = new TransactionTemplate(context.getBean(PlatformTransactionManager.class));
     }
@@ -162,18 +190,18 @@ class LearningIntegrationTest {
 
     @Test
     void databaseGuardAndRowIsolationAreReal() {
-        new DatabaseSafety(store.jdbc).verify();
+        new DatabaseSafety(context.getBean(JdbcTemplate.class)).verify();
         OidcUser alice = user("operator");
         UUID family = family("合成家庭甲", alice);
         UUID child = child(alice, family, "甲一");
         transaction.executeWithoutResult(status -> {
             var actor = learning.actor(alice);
-            assertEquals(0, store.jdbc.queryForObject("SELECT count(*) FROM learning.children", Integer.class));
+            assertEquals(0, context.getBean(JdbcTemplate.class).queryForObject("SELECT count(*) FROM learning.children", Integer.class));
             learning.family(actor, family, false, false);
-            assertEquals(1, store.jdbc.queryForObject("SELECT count(*) FROM learning.children", Integer.class));
+            assertEquals(1, context.getBean(JdbcTemplate.class).queryForObject("SELECT count(*) FROM learning.children", Integer.class));
         });
-        transaction.executeWithoutResult(status -> assertEquals(0, store.jdbc.queryForObject("SELECT count(*) FROM learning.children", Integer.class)));
-        assertEquals(10, store.jdbc.queryForObject("SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='learning' AND c.relkind='r' AND c.relrowsecurity AND c.relforcerowsecurity", Integer.class));
+        transaction.executeWithoutResult(status -> assertEquals(0, context.getBean(JdbcTemplate.class).queryForObject("SELECT count(*) FROM learning.children", Integer.class)));
+        assertEquals(10, context.getBean(JdbcTemplate.class).queryForObject("SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='learning' AND c.relkind='r' AND c.relrowsecurity AND c.relforcerowsecurity", Integer.class));
     }
 
     @Test
@@ -335,7 +363,7 @@ class LearningIntegrationTest {
             status.setRollbackOnly();
         });
         // Failed DDL rolls the whole migration back; it never chooses or deletes a membership.
-        new DatabaseSafety(store.jdbc).verify();
+        new DatabaseSafety(context.getBean(JdbcTemplate.class)).verify();
         assertEquals(1, learning.families(member).size());
         assertEquals(first, learning.families(member).getFirst().get("id"));
     }
@@ -531,6 +559,59 @@ class LearningIntegrationTest {
         ((ObjectNode) content.path("contentSnapshot")).put("oversized", "汉".repeat(170_000));
         assertThrows(ApiException.class, () -> records.createSession(owner, family, child, content));
         assertTrue(records.sessions(owner, family, child).isEmpty());
+    }
+
+    @Test
+    void practiceProfileHttpUsesProxiedRepositoryWithRealPostgres() throws Exception {
+        assertTrue(org.springframework.aop.support.AopUtils.isCglibProxy(store));
+        OidcUser owner = user("operator"), viewer = user("proxied-profile-viewer"), otherOwner = user("proxied-other-owner");
+        UUID family = family("合成代理家庭甲", owner), child = child(owner, family, "甲一");
+        UUID otherFamily = family("合成代理家庭乙", otherOwner), otherChild = child(otherOwner, otherFamily, "乙一");
+        join(owner, family, viewer, "VIEWER");
+        try (var web = new org.springframework.web.context.support.AnnotationConfigWebApplicationContext()) {
+            web.setParent(context);
+            web.setServletContext(new org.springframework.mock.web.MockServletContext());
+            web.register(WebConfig.class);
+            web.refresh();
+            var mvc = org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup(web)
+                    .apply(org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity()).build();
+            String path = "/api/v1/families/" + family + "/children/" + child + "/practice-profile";
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(path))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isUnauthorized());
+            // The empty child exercises the streamed-query path too; this failed on the production proxy before the fix.
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(path)
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(owner)))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.topicIds").isEmpty());
+            JsonNode question = currentPracticeQuestion();
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post(path.replace("practice-profile", "sessions"))
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(owner))
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf())
+                            .contentType("application/json").content(practiceRequest(question, "correct").toString()))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk());
+            String statistics = "$.families['fixed:" + question.path("id").asText() + "'].correct";
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(path)
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(viewer)))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().string("Cache-Control", "no-store"))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath(statistics).value(1));
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post(path.replace("practice-profile", "sessions"))
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(viewer))
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf())
+                            .contentType("application/json").content(practiceRequest(question, "correct").toString()))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isForbidden());
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(path.replace(child.toString(), otherChild.toString()))
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(owner)))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isNotFound());
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get("/api/v1/families/" + otherFamily + "/children/" + otherChild + "/practice-profile")
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(owner)))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isNotFound());
+            UUID viewerId = (UUID) learning.me(viewer).get("id");
+            learning.updateMember(owner, family, viewerId, json("role", "VIEWER", "active", false, "version", 0));
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(path)
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(viewer)))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isNotFound());
+        }
     }
 
     @Test
@@ -848,7 +929,7 @@ class LearningIntegrationTest {
     static void awaitBlocked(int minimum) {
         long deadline = System.nanoTime() + java.util.concurrent.TimeUnit.SECONDS.toNanos(3);
         while (System.nanoTime() < deadline) {
-            Integer count = store.jdbc.queryForObject("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND usename='learning_app' AND cardinality(pg_blocking_pids(pid))>0", Integer.class);
+            Integer count = context.getBean(JdbcTemplate.class).queryForObject("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND usename='learning_app' AND cardinality(pg_blocking_pids(pid))>0", Integer.class);
             if (count != null && count >= minimum) {
                 return;
             }

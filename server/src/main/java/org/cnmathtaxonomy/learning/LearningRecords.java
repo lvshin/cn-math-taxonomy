@@ -110,20 +110,9 @@ public class LearningRecords {
         scope(principal, family, child, false);
         var profile = practice.accumulator(Instant.now());
         // This query intentionally has no history-list LIMIT and reads each session's latest persisted snapshot once.
-        store.jdbc.query(connection -> {
-            var statement = connection.prepareStatement("SELECT id,snapshot,content_snapshot,occurred_at,updated_at FROM learning.sessions WHERE family_id=? AND child_id=?");
-            statement.setObject(1, family);
-            statement.setObject(2, child);
-            statement.setFetchSize(128);
-            return statement;
-        }, (org.springframework.jdbc.core.RowCallbackHandler) row -> {
-            try {
-                profile.add(row.getString("id"), mapper.readTree(row.getString("snapshot")), mapper.readTree(row.getString("content_snapshot")),
-                        row.getTimestamp("occurred_at").toInstant(), row.getTimestamp("updated_at").toInstant());
-            } catch (JsonProcessingException exception) {
-                throw new java.sql.SQLException("Stored practice snapshot is invalid", exception);
-            }
-        });
+        store.forEachRow("SELECT id,snapshot,content_snapshot,occurred_at,updated_at FROM learning.sessions WHERE family_id=? AND child_id=?",
+                row -> profile.add(row.get("id").toString(), (JsonNode) row.get("snapshot"), (JsonNode) row.get("contentSnapshot"),
+                        (Instant) row.get("occurredAt"), (Instant) row.get("updatedAt")), family, child);
         return profile.result();
     }
 

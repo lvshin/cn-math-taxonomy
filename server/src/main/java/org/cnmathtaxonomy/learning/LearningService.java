@@ -250,7 +250,7 @@ public class LearningService {
         String role = role(request);
         boolean active = bool(request, "active");
         if ("OWNER".equals(member.get("role")) && Boolean.TRUE.equals(member.get("active")) && (!active || !"OWNER".equals(role))) {
-            int owners = store.jdbc.queryForObject("SELECT count(*) FROM learning.members WHERE family_id=? AND active AND role='OWNER'", Integer.class, familyId);
+            int owners = store.count("SELECT count(*) FROM learning.members WHERE family_id=? AND active AND role='OWNER'", familyId);
             if (owners <= 1) {
                 throw ApiException.conflict("LAST_OWNER");
             }
@@ -273,7 +273,7 @@ public class LearningService {
         store.one("SELECT id FROM learning.families WHERE id=? FOR UPDATE", familyId);
         String role = family(actor, familyId, false, false);
         if ("OWNER".equals(role)) {
-            int owners = store.jdbc.queryForObject("SELECT count(*) FROM learning.members WHERE family_id=? AND active AND role='OWNER'", Integer.class, familyId);
+            int owners = store.count("SELECT count(*) FROM learning.members WHERE family_id=? AND active AND role='OWNER'", familyId);
             if (owners <= 1) {
                 throw ApiException.conflict("LAST_OWNER");
             }
