@@ -156,6 +156,34 @@ def main():
     assert member.api(f"families/{family['id']}/children/{second['id']}/history")["items"] == []
     CASES.append("operator has no automatic family access; idempotent observation history is isolated per child")
 
+    STAGE = "preschool records share profiles while keeping separate histories"
+    preschool = member.api("preschool/activities")[0]
+    preschool_path = f"families/{family['id']}/children/{first['id']}/preschool"
+    preschool_record = {"id": str(uuid.uuid4()), "activityId": preschool["id"], "activityVersion": preschool["version"],
+        "outcome": "TOGETHER", "note": "Synthetic preschool acceptance only", "occurredAt": "2026-01-02T12:00:00Z"}
+    member.api(preschool_path + "/observations", "POST", preschool_record, expected=403, csrf=False)
+    saved = member.api(preschool_path + "/observations", "POST", preschool_record)
+    assert member.api(preschool_path + "/observations", "POST", preschool_record)["id"] == saved["id"]
+    assert saved["activitySnapshot"]["module"] == "PRESCHOOL"
+    assert len(member.api(preschool_path + "/history")["items"]) == 1
+    assert len(member.api(f"families/{family['id']}/children/{first['id']}/history")["items"]) == 1
+    assert member.api(f"families/{family['id']}/children/{second['id']}/preschool/history")["items"] == []
+    operator.api(preschool_path + "/history", expected=404)
+    anonymous.api(preschool_path + "/history", expected=401)
+    CASES.append("real identity shares family and child profiles; preschool records require CSRF and stay separate from math and other children")
+
+    STAGE = "preschool SSO callback keeps the same identity and fixed module destination"
+    preschool_browser = Browser()
+    for cookie in member.cookies:
+        if not cookie.name.startswith("LEARNING_"):
+            preschool_browser.cookies.set_cookie(copy.copy(cookie))
+    preschool_browser.open(APP + "/oauth2/authorization/learning?module=preschool")
+    # The disposable backend has no external edge prefix; reaching that fixed target
+    # and an authenticated API validates the real code exchange before deployment.
+    assert any(urllib.parse.urlsplit(url).path == "/edu/kindergarten/" for url in preschool_browser.redirects.urls)
+    assert preschool_browser.api("me")["id"] == member.api("me")["id"]
+    CASES.append("real Keycloak SSO code exchange returns preschool login to the fixed kindergarten entry with the same adult identity")
+
     STAGE = "family invitation registration and explicit viewer membership"
     family_invite = member.api(f"families/{family['id']}/invitations", "POST", {"role": "VIEWER"})
     another = Browser()
@@ -201,6 +229,9 @@ def main():
             raise AssertionError("Keycloak backchannel logout did not invalidate the other application session")
         time.sleep(0.2)
     CASES.append("signed Keycloak backchannel logout invalidates the other session on its next API request")
+
+    preschool_browser.api("me", expected=401)
+    CASES.append("unified logout also revokes the independently established preschool session")
 
     result = {"passed": True, "database": "PostgreSQL 18", "identity": "Keycloak 26.7.3", "caseCount": len(CASES), "cases": CASES}
     (PRIVATE / "result.json").write_text(json.dumps(result, indent=2))

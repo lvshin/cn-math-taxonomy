@@ -27,7 +27,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.client.endpoint.DefaultOAuth2TokenRequestParametersConverter;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
-import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationExchange;
@@ -156,7 +155,7 @@ class SecurityIntegrationTest {
         assertNotNull(parameters.getFirst("code_challenge"));
         assertFalse(location.contains("code_verifier="));
         result.getRequest().addParameter("state", UriUtils.decode(parameters.getFirst("state"), StandardCharsets.UTF_8));
-        var authorization = new HttpSessionOAuth2AuthorizationRequestRepository().loadAuthorizationRequest(result.getRequest());
+        var authorization = new ModuleAuthorizationRequestRepository().loadAuthorizationRequest(result.getRequest());
         assertNotNull(authorization);
         String verifier = authorization.getAttribute("code_verifier");
         assertNotNull(verifier);
@@ -274,5 +273,109 @@ class SecurityIntegrationTest {
         request.addParameter("restore", "1");
         request.addParameter("invite_grant", LearningService.token());
         assertThrows(ApiException.class, () -> new InvitedRegistrationResolver(clients).resolve(request));
+    }
+
+    @Test
+    void preschoolApisReuseAuthenticationCsrfAndChildScope() throws Exception {
+        var family = java.util.UUID.randomUUID();
+        var child = java.util.UUID.randomUUID();
+        String path = "/api/v1/families/" + family + "/children/" + child + "/preschool/";
+        var records = context.getBean(LearningRecords.class);
+        mvc.perform(get("/api/v1/preschool/activities")).andExpect(status().isUnauthorized());
+        mvc.perform(get(path + "history")).andExpect(status().isUnauthorized());
+        mvc.perform(get(path + "observations")).andExpect(status().isUnauthorized());
+        mvc.perform(post(path + "observations").with(oidcLogin()).contentType("application/json").content("{}"))
+                .andExpect(status().isForbidden());
+        when(records.preschoolActivities()).thenReturn(new ObjectMapper().createArrayNode());
+        when(records.preschoolHistory(any(), eq(family), eq(child), any(), eq(50))).thenReturn(Map.of("items", java.util.List.of(), "module", "PRESCHOOL"));
+        when(records.observePreschool(any(), eq(family), eq(child), any())).thenReturn(Map.of("module", "PRESCHOOL"));
+        mvc.perform(get("/api/v1/preschool/activities").with(oidcLogin())).andExpect(status().isOk()).andExpect(content().json("[]"));
+        mvc.perform(get(path + "history").with(oidcLogin())).andExpect(status().isOk()).andExpect(jsonPath("$.module").value("PRESCHOOL"));
+        mvc.perform(post(path + "observations").with(oidcLogin()).with(csrf()).contentType("application/json").content("{}"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.module").value("PRESCHOOL"));
+        verify(records).observePreschool(any(), eq(family), eq(child), any());
+        verify(records, never()).observe(any(), any(), any(), any());
+        mvc.perform(get("/api/v1/capabilities").cookie(new Cookie(SessionRestoration.COOKIE, "1")))
+                .andExpect(jsonPath("$.preschool").value(true))
+                .andExpect(jsonPath("$.preschoolLoginUrl").value("oauth2/authorization/learning?module=preschool"))
+                .andExpect(jsonPath("$.preschoolSessionRestoreUrl").value("oauth2/authorization/learning?restore=1&module=preschool"));
+    }
+
+    @Test
+    void concurrentModuleLoginsKeepTheirOwnStatePkceDestinationAndRestoreFailure() throws Exception {
+        var first = mvc.perform(get("/edu/math/oauth2/authorization/learning").contextPath("/edu/math")
+                        .param("module", "preschool").param("restore", "1"))
+                .andExpect(status().is3xxRedirection()).andReturn();
+        var session = (MockHttpSession) first.getRequest().getSession(false);
+        var second = mvc.perform(get("/edu/math/oauth2/authorization/learning").contextPath("/edu/math").session(session))
+                .andExpect(status().is3xxRedirection()).andReturn();
+        assertPkceAndTokenExchange(first);
+        assertPkceAndTokenExchange(second);
+        assertNotEquals(first.getRequest().getParameter("state"), second.getRequest().getParameter("state"));
+        var repository = new ModuleAuthorizationRequestRepository();
+        var callback = new MockHttpServletRequest("GET", "/edu/math/login/oauth2/code/learning");
+        callback.setContextPath("/edu/math");
+        callback.setSession(session);
+        callback.addParameter("state", second.getRequest().getParameter("state"));
+        assertNotNull(repository.removeAuthorizationRequest(callback, new MockHttpServletResponse()));
+        var success = new MockHttpServletResponse();
+        new SessionRestoration().onAuthenticationSuccess(callback, success,
+                UsernamePasswordAuthenticationToken.authenticated("synthetic", "unused", java.util.List.of()));
+        assertEquals("/edu/math/", success.getRedirectedUrl());
+        mvc.perform(get("/edu/math/login/oauth2/code/learning").contextPath("/edu/math").session(session)
+                        .param("error", "login_required").param("state", first.getRequest().getParameter("state")))
+                .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/edu/kindergarten/#family"));
+        mvc.perform(get("/edu/math/login/oauth2/code/learning").contextPath("/edu/math").session(session)
+                        .param("error", "login_required").param("state", first.getRequest().getParameter("state")))
+                .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/edu/math/login?error"));
+    }
+
+    @Test
+    void preschoolCallbackUsesOnlyAllowlistedStateBoundDestination() throws Exception {
+        var start = mvc.perform(get("/edu/math/oauth2/authorization/learning").contextPath("/edu/math")
+                        .param("module", "preschool").param("redirect", "https://evil.example.invalid/"))
+                .andExpect(status().is3xxRedirection()).andReturn();
+        assertPkceAndTokenExchange(start);
+        assertFalse(start.getResponse().getRedirectedUrl().contains("evil"));
+        var callback = new MockHttpServletRequest("GET", "/edu/math/login/oauth2/code/learning");
+        callback.setContextPath("/edu/math");
+        callback.setSession((MockHttpSession) start.getRequest().getSession(false));
+        callback.addParameter("state", start.getRequest().getParameter("state"));
+        callback.addParameter("module", "https://evil.example.invalid/");
+        assertNotNull(new ModuleAuthorizationRequestRepository().removeAuthorizationRequest(callback, new MockHttpServletResponse()));
+        var response = new MockHttpServletResponse();
+        new SessionRestoration().onAuthenticationSuccess(callback, response,
+                UsernamePasswordAuthenticationToken.authenticated("synthetic", "unused", java.util.List.of()));
+        assertEquals("/edu/kindergarten/", response.getRedirectedUrl());
+        assertTrue(response.getHeader("Set-Cookie").contains("Path=/edu/math"));
+        var ordinary = mvc.perform(get("/oauth2/authorization/learning").param("module", "//evil.example.invalid/")).andReturn();
+        assertPkceAndTokenExchange(ordinary);
+        var authorization = new ModuleAuthorizationRequestRepository().loadAuthorizationRequest(ordinary.getRequest());
+        assertEquals("MATH", authorization.getAttribute(ModuleAuthorizationRequestRepository.MODULE));
+    }
+
+    @Test
+    void moduleAuthorizationRepositoryIsSessionBoundAndBoundsOutstandingAttempts() throws Exception {
+        MockHttpSession session = null;
+        var starts = new java.util.ArrayList<MvcResult>();
+        for (int i = 0; i < 10; i++) {
+            var request = get("/oauth2/authorization/learning").param("module", "preschool");
+            if (session != null) request.session(session);
+            var start = mvc.perform(request).andExpect(status().is3xxRedirection()).andReturn();
+            session = (MockHttpSession) start.getRequest().getSession(false);
+            starts.add(start);
+            var parameters = UriComponentsBuilder.fromUriString(start.getResponse().getRedirectedUrl()).build().getQueryParams();
+            start.getRequest().addParameter("state", UriUtils.decode(parameters.getFirst("state"), StandardCharsets.UTF_8));
+        }
+        var repository = new ModuleAuthorizationRequestRepository();
+        assertNull(repository.loadAuthorizationRequest(starts.get(0).getRequest()));
+        assertNull(repository.loadAuthorizationRequest(starts.get(1).getRequest()));
+        assertNotNull(repository.loadAuthorizationRequest(starts.get(2).getRequest()));
+        var stranger = new MockHttpServletRequest("GET", "/login/oauth2/code/learning");
+        stranger.setSession(new MockHttpSession());
+        stranger.addParameter("state", starts.get(9).getRequest().getParameter("state"));
+        assertNull(repository.removeAuthorizationRequest(stranger, new MockHttpServletResponse()));
+        assertNull(stranger.getAttribute(ModuleAuthorizationRequestRepository.MODULE));
+        assertNotNull(repository.loadAuthorizationRequest(starts.get(9).getRequest()));
     }
 }

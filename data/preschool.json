@@ -1,0 +1,904 @@
+{
+  "schema": 1,
+  "version": "2026-10-22-preschool-v1",
+  "title": "幼儿园亲子活动",
+  "intro": "从一张活动卡开始，在生活和游戏中表达、合作、探索与创造。可以直接玩，不必先看动画；随时暂停、求助或换一种玩法。",
+  "reviewStatus": "family-adaptations-not-professionally-reviewed",
+  "notice": "活动是根据布鲁伊游戏资料重新编写的家庭改编，未经学前教育专业人员审核。记录当次参与过程，不作能力诊断、达标考核或排名。建议时长只供安排，可按兴趣提前结束。",
+  "themes": [
+    {
+      "id": "communication",
+      "name": "语言表达与沟通",
+      "description": "把需要说出来，听一听对方，再一起把故事接下去。"
+    },
+    {
+      "id": "emotions",
+      "name": "情绪识别与调节",
+      "description": "在假装游戏中描述感受，尝试表达需要、暂停或请求陪伴。"
+    },
+    {
+      "id": "relationships",
+      "name": "关系修复与协商",
+      "description": "邀请别人加入，商量不同想法，冲突后尝试重新一起玩。"
+    },
+    {
+      "id": "fairness",
+      "name": "规则、轮流与公平",
+      "description": "先商量简单规则，在轮换角色和共同修改中体验公平。"
+    },
+    {
+      "id": "self-care",
+      "name": "日常生活与自理",
+      "description": "从能参与的一小步开始，照顾物品并共同完成日常事务。"
+    },
+    {
+      "id": "movement",
+      "name": "身体、运动与安全",
+      "description": "在安全场地里观察路线、移动身体，练习停下来与求助。"
+    },
+    {
+      "id": "creativity",
+      "name": "想象游戏与创造",
+      "description": "用手边材料创造场景，容纳不同玩法和自己的新点子。"
+    },
+    {
+      "id": "transitions",
+      "name": "变化、分离与新体验",
+      "description": "借助游戏预演开始、结束与角色变化，给不熟悉的体验留余地。"
+    }
+  ],
+  "activities": [
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-hotel-requests",
+      "version": "1",
+      "title": "欢迎来到小酒店",
+      "themeId": "communication",
+      "domain": "语言与社会",
+      "summary": "轮流当住客和接待员，把想要的服务说清楚，也听听对方怎样回应。",
+      "materials": [
+        "两三个靠垫",
+        "纸和粗画笔"
+      ],
+      "steps": [
+        "一起给酒店起名字，画出门口和休息区，先商量今天能提供哪些服务。",
+        "成人先当住客，提出一个简单请求，如想要安静的位置；孩子可以用语言、手势或指图回应。",
+        "互换角色，让孩子决定住哪里、需要什么；接待员听完再复述一次，确认理解。",
+        "请住客说想继续住一会儿还是办理退房，按共同决定收起场景。"
+      ],
+      "parentPrompts": [
+        "你想让接待员知道什么？指给我看也可以。",
+        "我听到你想要一个安静的房间，是这样吗？"
+      ],
+      "observe": [
+        "孩子用哪些词、动作或图画表达请求。",
+        "对方没听懂时，孩子是否换一种说法、指一指或求助。"
+      ],
+      "easier": "只留一个房间和一种服务，成人用两个具体选项帮助孩子表达。",
+      "variation": "增加一张自画服务单，由孩子决定哪些请求可以做到，哪些需要商量。",
+      "safety": [
+        "靠垫放在地面，不搭需要钻爬或可能倒塌的高结构；不靠近窗户和楼梯。"
+      ],
+      "duration": "建议 10—15 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内地面或桌边",
+      "sourceGame": {
+        "name": "Hotel",
+        "chineseName": "酒店",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏是假装经营酒店，由住客和店员进行角色扮演。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S01E10",
+          "title": "酒店",
+          "englishTitle": "Hotel",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-1/hotel/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-hand-story",
+      "version": "1",
+      "title": "两只手的小故事",
+      "themeId": "communication",
+      "domain": "语言与艺术",
+      "summary": "让手变成故事角色，一人说一句，也给对方接话和改变故事的机会。",
+      "materials": [
+        "一张可一起围坐的桌子或地垫"
+      ],
+      "steps": [
+        "每人给自己的一只手选一个角色，如散步的小狗或会说话的小树。",
+        "成人先演一个短动作，说出故事的开头，再把下一步交给孩子。",
+        "孩子可以说话，也可以只用手演；另一人根据看到的动作回应，轮流接几次。",
+        "一起商量结尾，也可以停在这里，约好想继续时再接。"
+      ],
+      "parentPrompts": [
+        "我看到它停下来了，它接下来想做什么？",
+        "这次由你的角色来决定，还是想让我先演？"
+      ],
+      "observe": [
+        "孩子怎样用动作、声音或短句接续故事。",
+        "孩子是否回应对方刚演的内容，或提出自己的变化。"
+      ],
+      "easier": "成人只问角色往左走还是往右走，接纳孩子指一指的选择。",
+      "variation": "由孩子当讲述者，成人只用手演出听到的故事，演错时请孩子纠正。",
+      "safety": [
+        "不扳手指，不在对方脸部或身体上表演；不需要把手染色或套小饰物。"
+      ],
+      "duration": "建议 5—10 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内桌边或地垫",
+      "sourceGame": {
+        "name": "Hand Stories",
+        "chineseName": "手部故事",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏由一人讲故事，参与者用手表演角色和动作。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S01E21",
+          "title": "蓝色大山",
+          "englishTitle": "Blue Mountains",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-1/blue-mountains/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-mood-puppet",
+      "version": "1",
+      "title": "玩偶有一点不高兴",
+      "themeId": "emotions",
+      "domain": "社会与语言",
+      "summary": "让玩偶替虚构角色说说感受，试试它想独处、休息还是请人陪伴。",
+      "materials": [
+        "一个较大的软玩偶",
+        "一块地垫"
+      ],
+      "steps": [
+        "成人让玩偶遇到一个小麻烦，如积木倒了，演出停下、叹气等动作，不把角色叫作坏孩子。",
+        "请孩子说说看到的动作，也可以替玩偶补一句话；不要求猜中某种情绪。",
+        "给玩偶提出两种可选帮助，如安静坐一会儿或一起重新搭；孩子也可以想第三种。",
+        "让玩偶尝试自己选的办法，仍不想继续就让它休息；孩子可随时退出角色。"
+      ],
+      "parentPrompts": [
+        "你看到它在做什么？它可能想告诉我们什么？",
+        "你想陪它坐一会儿，还是先问它需要什么？"
+      ],
+      "observe": [
+        "孩子怎样描述玩偶的动作、感受或需要。",
+        "孩子提出了什么帮助，是否接受角色暂时不想继续。"
+      ],
+      "easier": "成人替玩偶说出需要，孩子只选择帮它找位置或陪它坐下。",
+      "variation": "让两个玩偶有不同需要，分别询问并安排空间，不强求它们马上一起玩。",
+      "safety": [
+        "用玩偶表演，不控制或拉扯孩子身体；不把真实争执拿来当众演示，也不强迫说出自己的情绪。"
+      ],
+      "duration": "建议 5—10 分钟，可随时结束",
+      "participants": "1 名成人和 1 名孩子",
+      "setting": "室内安静角落",
+      "sourceGame": {
+        "name": "Bad Mood",
+        "chineseName": "坏心情",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏把坏情绪变成会捣乱的角色；本卡改用玩偶表达需要。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S02E40",
+          "title": "坏心情",
+          "englishTitle": "Bad Mood",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-2/bad-mood/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-music-statues",
+      "version": "1",
+      "title": "音乐停了，身体歇一歇",
+      "themeId": "emotions",
+      "domain": "艺术与健康",
+      "summary": "用轻松的音乐和停顿尝试不同动作，听见身体想动、想停或想换节奏。",
+      "materials": [
+        "可低音量播放音乐的设备，或成人拍手打节奏"
+      ],
+      "steps": [
+        "一起选一段喜欢的节奏，确认活动范围和表示暂停的手势。",
+        "有音乐时各自做舒服的动作，音乐停时可以站住，也可以坐下歇一歇；没有淘汰。",
+        "轮流控制开始和停止，愿意的人用动作表示今天想慢一点、轻一点或有力一点。",
+        "结束前一起把动作放慢，问问想继续、换音乐还是休息，按意愿收尾。"
+      ],
+      "parentPrompts": [
+        "你想让下一段音乐快一点，还是慢一点？",
+        "你的身体现在还想动，还是想坐一会儿？"
+      ],
+      "observe": [
+        "孩子选择了哪些动作或节奏，用什么方式表示停下。",
+        "开始和停止时，孩子如何参与、等待或请求帮助。"
+      ],
+      "easier": "坐着拍手、点头或动手指，由成人控制一两次停顿。",
+      "variation": "孩子用拍手指挥全家，在结束后说或画出最喜欢的一个动作。",
+      "safety": [
+        "清空地面，保持低音量；不在湿滑地面奔跑，不比谁能憋气或僵住更久。"
+      ],
+      "duration": "建议 5—10 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内空地或安全的平坦场地",
+      "sourceGame": {
+        "name": "Musical Statues",
+        "chineseName": "音乐木头人",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏在音乐响起时跳舞，停下时保持不动。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S03E27",
+          "title": "音乐雕像",
+          "englishTitle": "Musical Statues",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-3/musical-statues/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-butterfly-invitation",
+      "version": "1",
+      "title": "邀请蝴蝶一起玩",
+      "themeId": "relationships",
+      "domain": "社会与语言",
+      "summary": "在地面画出蝴蝶花园，练习邀请、回应拒绝和商量下一种玩法。",
+      "materials": [
+        "大张纸和粗画笔，或空地上的想象花园"
+      ],
+      "steps": [
+        "一起画几朵花，每人选择当蝴蝶、花园管理员或旁观者。",
+        "一只蝴蝶邀请另一位加入，受邀者可以答应、先看一会儿或说想玩别的。",
+        "成人用角色提出一个不同想法，如想停在另一朵花；大家商量轮流选择或留出两片花园。",
+        "如果意见不一致，先停下听双方，再试一小段双方同意的办法；不要求立刻道歉或和好。"
+      ],
+      "parentPrompts": [
+        "你想怎样邀请它？它说想先看一会儿，我们怎么回应？",
+        "你们想去不同的花，有什么办法可以试一下？"
+      ],
+      "observe": [
+        "孩子怎样邀请别人、回应邀请或说明不愿意。",
+        "出现不同想法后，孩子提出或接受了什么具体办法。"
+      ],
+      "easier": "只让两个玩偶在桌面表演，成人示范邀请和暂时拒绝。",
+      "variation": "让孩子设计一个新角色，并决定它用语言还是动作向大家发出邀请。",
+      "safety": [
+        "不用吊床、包裹身体的毯子或追抓动作；不挡住退出路线，不强迫身体接触。"
+      ],
+      "duration": "建议 10—15 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内桌边或平坦空地",
+      "sourceGame": {
+        "name": "Butterflies",
+        "chineseName": "蝴蝶",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏以毛毛虫变成蝴蝶的假装情节展开；本卡改为地面花园里的邀请。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S01E15",
+          "title": "蝴蝶",
+          "englishTitle": "Butterflies",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-1/butterflies/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-helicopter-plan",
+      "version": "1",
+      "title": "一起决定直升机去哪儿",
+      "themeId": "relationships",
+      "domain": "社会与想象游戏",
+      "summary": "在地面假装驾驶直升机，把不同目的地放进一个大家愿意尝试的计划。",
+      "materials": [
+        "几张画有目的地的大纸",
+        "可选：一个软玩偶乘客"
+      ],
+      "steps": [
+        "在地面摆出起点和两个目的地，坐在地垫上假装机舱，不搭高台。",
+        "每位乘客说或指出想去的地方，驾驶员先听完再复述。",
+        "目的地不同时，商量先后、轮流驾驶或分成两趟，确认大家愿意试哪一种。",
+        "演完一趟后问要不要调整路线；任何人都可以选择下机休息。"
+      ],
+      "parentPrompts": [
+        "我们有两个想去的地方，你想怎样安排？",
+        "先试这一趟，回来后还想改哪里？"
+      ],
+      "observe": [
+        "孩子怎样提出目的地，是否听到并回应另一位乘客的选择。",
+        "计划变化时，孩子用了什么协商或求助方式。"
+      ],
+      "easier": "只设一个目的地，让孩子决定什么时候出发和停靠。",
+      "variation": "增加一位需要休息的玩偶乘客，让孩子想办法把休息站加入路线。",
+      "safety": [
+        "全程在地面假装，不上桌椅或树桩，不拿树枝旋转，也不拉着别人奔跑。"
+      ],
+      "duration": "建议 10—15 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内地面或安全的平坦场地",
+      "sourceGame": {
+        "name": "Helicopter",
+        "chineseName": "直升机",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏是假装驾驶直升机，接送和帮助不同角色。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S02E25",
+          "title": "直升机",
+          "englishTitle": "Helicopter",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-2/helicopter/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-parcel-turns",
+      "version": "1",
+      "title": "包裹传到谁手里",
+      "themeId": "fairness",
+      "domain": "社会与语言",
+      "summary": "传递一个软包裹，先商量轮流规则，再体验等待、选择与调整规则。",
+      "materials": [
+        "一块布包住的较大软玩偶",
+        "可选：低音量音乐"
+      ],
+      "steps": [
+        "一起决定传递方向和何时停下，说明这次不设奖品，也不淘汰。",
+        "坐着轻轻传包裹，音乐或拍手停下时，拿到的人可选做一个动作、说一个点子或跳过。",
+        "成人确保每人都有被邀请的机会，愿意跳过的人也可以只负责传递。",
+        "玩几次后一起问规则是否舒服，想换方向、按顺序停还是结束，再按新约定尝试。"
+      ],
+      "parentPrompts": [
+        "我们先约好怎样轮流，你觉得这个办法怎么样？",
+        "这次你想做一个动作，还是直接传给下一位？"
+      ],
+      "observe": [
+        "孩子怎样等待、传递或表达想跳过。",
+        "孩子对共同约定提出了什么问题或修改建议。"
+      ],
+      "easier": "两人不放音乐，按顺序互传，每次只说想继续还是结束。",
+      "variation": "请孩子当规则说明员，用画图或演示把新的传递办法告诉大家。",
+      "safety": [
+        "不用塑料袋、绳带和小奖品；坐着轻传，不抛向面部，不要求表演或身体接触。"
+      ],
+      "duration": "建议 5—10 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内围坐的地面",
+      "sourceGame": {
+        "name": "Pass the Parcel",
+        "chineseName": "传包裹",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏逐层拆开传递的包裹，并设有最终奖品；本卡改为无奖品的轮流选择。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S03E14",
+          "title": "传包裹",
+          "englishTitle": "Pass the Parcel",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-3/pass-the-parcel/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-library-rules",
+      "version": "1",
+      "title": "今天我当图书管理员",
+      "themeId": "fairness",
+      "domain": "语言与社会",
+      "summary": "布置一个小图书馆，让管理员和读者都参与约定借书、看书和归还的办法。",
+      "materials": [
+        "三到五本结实的绘本",
+        "一张纸做借阅区标记"
+      ],
+      "steps": [
+        "一起选几本书，划出借阅区和归还区，每人说一条能让大家舒服使用的规则。",
+        "一人当管理员，一人当读者，练习询问、借阅和归还。",
+        "成人演一个小问题，如两位读者想看同一本书，邀请大家商量一起看、轮流或先选另一本。",
+        "互换角色，再试同一条规则；如果不合适，可以共同修改并整理归还区。"
+      ],
+      "parentPrompts": [
+        "你希望读者怎样使用这本书？管理员也要遵守什么？",
+        "两个人都想看它，你愿意试哪个办法？"
+      ],
+      "observe": [
+        "孩子提出或复述了哪些具体规则。",
+        "同一本书出现不同需要时，孩子如何协商和轮换。"
+      ],
+      "easier": "只用两本书，成人示范借、看、还三个动作，不加入冲突情节。",
+      "variation": "让孩子画一个归还标记，并邀请玩偶来借书，检查规则是否说清楚。",
+      "safety": [
+        "书放在孩子能安全拿到的低处，不攀爬书架；不用订书针、硬质借书卡或小印章。"
+      ],
+      "duration": "建议 10—15 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内低书架或地垫旁",
+      "sourceGame": {
+        "name": "Library",
+        "chineseName": "图书馆",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏在家里模拟图书馆的借阅、阅读和归还。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S02E30",
+          "title": "图书馆",
+          "englishTitle": "Library",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-2/library/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-tidy-robot",
+      "version": "1",
+      "title": "整理机器人需要好指令",
+      "themeId": "self-care",
+      "domain": "健康与语言",
+      "summary": "用机器人游戏把整理拆成清楚的一小步，孩子和成人都能参与、求助和换角色。",
+      "materials": [
+        "几个较大的软玩具",
+        "一个低矮收纳篮"
+      ],
+      "steps": [
+        "先一起选少量需要归位的物品，并约定说暂停就停止机器人表演。",
+        "成人当机器人，请孩子说清楚先拿什么、放哪里；指一指也可以。",
+        "机器人遇到含糊指令时停下来询问，不故意捣乱或把孩子的东西藏走。",
+        "换孩子当机器人或一起整理，完成这一小区就庆祝收工，不临时加任务。"
+      ],
+      "parentPrompts": [
+        "先拿哪一个，放到哪里？你可以指给我。",
+        "这个有点难搬，你需要我帮哪一部分？"
+      ],
+      "observe": [
+        "孩子怎样把一个整理动作说清楚或演示出来。",
+        "孩子自己参与了哪一步，遇到困难时怎样请求帮助。"
+      ],
+      "easier": "只收两个同类玩具，成人扶住篮子，和孩子一起放回。",
+      "variation": "让孩子画出收纳位置，成人按图整理，看看有没有需要说明的地方。",
+      "safety": [
+        "只搬轻物，不使用电器、清洁剂或尖锐物；不按鼻子、拉扯身体或强迫搬运。"
+      ],
+      "duration": "建议 5—10 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内低收纳区",
+      "sourceGame": {
+        "name": "Daddy Robot",
+        "chineseName": "爸爸机器人",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏由成人扮演接收家务指令的机器人；本卡保留角色和清楚指令的设定。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S01E04",
+          "title": "爸爸机器人",
+          "englishTitle": "Daddy Robot",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-1/daddy-robot/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-pretend-picnic",
+      "version": "1",
+      "title": "一起准备纸上野餐",
+      "themeId": "self-care",
+      "domain": "健康与社会",
+      "summary": "用画出来的食物招待玩偶，参与准备、询问需要和收拾，不涉及真火或进食要求。",
+      "materials": [
+        "纸和粗画笔",
+        "可重复使用的大号餐具",
+        "一个软玩偶"
+      ],
+      "steps": [
+        "一起画几种想象食物，分配准备菜单、摆餐具和招待客人的小工作。",
+        "请孩子选自己愿意承担的一步，成人和孩子分别做，再互相看看还缺什么。",
+        "让玩偶客人说想要什么、不要什么，服务员确认后递上纸画，不强求每个角色都吃同样的东西。",
+        "一起把餐具和纸画归位，孩子决定想保留哪张菜单供下次使用。"
+      ],
+      "parentPrompts": [
+        "你想负责哪一步？哪里需要我一起做？",
+        "客人说现在不想要这个，我们可以怎样回应？"
+      ],
+      "observe": [
+        "孩子选择并参与了哪一项准备或收拾动作。",
+        "孩子怎样询问客人需要，是否回应对方的选择。"
+      ],
+      "easier": "成人画食物，孩子只选一件大餐具和一张画递给玩偶。",
+      "variation": "换一次角色，请孩子当客人，清楚说明自己的需要，再和成人一起收桌。",
+      "safety": [
+        "仅用纸画假装烹饪，不用火、刀具或热水；不用小颗粒作食物，不把纸画和玩具放入口中。"
+      ],
+      "duration": "建议 10—15 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内桌边或地垫",
+      "sourceGame": {
+        "name": "BBQ",
+        "chineseName": "烧烤",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏是假装布置烧烤摊、烹饪并招待客人；本卡用纸画改成野餐准备。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S01E07",
+          "title": "烧烤",
+          "englishTitle": "BBQ",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-1/bbq/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-floor-course",
+      "version": "1",
+      "title": "我来设计地面路线",
+      "themeId": "movement",
+      "domain": "健康与科学",
+      "summary": "在平坦地面绕过标记，自己选路线和速度，遇到不舒服的动作就改道或求助。",
+      "materials": [
+        "几张大纸作为边界标记",
+        "可选：一个软玩偶作终点"
+      ],
+      "steps": [
+        "成人先检查干燥、平坦、无尖角的区域，把纸放在行走区外侧作边界，不放在脚下。",
+        "和孩子设计一条短路线，如绕过标记、沿空地走到终点；不设置攀爬和跨高物。",
+        "成人先慢走示范，孩子自己选步速，也可牵成人的手或只观察。",
+        "问孩子哪里想变宽、变短或取消，按意见调整后再试；不计时、不比较名次。"
+      ],
+      "parentPrompts": [
+        "哪条路让你觉得舒服？想从哪里绕过去？",
+        "想停下看看，还是需要我的手？"
+      ],
+      "observe": [
+        "孩子怎样观察并选择路线，在哪一步停下或改变方向。",
+        "孩子如何表达需要扶手、改道、休息或再试一次。"
+      ],
+      "easier": "只设起点和终点，两人并排慢走一趟。",
+      "variation": "让孩子当设计师，用手指带成人走一遍，说明每个转弯的地方。",
+      "safety": [
+        "成人全程在旁，远离楼梯、窗边和道路；不用绳网、叠高家具或翻滚动作，地面不散放滑动物。"
+      ],
+      "duration": "建议 10—15 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "干燥平坦且无车辆的空地",
+      "sourceGame": {
+        "name": "Obstacle Course",
+        "chineseName": "障碍赛",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏通过障碍竞赛或计时；本卡改成不计时的地面路线设计。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S03E03",
+          "title": "障碍赛训练场",
+          "englishTitle": "Obstacle Course",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-3/obstacle-course/"
+        },
+        {
+          "id": "S03E30",
+          "title": "小海龟",
+          "englishTitle": "Turtleboy",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-3/turtleboy/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-shadow-path",
+      "version": "1",
+      "title": "影子小路会变化",
+      "themeId": "movement",
+      "domain": "科学与健康",
+      "summary": "观察安全场地里的光和影，商量一条能慢慢走完的路线，路线断开就停下想办法。",
+      "materials": [
+        "一块事先检查过的平坦、有阴影的安全场地"
+      ],
+      "steps": [
+        "成人先划定远离车辆、水域和高处的小范围，和孩子站在阴影里看看形状。",
+        "一起找两片相邻的影子，慢走过去；亮处同样安全，随时可以踩过去，不需要跳跃闯关。",
+        "遇到影子断开时停下，商量走亮处、换方向或结束，不为遵守游戏规则冒险。",
+        "稍后再看同一个地方，描述影子的形状或位置有什么变化，也可用手比画。"
+      ],
+      "parentPrompts": [
+        "你发现这片影子像什么？它和刚才有什么不一样？",
+        "小路在这里断了，我们可以怎么改？"
+      ],
+      "observe": [
+        "孩子指出或描述了哪些光影变化。",
+        "路线遇到中断时，孩子选择了什么办法或怎样求助。"
+      ],
+      "easier": "留在同一片阴影里找形状，只观察不移动。",
+      "variation": "在室内用日光形成的固定影子观察，不直视光源，也不用关闭照明制造黑暗。",
+      "safety": [
+        "成人陪同，不进入道路或水域，不跳跃跨越间隙；根据天气缩短活动，不直视太阳。"
+      ],
+      "duration": "建议 5—10 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "事先检查过的平坦安全场地",
+      "sourceGame": {
+        "name": "Shadowlands",
+        "chineseName": "影子陆地",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏把阴影当作可走的陆地；本卡允许随时离开阴影并改路线。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S01E05",
+          "title": "影子陆地",
+          "englishTitle": "Shadowlands",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-1/shadowlands/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-paper-garden",
+      "version": "1",
+      "title": "给想象朋友造花园",
+      "themeId": "creativity",
+      "domain": "艺术与科学",
+      "summary": "用大张纸和画笔设计一个想象花园，让每个人的点子都有位置。",
+      "materials": [
+        "大张纸",
+        "粗画笔"
+      ],
+      "steps": [
+        "孩子决定花园给谁使用，成人听听它喜欢什么、不喜欢什么。",
+        "轮流往大纸上添加小路、植物或休息处，用画、比画和讲述表达，不要求画得像。",
+        "两个人想画在同一处时，商量连起来、换位置或各留一块，保留不同点子。",
+        "请孩子带成人参观，介绍一个自己喜欢的设计，也可决定留一处下次再做。"
+      ],
+      "parentPrompts": [
+        "你的花园想欢迎谁？它进来后会先看到什么？",
+        "你想听我的点子，还是先把自己的画完？"
+      ],
+      "observe": [
+        "孩子选择了哪些材料或图形，怎样说明自己的设计。",
+        "出现不同点子时，孩子怎样决定保留、连接或修改。"
+      ],
+      "easier": "成人画一条路，孩子只决定路通向哪里，用点画或手势补充。",
+      "variation": "让想象朋友提出一个新需要，如想安静坐下，请孩子决定是否增添一处空间。",
+      "safety": [
+        "仅用大纸和画笔，不采摘未知植物，也不用石子、珠子或小装饰作景观。"
+      ],
+      "duration": "建议 10—20 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内桌边或地面创作区",
+      "sourceGame": {
+        "name": "Fairy Garden",
+        "chineseName": "仙女花园",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏为想象中的仙女布置花园；本卡改成大纸上的共同设计。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S01E30",
+          "title": "小精灵",
+          "englishTitle": "Fairies",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-1/fairies/"
+        },
+        {
+          "id": "S02E31",
+          "title": "树皮船",
+          "englishTitle": "Barky Boats",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-2/barky-boats/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-octopus-ideas",
+      "version": "1",
+      "title": "章鱼今天有什么新办法",
+      "themeId": "creativity",
+      "domain": "艺术与语言",
+      "summary": "在桌面上扮演章鱼和小鱼，用故事想办法经过章鱼的家，再交换角色改一次玩法。",
+      "materials": [
+        "一张大纸",
+        "粗画笔",
+        "可选：两个较大的软玩偶"
+      ],
+      "steps": [
+        "在纸上画章鱼的家和小鱼想去的地方，用手或大玩偶当角色。",
+        "章鱼先说它今天喜欢什么声音或动作，小鱼试着用自己的办法请它让路。",
+        "章鱼可以回应愿意、想换一种办法或休息；双方商量能接受的故事走向，不设必须赢的目标。",
+        "互换角色，让新章鱼决定一个不同的设定，最后一起为故事收尾。"
+      ],
+      "parentPrompts": [
+        "这只章鱼和刚才那只有什么不一样？",
+        "你想先问问它，还是想一个新的故事办法？"
+      ],
+      "observe": [
+        "孩子提出了哪些不同的动作、声音或情节。",
+        "对方改变设定后，孩子怎样回应或重新商量。"
+      ],
+      "easier": "成人当章鱼，提供打招呼或唱一句歌两个选项，孩子任选或提出别的办法。",
+      "variation": "让孩子把章鱼改成另一种想象生物，并解释新角色喜欢什么。",
+      "safety": [
+        "只在桌面或地面演故事，不追抓、不捆绑、不藏在封闭空间；不把身体接触设为通过条件。"
+      ],
+      "duration": "建议 10—15 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内桌边或地垫",
+      "sourceGame": {
+        "name": "Octopus",
+        "chineseName": "章鱼",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏由章鱼守护宝藏、小鱼设法经过；本卡改成桌面协商故事。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S02E41",
+          "title": "章鱼",
+          "englishTitle": "Octopus",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-2/octopus/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-cafe-hello-goodbye",
+      "version": "1",
+      "title": "小咖啡馆的你好与再见",
+      "themeId": "transitions",
+      "domain": "社会与语言",
+      "summary": "用假装咖啡馆预演见面、换角色和告别，结束前留出提醒，也可以选择再多玩一小段。",
+      "materials": [
+        "纸和粗画笔",
+        "大号空杯或纸画的杯子",
+        "一个软玩偶"
+      ],
+      "steps": [
+        "一起画菜单，请玩偶当第一次来的客人，由孩子选择店员或陪同者角色。",
+        "店员打招呼、介绍一个选项，客人可以先看看、点单或请陪同者帮忙。",
+        "成人提前提醒这个故事快到告别时刻，一起决定最后做一件什么事。",
+        "让角色说、挥手或用自己的方式告别；想延长就商量明确的一小段，完成后共同收拾。"
+      ],
+      "parentPrompts": [
+        "第一次来的客人想先看看，我们可以怎样陪它？",
+        "故事快结束了，你想先做哪一件事，再说再见？"
+      ],
+      "observe": [
+        "孩子在见面、换角色或告别时选择了哪些词和动作。",
+        "得到结束提醒后，孩子提出了什么需要或收尾办法。"
+      ],
+      "easier": "只演玩偶进门打招呼和离开挥手两个动作，成人全程陪同。",
+      "variation": "孩子当新客人，成人当店员，允许孩子先旁观再决定是否加入。",
+      "safety": [
+        "只使用空杯或纸画，不用热饮和真实食物；不借游戏突然离开孩子，不以分离或告别作威胁。"
+      ],
+      "duration": "建议 5—10 分钟，可随时结束",
+      "participants": "1 名成人和 1 名孩子",
+      "setting": "室内桌边或地垫",
+      "sourceGame": {
+        "name": "Café",
+        "chineseName": "咖啡馆",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏是假装经营咖啡馆并招待客人；本卡增加见面和收尾的家庭预演。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [],
+      "episodeNote": "对应动画待确认；可直接开展活动。",
+      "adaptation": "家庭活动改编"
+    },
+    {
+      "module": "PRESCHOOL",
+      "id": "bluey-paper-boat-journey",
+      "version": "1",
+      "title": "小船去旅行，也会回来",
+      "themeId": "transitions",
+      "domain": "科学与社会",
+      "summary": "在纸画河流上推着纸船旅行，预演出发、停靠、改变计划和返回，不到水边操作。",
+      "materials": [
+        "大张纸和粗画笔",
+        "成人预先折好的大纸船"
+      ],
+      "steps": [
+        "一起在大纸上画一条河、起点和终点，成人把纸船放在纸上，不使用真水。",
+        "让船上的想象角色说想去哪里、愿意谁陪同；孩子可以先推一小段看看。",
+        "成人提出一个温和变化，如前面需要停靠休息，邀请孩子选择继续、换路线或返回。",
+        "为船找一个靠岸的位置，一起决定故事今天到这里还是下次再出发，保留路线图。"
+      ],
+      "parentPrompts": [
+        "船想先去一小段，还是请另一只船陪着？",
+        "计划变了，你想停靠、换路线，还是回到起点？"
+      ],
+      "observe": [
+        "孩子如何为出发、停靠和返回安排情节。",
+        "路线变化时，孩子用什么方式说明选择或请求陪伴。"
+      ],
+      "easier": "只画起点和一个停靠点，让孩子决定推船过去还是留在原处。",
+      "variation": "增加一条由孩子画的新路线，让两只船可以同行，也能各自停靠。",
+      "safety": [
+        "全程在干燥桌面或地面操作，不去溪流、水池或浴缸边玩；不用树皮、树枝和小零件，不把纸船放入口中。"
+      ],
+      "duration": "建议 10—15 分钟，可随时结束",
+      "participants": "1 名成人和 1 名或多名孩子",
+      "setting": "室内干燥桌面或地面",
+      "sourceGame": {
+        "name": "Barky Boats",
+        "chineseName": "树皮小船",
+        "chineseNameStatus": "working-translation",
+        "summary": "原游戏用树皮做船并玩航行游戏；本卡改成无水的纸船路线故事。",
+        "url": "https://blueypedia.fandom.com/wiki/List_of_Games"
+      },
+      "episodes": [
+        {
+          "id": "S02E31",
+          "title": "树皮船",
+          "englishTitle": "Barky Boats",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-2/barky-boats/"
+        },
+        {
+          "id": "S01E29",
+          "title": "小溪",
+          "englishTitle": "The Creek",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-1/the-creek/"
+        },
+        {
+          "id": "S03E45",
+          "title": "电视商店",
+          "englishTitle": "TV Shop",
+          "titleSource": "TMDB zh-CN",
+          "url": "https://www.bluey.tv/watch/season-3/tv-shop/"
+        }
+      ],
+      "adaptation": "家庭活动改编"
+    }
+  ]
+}

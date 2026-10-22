@@ -926,6 +926,222 @@ class LearningIntegrationTest {
         assertEquals(1, learning.members(a, family).stream().filter(member -> "OWNER".equals(member.get("role")) && Boolean.TRUE.equals(member.get("active"))).count());
     }
 
+    static ObjectNode observationRequest(JsonNode card) {
+        return json("id", UUID.randomUUID(), "activityId", card.path("id").asText(), "activityVersion", card.path("version").asText(),
+                "outcome", "TOGETHER", "note", "合成活动观察", "occurredAt", Instant.now().toString());
+    }
+
+    @Test
+    void preschoolObservationsRemainScopedAcrossTwoFamiliesAndFourChildren() {
+        OidcUser firstOwner = user("operator"), secondOwner = user("preschool-second-owner");
+        UUID firstFamily = family("合成活动家庭甲", firstOwner), secondFamily = family("合成活动家庭乙", secondOwner);
+        UUID a = child(firstOwner, firstFamily, "甲一"), b = child(firstOwner, firstFamily, "甲二");
+        UUID c = child(secondOwner, secondFamily, "乙一"), d = child(secondOwner, secondFamily, "乙二");
+        JsonNode card = records.preschoolActivities().get(0);
+        for (UUID child : List.of(a, b)) records.observePreschool(firstOwner, firstFamily, child, observationRequest(card));
+        for (UUID child : List.of(c, d)) records.observePreschool(secondOwner, secondFamily, child, observationRequest(card));
+        for (UUID child : List.of(a, b)) {
+            assertEquals(1, records.preschoolObservations(firstOwner, firstFamily, child).size());
+            assertEquals(1, ((List<?>) records.preschoolHistory(firstOwner, firstFamily, child, null, 50).get("items")).size());
+        }
+        for (UUID child : List.of(c, d)) {
+            assertEquals(1, records.preschoolObservations(secondOwner, secondFamily, child).size());
+            assertEquals("NOT_FOUND", assertThrows(ApiException.class, () -> records.preschoolHistory(firstOwner, secondFamily, child, null, 50)).code());
+            assertThrows(ApiException.class, () -> records.preschoolObservations(firstOwner, firstFamily, child));
+            assertThrows(ApiException.class, () -> records.observePreschool(firstOwner, firstFamily, child, observationRequest(card)));
+            assertThrows(ApiException.class, () -> records.observePreschool(firstOwner, secondFamily, child, observationRequest(card)));
+        }
+        assertThrows(ApiException.class, () -> records.export(firstOwner, secondFamily));
+        transaction.executeWithoutResult(status -> {
+            var actor = learning.actor(firstOwner);
+            learning.family(actor, firstFamily, false, false);
+            assertEquals(2, store.count("SELECT count(*) FROM learning.observations"));
+        });
+        transaction.executeWithoutResult(status -> assertEquals(0, store.count("SELECT count(*) FROM learning.observations")));
+    }
+
+    @Test
+    void preschoolRolesRevocationAndArchiveUseExistingFamilyRules() {
+        OidcUser owner = user("operator"), editor = user("preschool-editor"), anotherEditor = user("preschool-another-editor"), viewer = user("preschool-viewer");
+        UUID family = family("合成活动家庭", owner), child = child(owner, family, "合成孩子");
+        join(owner, family, editor, "EDITOR");
+        join(owner, family, anotherEditor, "EDITOR");
+        join(owner, family, viewer, "VIEWER");
+        ObjectNode request = observationRequest(records.preschoolActivities().get(0));
+        var saved = records.observePreschool(editor, family, child, request);
+        assertEquals(1, records.preschoolObservations(viewer, family, child).size());
+        assertThrows(ApiException.class, () -> records.observePreschool(viewer, family, child, observationRequest(records.preschoolActivities().get(0))));
+        var correction = request.deepCopy().put("id", UUID.randomUUID().toString()).put("correctionOf", saved.get("id").toString()).put("outcome", "PAUSED");
+        assertThrows(ApiException.class, () -> records.observePreschool(anotherEditor, family, child, correction));
+        assertEquals("PAUSED", records.observePreschool(editor, family, child, correction).get("outcome"));
+        assertEquals("PAUSED", records.observePreschool(owner, family, child, correction.deepCopy().put("id", UUID.randomUUID().toString())).get("outcome"));
+        UUID viewerId = (UUID) learning.me(viewer).get("id");
+        learning.updateMember(owner, family, viewerId, json("role", "VIEWER", "active", false, "version", 0));
+        assertEquals("NOT_FOUND", assertThrows(ApiException.class, () -> records.preschoolHistory(viewer, family, child, null, 50)).code());
+        UUID editorId = (UUID) learning.me(editor).get("id");
+        learning.updateMember(owner, family, editorId, json("role", "EDITOR", "active", false, "version", 0));
+        assertThrows(ApiException.class, () -> records.observePreschool(editor, family, child, request));
+        learning.updateChild(owner, family, child, json("archived", true, "version", 0));
+        assertEquals("CHILD_ARCHIVED", assertThrows(ApiException.class, () -> records.observePreschool(owner, family, child, observationRequest(records.preschoolActivities().get(0)))).code());
+        assertEquals(3, records.preschoolObservations(owner, family, child).size());
+    }
+
+    @Test
+    void observationModulesCannotBeSpoofedCorrectedAcrossOrReusedById() {
+        OidcUser owner = user("operator");
+        UUID family = family("合成活动家庭", owner), child = child(owner, family, "合成孩子");
+        ObjectNode math = observationRequest(records.activities().get(0)).put("module", "PRESCHOOL");
+        ObjectNode preschool = observationRequest(records.preschoolActivities().get(0)).put("module", "MATH");
+        var mathSaved = records.observe(owner, family, child, math);
+        var preschoolSaved = records.observePreschool(owner, family, child, preschool);
+        assertEquals("MATH", mathSaved.get("module"));
+        assertEquals("PRESCHOOL", preschoolSaved.get("module"));
+        assertEquals("PRESCHOOL", ((JsonNode) preschoolSaved.get("activitySnapshot")).path("module").asText());
+        assertEquals("IDEMPOTENCY_CONFLICT", assertThrows(ApiException.class, () -> records.observePreschool(owner, family, child, preschool.deepCopy().put("id", mathSaved.get("id").toString()))).code());
+        assertEquals("IDEMPOTENCY_CONFLICT", assertThrows(ApiException.class, () -> records.observe(owner, family, child, math.deepCopy().put("id", preschoolSaved.get("id").toString()))).code());
+        assertEquals("NOT_FOUND", assertThrows(ApiException.class, () -> records.observePreschool(owner, family, child,
+                preschool.deepCopy().put("id", UUID.randomUUID().toString()).put("correctionOf", mathSaved.get("id").toString()))).code());
+        assertEquals("NOT_FOUND", assertThrows(ApiException.class, () -> records.observe(owner, family, child,
+                math.deepCopy().put("id", UUID.randomUUID().toString()).put("correctionOf", preschoolSaved.get("id").toString()))).code());
+        assertThrows(ApiException.class, () -> records.observe(owner, family, child, preschool.deepCopy().put("id", UUID.randomUUID().toString())));
+        assertThrows(ApiException.class, () -> records.observePreschool(owner, family, child, math.deepCopy().put("id", UUID.randomUUID().toString())));
+        assertEquals(1, records.observations(owner, family, child).size());
+        assertEquals(1, records.preschoolObservations(owner, family, child).size());
+    }
+
+    @Test
+    void preschoolFrozenContentSurvivesUpgradeRetriesAndCorrections() {
+        OidcUser owner = user("operator");
+        UUID family = family("合成活动家庭", owner), child = child(owner, family, "合成孩子");
+        JsonNode card = records.preschoolActivities().get(0).deepCopy();
+        ObjectNode request = observationRequest(card);
+        request.set("activitySnapshot", json("title", "Untrusted browser content"));
+        var original = records.observePreschool(owner, family, child, request);
+        assertEquals(card, original.get("activitySnapshot"));
+        LearningRecords upgraded = new LearningRecords(learning, store, mapper) {
+            @Override
+            public JsonNode preschoolActivities() {
+                return mapper.createArrayNode().add(((ObjectNode) card.deepCopy()).put("version", "future-v2").put("title", "Changed title"));
+            }
+        };
+        transaction.executeWithoutResult(status -> {
+            assertEquals(original.get("id"), upgraded.observePreschool(owner, family, child, request).get("id"));
+            var correction = request.deepCopy().put("id", UUID.randomUUID().toString()).put("correctionOf", original.get("id").toString()).put("outcome", "PAUSED");
+            assertEquals(card, upgraded.observePreschool(owner, family, child, correction).get("activitySnapshot"));
+        });
+        assertEquals("IDEMPOTENCY_CONFLICT", assertThrows(ApiException.class, () -> records.observePreschool(owner, family, child, request.deepCopy().put("note", "Changed"))).code());
+        var exported = (List<Map<String, Object>>) records.export(owner, family).get("observations");
+        assertEquals(2, exported.size());
+        assertTrue(exported.stream().allMatch(item -> "PRESCHOOL".equals(item.get("module")) && card.equals(item.get("activitySnapshot"))));
+    }
+
+    @Test
+    void preschoolHistoryPaginationExcludesMathAndBindsCursorToModule() throws Exception {
+        OidcUser owner = user("operator");
+        UUID family = family("合成活动家庭", owner), child = child(owner, family, "合成孩子");
+        JsonNode mathCard = records.activities().get(0), preschoolCard = records.preschoolActivities().get(0);
+        ObjectNode math = observationRequest(mathCard);
+        // V4 legacy placeholders have no module and remain mathematics without rewriting their contents.
+        transaction.executeWithoutResult(status -> {
+            var actor = learning.actor(owner);
+            learning.family(actor, family, true, false);
+            store.update("INSERT INTO learning.observations(id,family_id,child_id,author_id,activity_id,activity_version,activity_snapshot,outcome,occurred_at,fingerprint) VALUES(?,?,?,?,?,?,?::jsonb,?,?,?)",
+                    UUID.fromString(math.path("id").asText()), family, child, actor.id(), mathCard.path("id").asText(), mathCard.path("version").asText(),
+                    "{\"unavailable\":true}", "TOGETHER", LearningService.timestamp(Instant.now()), "synthetic-legacy-placeholder");
+        });
+        records.createSession(owner, family, child, sessionRequest());
+        records.importRecord(owner, family, child, json("id", UUID.randomUUID(), "record", Map.of("schema", 1, "dataVersion", "old-import-version", "targets", List.of("old-topic"),
+                "answers", List.of(Map.of("id", "old-topic", "qid", "old-question", "result", "correct")), "options", Map.of())));
+        for (int i = 0; i < 3; i++) records.observePreschool(owner, family, child,
+                observationRequest(preschoolCard).put("occurredAt", Instant.now().minusSeconds(i + 10).toString()));
+        var mathHistory = records.history(owner, family, child, null, 1);
+        assertNotNull(mathHistory.get("nextCursor"));
+        assertEquals(3, ((List<?>) records.history(owner, family, child, null, 50).get("items")).size());
+        ObjectNode oldCursor = (ObjectNode) mapper.readTree(Base64.getUrlDecoder().decode(mathHistory.get("nextCursor").toString()));
+        oldCursor.remove("module");
+        String oldEncoded = Base64.getUrlEncoder().withoutPadding().encodeToString(oldCursor.toString().getBytes(StandardCharsets.UTF_8));
+        assertEquals(2, ((List<?>) records.history(owner, family, child, oldEncoded, 50).get("items")).size());
+        var page = records.preschoolHistory(owner, family, child, null, 1);
+        String preschoolCursor = page.get("nextCursor").toString();
+        var ids = new java.util.HashSet<Object>();
+        while (true) {
+            var items = (List<Map<String, Object>>) page.get("items");
+            assertEquals(1, items.size());
+            assertEquals("OBSERVATION", items.getFirst().get("kind"));
+            assertEquals("PRESCHOOL", items.getFirst().get("module"));
+            assertTrue(ids.add(items.getFirst().get("id")));
+            if (page.get("nextCursor") == null) break;
+            page = records.preschoolHistory(owner, family, child, page.get("nextCursor").toString(), 1);
+        }
+        assertEquals(3, ids.size());
+        assertThrows(ApiException.class, () -> records.history(owner, family, child, preschoolCursor, 50));
+        assertThrows(ApiException.class, () -> records.preschoolHistory(owner, family, child, mathHistory.get("nextCursor").toString(), 50));
+        assertThrows(ApiException.class, () -> records.preschoolHistory(owner, family, child, "invalid", 50));
+        assertThrows(ApiException.class, () -> records.preschoolHistory(owner, family, child, null, 101));
+        assertTrue(((List<?>) records.practiceProfile(owner, family, child).get("topicIds")).isEmpty());
+    }
+
+    @Test
+    void concurrentPreschoolRetriesAndCrossModuleIdRacesRemainAtomic() throws Exception {
+        OidcUser owner = user("operator");
+        UUID family = family("合成活动家庭", owner), child = child(owner, family, "合成孩子");
+        ObjectNode request = observationRequest(records.preschoolActivities().get(0));
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            var first = executor.submit(() -> records.observePreschool(owner, family, child, request));
+            var second = executor.submit(() -> records.observePreschool(owner, family, child, request));
+            assertEquals(first.get(5, java.util.concurrent.TimeUnit.SECONDS).get("id"), second.get(5, java.util.concurrent.TimeUnit.SECONDS).get("id"));
+            assertEquals(1, records.preschoolObservations(owner, family, child).size());
+            ObjectNode math = observationRequest(records.activities().get(0)), preschool = observationRequest(records.preschoolActivities().get(0)).put("id", math.path("id").asText());
+            var outcomes = executor.invokeAll(List.of(
+                    (Callable<String>) () -> { try { records.observe(owner, family, child, math); return "SAVED"; } catch (ApiException exception) { return exception.code(); } },
+                    (Callable<String>) () -> { try { records.observePreschool(owner, family, child, preschool); return "SAVED"; } catch (ApiException exception) { return exception.code(); } }))
+                    .stream().map(future -> { try { return future.get(); } catch (Exception exception) { throw new RuntimeException(exception); } }).toList();
+            assertEquals(1, outcomes.stream().filter("SAVED"::equals).count());
+            assertEquals(1, outcomes.stream().filter("IDEMPOTENCY_CONFLICT"::equals).count());
+        }
+        assertEquals(2, records.observations(owner, family, child).size() + records.preschoolObservations(owner, family, child).size());
+    }
+
+    @Test
+    void preschoolHttpExercisesRealRepositoryProxyAuthenticationAndRoles() throws Exception {
+        OidcUser owner = user("operator"), viewer = user("preschool-http-viewer");
+        UUID family = family("合成活动家庭", owner), child = child(owner, family, "合成孩子"), second = child(owner, family, "另一孩子");
+        join(owner, family, viewer, "VIEWER");
+        try (var web = new org.springframework.web.context.support.AnnotationConfigWebApplicationContext()) {
+            web.setParent(context);
+            web.setServletContext(new org.springframework.mock.web.MockServletContext());
+            web.register(WebConfig.class);
+            web.refresh();
+            var mvc = org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup(web)
+                    .apply(org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity()).build();
+            String base = "/api/v1/families/" + family + "/children/" + child + "/preschool/";
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(base + "history"))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isUnauthorized());
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post(base + "observations")
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(owner))
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf())
+                            .contentType("application/json").content(observationRequest(records.preschoolActivities().get(0)).toString()))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.module").value("PRESCHOOL"));
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(base + "history")
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(viewer)))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.items[0].module").value("PRESCHOOL"));
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(base.replace(child.toString(), second.toString()) + "history")
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(viewer)))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$.items").isEmpty());
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post(base + "observations")
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(viewer))
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf())
+                            .contentType("application/json").content(observationRequest(records.preschoolActivities().get(0)).toString()))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isForbidden());
+            learning.updateMember(owner, family, (UUID) learning.me(viewer).get("id"), json("active", false, "role", "VIEWER", "version", 0));
+            mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(base + "history")
+                            .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin().oidcUser(viewer)))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isNotFound());
+        }
+    }
+
     static void awaitBlocked(int minimum) {
         long deadline = System.nanoTime() + java.util.concurrent.TimeUnit.SECONDS.toNanos(3);
         while (System.nanoTime() < deadline) {

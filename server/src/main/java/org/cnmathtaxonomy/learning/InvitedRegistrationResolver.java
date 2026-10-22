@@ -31,7 +31,11 @@ final class InvitedRegistrationResolver implements OAuth2AuthorizationRequestRes
         if (resolved == null) {
             return resolved;
         }
-        SessionRestoration.forgetAttempt(request);
+        // A fixed module name is metadata on this authorization request, never a caller-provided redirect URI.
+        resolved = OAuth2AuthorizationRequest.from(resolved).attributes(attributes -> {
+            attributes.put(ModuleAuthorizationRequestRepository.MODULE, "preschool".equals(request.getParameter("module")) ? "PRESCHOOL" : "MATH");
+            attributes.put(ModuleAuthorizationRequestRepository.RESTORING, "1".equals(request.getParameter("restore")));
+        }).build();
         String grant = request.getParameter("invite_grant");
         boolean restoring = "1".equals(request.getParameter("restore"));
         if (grant != null && restoring) {
@@ -41,7 +45,6 @@ final class InvitedRegistrationResolver implements OAuth2AuthorizationRequestRes
             if (restoring) {
                 // The marker only determines whether the UI offers a one-shot attempt. Even a
                 // forged marker must pass the normal authorization code/state/nonce/PKCE flow.
-                SessionRestoration.rememberAttempt(request, resolved.getState());
                 return OAuth2AuthorizationRequest.from(resolved)
                         .additionalParameters(parameters -> parameters.put("prompt", "none")).build();
             }

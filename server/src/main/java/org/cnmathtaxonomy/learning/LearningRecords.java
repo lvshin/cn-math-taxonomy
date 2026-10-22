@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class LearningRecords {
     private static final String SESSION_COLUMNS = "id,family_id,child_id,author_id,data_version,content_snapshot,snapshot,finished,version,occurred_at,updated_at";
-    private static final String OBSERVATION_COLUMNS = "id,author_id,activity_id,activity_version,activity_snapshot,outcome,note,occurred_at,correction_of";
+    private static final String OBSERVATION_COLUMNS = "id,author_id,activity_id,activity_version,activity_snapshot,outcome,note,occurred_at,correction_of,COALESCE(activity_snapshot->>'module','MATH') AS module";
     private final LearningService learning;
     private final LearningStore store;
     private final ObjectMapper mapper;
@@ -38,7 +38,15 @@ public class LearningRecords {
     }
 
     public JsonNode activities() {
-        try (var stream = new ClassPathResource("static/data/activities.json").getInputStream()) {
+        return activityCatalog("activities.json");
+    }
+
+    public JsonNode preschoolActivities() {
+        return activityCatalog("preschool.json");
+    }
+
+    private JsonNode activityCatalog(String file) {
+        try (var stream = new ClassPathResource("static/data/" + file).getInputStream()) {
             JsonNode content = mapper.readTree(stream);
             return content.isArray() ? content : content.path("activities");
         } catch (IOException exception) {
@@ -54,11 +62,27 @@ public class LearningRecords {
     }
 
     public List<Map<String, Object>> observations(OidcUser principal, UUID family, UUID child) {
+        return observations(principal, family, child, "MATH");
+    }
+
+    public List<Map<String, Object>> preschoolObservations(OidcUser principal, UUID family, UUID child) {
+        return observations(principal, family, child, "PRESCHOOL");
+    }
+
+    private List<Map<String, Object>> observations(OidcUser principal, UUID family, UUID child, String module) {
         scope(principal, family, child, false);
-        return store.list("SELECT " + OBSERVATION_COLUMNS + " FROM learning.observations WHERE family_id=? AND child_id=? ORDER BY occurred_at DESC,id DESC LIMIT 1000", family, child);
+        return store.list("SELECT " + OBSERVATION_COLUMNS + " FROM learning.observations WHERE family_id=? AND child_id=? AND COALESCE(activity_snapshot->>'module','MATH')=? ORDER BY occurred_at DESC,id DESC LIMIT 1000", family, child, module);
     }
 
     public Map<String, Object> observe(OidcUser principal, UUID family, UUID child, JsonNode request) {
+        return observe(principal, family, child, request, "MATH");
+    }
+
+    public Map<String, Object> observePreschool(OidcUser principal, UUID family, UUID child, JsonNode request) {
+        return observe(principal, family, child, request, "PRESCHOOL");
+    }
+
+    private Map<String, Object> observe(OidcUser principal, UUID family, UUID child, JsonNode request, String module) {
         var actor = scope(principal, family, child, true);
         UUID id = LearningService.uuid(request, "id");
         String activity = LearningService.text(request, "activityId", 100, true);
@@ -70,9 +94,20 @@ public class LearningRecords {
         String note = LearningService.text(request, "note", 2000, false);
         Instant occurred = occurredAt(request);
         UUID correction = request.hasNonNull("correctionOf") ? LearningService.uuid(request, "correctionOf") : null;
+        var normalized = mapper.createObjectNode().put("activityId", activity).put("activityVersion", activityVersion)
+                .put("outcome", outcome).put("note", note).put("occurredAt", occurred.toString()).put("correctionOf", correction == null ? null : correction.toString());
+        // Keep pre-module mathematics fingerprints valid; preschool requests have a separate namespace.
+        if ("PRESCHOOL".equals(module)) {
+            normalized.put("module", module);
+        }
+        String fingerprint = fingerprint(normalized);
+        var existing = store.optional("SELECT " + OBSERVATION_COLUMNS + ",fingerprint FROM learning.observations WHERE family_id=? AND child_id=? AND id=?", family, child, id);
+        if (existing != null) {
+            return matchingObservation(existing, actor.id(), fingerprint, module);
+        }
         JsonNode activitySnapshot = null;
         if (correction != null) {
-            var original = store.one("SELECT author_id,activity_id,activity_version,activity_snapshot FROM learning.observations WHERE family_id=? AND child_id=? AND id=?", family, child, correction);
+            var original = store.one("SELECT author_id,activity_id,activity_version,activity_snapshot FROM learning.observations WHERE family_id=? AND child_id=? AND id=? AND COALESCE(activity_snapshot->>'module','MATH')=?", family, child, correction, module);
             if (!original.get("authorId").equals(actor.id()) && !"OWNER".equals(store.one("SELECT role FROM learning.members WHERE family_id=? AND user_id=?", family, actor.id()).get("role"))) {
                 throw ApiException.forbidden();
             }
@@ -81,21 +116,25 @@ public class LearningRecords {
             }
             activitySnapshot = (JsonNode) original.get("activitySnapshot");
         } else {
-            for (JsonNode card : activities()) {
+            for (JsonNode card : "PRESCHOOL".equals(module) ? preschoolActivities() : activities()) {
                 if (activity.equals(card.path("id").asText()) && activityVersion.equals(card.path("version").asText())) {
-                    activitySnapshot = card;
+                    activitySnapshot = card.deepCopy();
+                    if ("PRESCHOOL".equals(module)) {
+                        ((ObjectNode) activitySnapshot).put("module", module);
+                    }
                 }
             }
             if (activitySnapshot == null) {
                 throw ApiException.invalid("活动或版本不存在");
             }
         }
-        var normalized = mapper.createObjectNode().put("activityId", activity).put("activityVersion", activityVersion)
-                .put("outcome", outcome).put("note", note).put("occurredAt", occurred.toString()).put("correctionOf", correction == null ? null : correction.toString());
-        String fingerprint = fingerprint(normalized);
         store.update("INSERT INTO learning.observations(id,family_id,child_id,author_id,activity_id,activity_version,activity_snapshot,outcome,note,occurred_at,correction_of,fingerprint) VALUES(?,?,?,?,?,?,?::jsonb,?,?,?,?,?) ON CONFLICT(id) DO NOTHING", id, family, child, actor.id(), activity, activityVersion, activitySnapshot.toString(), outcome, note, LearningService.timestamp(occurred), correction, fingerprint);
         var stored = store.one("SELECT " + OBSERVATION_COLUMNS + ",fingerprint FROM learning.observations WHERE family_id=? AND child_id=? AND id=?", family, child, id);
-        if (!actor.id().equals(stored.get("authorId")) || !fingerprint.equals(stored.remove("fingerprint"))) {
+        return matchingObservation(stored, actor.id(), fingerprint, module);
+    }
+
+    private Map<String, Object> matchingObservation(Map<String, Object> stored, UUID actor, String fingerprint, String module) {
+        if (!module.equals(stored.get("module")) || !actor.equals(stored.get("authorId")) || !fingerprint.equals(stored.remove("fingerprint"))) {
             throw ApiException.conflict("IDEMPOTENCY_CONFLICT");
         }
         return stored;
@@ -190,19 +229,32 @@ public class LearningRecords {
     }
 
     public Map<String, Object> history(OidcUser principal, UUID family, UUID child, String cursor, int limit) {
+        return history(principal, family, child, cursor, limit, "MATH");
+    }
+
+    public Map<String, Object> preschoolHistory(OidcUser principal, UUID family, UUID child, String cursor, int limit) {
+        return history(principal, family, child, cursor, limit, "PRESCHOOL");
+    }
+
+    private Map<String, Object> history(OidcUser principal, UUID family, UUID child, String cursor, int limit, String module) {
         scope(principal, family, child, false);
         if (limit < 1 || limit > 100) {
             throw ApiException.invalid("每页记录数应为1至100");
         }
         String cursorCondition = "";
-        List<Object> args = new ArrayList<>(List.of(family, child, family, child, family, child));
+        List<Object> args = new ArrayList<>(List.of(family, child, module));
+        if ("MATH".equals(module)) {
+            args.addAll(List.of(family, child, family, child));
+        }
         if (cursor != null && !cursor.isBlank()) {
             try {
                 JsonNode parsed = mapper.readTree(Base64.getUrlDecoder().decode(cursor));
                 Instant time = Instant.parse(parsed.path("time").asText());
                 UUID id = UUID.fromString(parsed.path("id").asText());
                 String kind = parsed.path("kind").asText();
-                if (!List.of("OBSERVATION", "SESSION", "IMPORT").contains(kind)) {
+                if (!List.of("OBSERVATION", "SESSION", "IMPORT").contains(kind)
+                        || (!"MATH".equals(module) && !"OBSERVATION".equals(kind))
+                        || !module.equals(parsed.path("module").asText("MATH"))) {
                     throw new IllegalArgumentException();
                 }
                 cursorCondition = " WHERE (h.occurred_at,h.id,h.kind) < (?,?,?)";
@@ -214,18 +266,23 @@ public class LearningRecords {
             }
         }
         args.add(limit + 1);
-        String query = """
+        String observations = """
                 WITH h AS (
                   SELECT id,'OBSERVATION'::text kind,occurred_at,author_id,activity_id,activity_version,activity_snapshot,outcome,note,correction_of,
-                    null::text data_version,null::uuid session_id,null::boolean finished,null::jsonb snapshot,null::jsonb content_snapshot,null::jsonb record FROM learning.observations WHERE family_id=? AND child_id=?
+                    null::text data_version,null::uuid session_id,null::boolean finished,null::jsonb snapshot,null::jsonb content_snapshot,null::jsonb record FROM learning.observations WHERE family_id=? AND child_id=? AND COALESCE(activity_snapshot->>'module','MATH')=?
+                """;
+        String mathematics = """
                   UNION ALL
                   SELECT id,'SESSION',occurred_at,author_id,null,null,null,null,null,null,data_version,id,finished,snapshot,content_snapshot,null FROM learning.sessions WHERE family_id=? AND child_id=?
                   UNION ALL
                   SELECT id,'IMPORT',occurred_at,author_id,null,null,null,null,null,null,record->>'dataVersion',null,null,null,null,record FROM learning.imports WHERE family_id=? AND child_id=?
+                """;
+        String query = observations + ("MATH".equals(module) ? mathematics : "") + """
                 ) SELECT h.id,h.kind,h.occurred_at,h.author_id,u.name author_name,h.activity_id,h.activity_version,h.activity_snapshot,h.outcome,h.note,h.correction_of,h.data_version,h.session_id,h.finished,h.snapshot,h.content_snapshot,h.record
                   FROM h JOIN learning.users u ON u.id=h.author_id
                 """ + cursorCondition + " ORDER BY h.occurred_at DESC,h.id DESC,h.kind DESC LIMIT ?";
         var rows = store.list(query, args.toArray());
+        rows.forEach(row -> row.put("module", module));
         boolean more = rows.size() > limit;
         if (more) {
             rows.removeLast();
@@ -234,13 +291,14 @@ public class LearningRecords {
         if (more && !rows.isEmpty()) {
             var last = rows.getLast();
             var node = mapper.createObjectNode().put("time", LearningService.instant(last.get("occurredAt")).toString())
-                    .put("id", last.get("id").toString()).put("kind", last.get("kind").toString());
+                    .put("id", last.get("id").toString()).put("kind", last.get("kind").toString()).put("module", module);
             next = Base64.getUrlEncoder().withoutPadding().encodeToString(node.toString().getBytes(StandardCharsets.UTF_8));
         }
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("items", rows);
         result.put("nextCursor", next);
-        result.put("evidencePolicy", "仅直接作答与家长观察作为长期证据；推断跳过不计为掌握");
+        result.put("module", module);
+        result.put("evidencePolicy", "PRESCHOOL".equals(module) ? "仅记录当次参与和家长观察，不计分、不排名，不判断完整能力" : "仅直接作答与家长观察作为长期证据；推断跳过不计为掌握");
         return result;
     }
 

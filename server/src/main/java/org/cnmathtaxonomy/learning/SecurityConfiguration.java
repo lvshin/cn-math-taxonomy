@@ -55,10 +55,11 @@ class SecurityConfiguration {
                 .requestMatchers("/healthz", "/readyz", "/api/v1/capabilities", "/api/v1/csrf",
                         "/api/v1/invitations/preview", "/api/v1/invitations/registration-grant", "/internal/registration/**").permitAll()
                 .requestMatchers("/api/**").authenticated()
-                .requestMatchers("/", "/index.html", "/assets/**", "/data/**", "/diagnose/engine.js", "/oauth2/**", "/login/**", "/error").permitAll()
+                .requestMatchers("/", "/index.html", "/kindergarten/", "/kindergarten/index.html", "/kindergarten/assets/**", "/assets/**", "/data/**", "/diagnose/engine.js", "/oauth2/**", "/login/**", "/error").permitAll()
                 .anyRequest().denyAll())
                 .csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/internal/registration/**")))
-                .oauth2Login(login -> login.authorizationEndpoint(endpoint -> endpoint.authorizationRequestResolver(new InvitedRegistrationResolver(clients)))
+                .oauth2Login(login -> login.authorizationEndpoint(endpoint -> endpoint.authorizationRequestResolver(new InvitedRegistrationResolver(clients))
+                                .authorizationRequestRepository(new ModuleAuthorizationRequestRepository()))
                         .successHandler(sessionRestoration).failureHandler(sessionRestoration))
                 .oidcLogout(logout -> logout.backChannel(back -> back.logoutHandler(backChannelLogoutHandler)))
                 .logout(logout -> logout.addLogoutHandler(sessionRestoration).logoutSuccessHandler(logoutHandler))

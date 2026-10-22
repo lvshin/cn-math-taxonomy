@@ -20,7 +20,7 @@
     <finalName>family-learning-server</finalName>
     <resources>
       <resource><directory>src/main/resources</directory></resource>
-      <resource><directory>..</directory><targetPath>static</targetPath><includes><include>index.html</include><include>assets/**</include><include>data/**</include><include>diagnose/engine.js</include></includes></resource>
+      <resource><directory>..</directory><targetPath>static</targetPath><includes><include>index.html</include><include>kindergarten/**</include><include>assets/**</include><include>data/**</include><include>diagnose/engine.js</include></includes></resource>
     </resources>
     <plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId></plugin></plugins>
   </build>

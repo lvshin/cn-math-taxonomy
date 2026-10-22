@@ -35,9 +35,11 @@ class LearningController {
     @GetMapping("/capabilities")
     ResponseEntity<Map<String, Object>> capabilities(HttpServletRequest request) {
         Map<String, Object> capabilities = new LinkedHashMap<>(Map.of("cloud", true, "adaptivePractice", true, "apiVersion", 1,
-                "loginUrl", "oauth2/authorization/learning"));
+                "loginUrl", "oauth2/authorization/learning", "preschool", true,
+                "preschoolLoginUrl", "oauth2/authorization/learning?module=preschool"));
         if (SessionRestoration.hasMarker(request)) {
             capabilities.put("sessionRestoreUrl", "oauth2/authorization/learning?restore=1");
+            capabilities.put("preschoolSessionRestoreUrl", "oauth2/authorization/learning?restore=1&module=preschool");
         }
         return ResponseEntity.ok().header("Cache-Control", "no-store").header("Vary", "Cookie").body(capabilities);
     }
@@ -140,6 +142,27 @@ class LearningController {
     @GetMapping("/activities")
     JsonNode activities() {
         return records.activities();
+    }
+
+    @GetMapping("/preschool/activities")
+    JsonNode preschoolActivities() {
+        return records.preschoolActivities();
+    }
+
+    @GetMapping("/families/{family}/children/{child}/preschool/observations")
+    List<Map<String, Object>> preschoolObservations(@AuthenticationPrincipal OidcUser user, @PathVariable UUID family, @PathVariable UUID child) {
+        return records.preschoolObservations(user, family, child);
+    }
+
+    @PostMapping("/families/{family}/children/{child}/preschool/observations")
+    Map<String, Object> observePreschool(@AuthenticationPrincipal OidcUser user, @PathVariable UUID family, @PathVariable UUID child, @RequestBody JsonNode request) {
+        return records.observePreschool(user, family, child, request);
+    }
+
+    @GetMapping("/families/{family}/children/{child}/preschool/history")
+    Map<String, Object> preschoolHistory(@AuthenticationPrincipal OidcUser user, @PathVariable UUID family, @PathVariable UUID child,
+            @RequestParam(required = false) String cursor, @RequestParam(defaultValue = "50") int limit) {
+        return records.preschoolHistory(user, family, child, cursor, limit);
     }
 
     @GetMapping("/families/{family}/children/{child}/observations")
