@@ -82,6 +82,9 @@ Fork 分支分工、同步时机与验证流程见 [上游同步约定](docs/上
 
 ```sh
 python3 scripts/build.py
+python3 scripts/build_preschool.py --check
+node tests/test_preschool_ui.js
+python3 -m unittest discover -s tests -p test_preschool_catalog.py
 node tests/test_engine.js
 node tests/test_suzhou.js
 node tests/test_cloud.js

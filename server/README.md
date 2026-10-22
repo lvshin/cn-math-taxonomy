@@ -77,3 +77,8 @@ LEARNING_TEST_JDBC_URL=jdbc:postgresql://127.0.0.1:18543/learning_test mvn -f se
 `learning_backup` 只拥有明确的全行SELECT策略与读取权限，不能写业务表。独立业务库完整备份包含 `public.flyway_schema_history`；必须使用 `pg_dump --enable-row-security`，不能以Web运行身份备份部分可见记录。
 
 完整自定义格式归档可由非超级用户恢复到全新隔离库，使用 `pg_restore --no-owner --no-acl`；数据在恢复FORCE RLS策略前载入。恢复后重新给予应用与备份角色各自的最小权限，核对所有表计数与Flyway历史，再开放服务。禁止关闭生产RLS或把归档恢复到已有业务库。通用受保护备份与隔离恢复校验工具见根目录 `ops/`。
+
+
+## 幼儿园入口
+
+后端同时打包 `kindergarten/` 及独立活动目录，部署侧可为幼儿园提供 `/edu/kindergarten/` 独立入口。家庭与孩子档案复用，观察按服务端模块分开查询；旧数学记录缺module时保持数学归属，无需新增表或迁移。登录按各自state返回固定入口，保持现有Cookie路径和PKCE。详细资源、接口与验证见 [幼儿园模块](../docs/幼儿园模块.md) 和 [接口约定](../docs/云端接口约定.md#幼儿园活动与独立记录)。
