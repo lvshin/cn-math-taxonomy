@@ -67,7 +67,8 @@ class PreschoolCatalog(unittest.TestCase):
         output = (ROOT / 'data/preschool.json').read_bytes()
         self.assertEqual(output, builder.encode(builder.validate(self.catalog)))
         self.assertEqual(output, builder.encode(builder.validate(copy.deepcopy(self.catalog))))
-        self.assertEqual(json.loads((ROOT / 'data/meta.json').read_text())['data_version'], '2026-10-21-suzhou-v4')
+        self.assertEqual(self.catalog['version'], '2026-10-22-preschool-v1')
+        self.assertNotIn('suzhou', self.catalog['version'])
         self.assertNotIn('preschool', (ROOT / 'scripts/build.py').read_text())
 
     def test_complete_play_instructions_and_process_only_observation_prompts(self):

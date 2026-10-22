@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "upstream_commit": "62b341d4b66b175413d6e3f697e37639fd96aa2d",
+  "applies_to_topic_snapshot": "10a0f562b32433b785729661c2164756cb933154",
+  "note": "仅将旧小学主题引用迁移到本次课标参考；不能在最新条款JSON中做全局ID替换。稳定概念ID、苏教落册、题目与历史不变。",
+  "review_status": "ai_draft_not_teacher_reviewed",
+  "standard_id_migrations": {
+    "cms-2022:3.SP.03": "cms-2022:3.SP.06",
+    "cms-2022:3.SP.04": "cms-2022:3.SP.07"
+  },
+  "expected_legacy_references": {
+    "cnm_p140": [
+      "cms-2022:3.SP.03",
+      "cms-2022:3.SP.04"
+    ],
+    "cnm_p141": [
+      "cms-2022:3.SP.04"
+    ],
+    "cnm_p194": [
+      "cms-2022:3.NA.04"
+    ],
+    "cnm_p195": [
+      "cms-2022:3.NA.02"
+    ],
+    "cnm_p196": [
+      "cms-2022:3.NA.04"
+    ],
+    "cnm_p197": [
+      "cms-2022:3.NA.08"
+    ],
+    "cnm_p198": [
+      "cms-2022:3.NA.04"
+    ],
+    "cnm_p205": [
+      "cms-2022:3.NA.08"
+    ]
+  },
+  "topic_overrides": {
+    "cnm_p194": {
+      "standards": [
+        {
+          "id": "cms-2022:3.SP.04",
+          "confidence": "exact",
+          "note": "条款直接要求探索百分数的意义；依据补齐后的第三学段统计条款调整，映射仍未经教师审核。"
+        }
+      ]
+    },
+    "cnm_p195": {
+      "standards": [
+        {
+          "id": "cms-2022:3.SP.04",
+          "confidence": "inferred",
+          "note": "百分数与分数、小数互化是理解和应用百分数的教材细化；本条未逐项列出互化方法。"
+        }
+      ]
+    },
+    "cnm_p196": {
+      "standards": [
+        {
+          "id": "cms-2022:3.SP.04",
+          "confidence": "inferred",
+          "note": "求一个数的百分之几属于百分数实际问题的具体计算题型；本条未单列计算方法。"
+        }
+      ]
+    },
+    "cnm_p197": {
+      "standards": [
+        {
+          "id": "cms-2022:3.SP.04",
+          "confidence": "inferred",
+          "note": "求百分率是百分数统计意义的具体应用；本条未单列各种百分率公式。"
+        }
+      ]
+    },
+    "cnm_p198": {
+      "standards": [
+        {
+          "id": "cms-2022:3.SP.04",
+          "confidence": "inferred",
+          "note": "已知一个数的百分之几求原数是百分数实际问题的逆向题型；本条未单列解法。"
+        }
+      ]
+    },
+    "cnm_p205": {
+      "standards": [
+        {
+          "id": "cms-2022:3.SP.04",
+          "confidence": "inferred",
+          "note": "百分数应用属于本条的简单实际问题范围；具体增长率等题型是教材细化，仍需结合题目判断。"
+        }
+      ]
+    }
+  }
+}

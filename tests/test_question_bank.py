@@ -27,7 +27,9 @@ class FixedQuestionBank(unittest.TestCase):
         cls.added = [q for q in cls.questions if q['origin'] == 'suzhou-supplement']
 
     def test_original_458_questions_are_unchanged(self):
-        original = [q for q in self.questions if q['origin'] != 'suzhou-supplement']
+        # Illustrations are additive metadata; every legacy field remains byte-for-byte canonical.
+        original = [{k: v for k, v in q.items() if k != 'figure'}
+                    for q in self.questions if q['origin'] != 'suzhou-supplement']
         canonical = json.dumps(original, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
         self.assertEqual(len(original), 458)
         # Verified published v3 bank; changing existing IDs, wording, answers or explanations fails.

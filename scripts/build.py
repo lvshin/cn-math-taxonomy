@@ -56,8 +56,49 @@ def append_supplements(questions, assigned):
                     q.update(type='numeric', answer=answer, verify=row['verify'])
                 questions.append(q)
 
+def align_standards(topics):
+    alignment = read('config/standards_alignment.json')
+    if alignment.get('schema') != 1:
+        raise ValueError('课标迁移配置版本无效')
+    by_id = {t['id']: t for t in topics}
+    for key, expected in alignment['expected_legacy_references'].items():
+        if key not in by_id or [s['id'] for s in by_id[key]['standards']] != expected:
+            raise ValueError('课标旧引用与声明基线不符：' + key)
+    for topic in topics:
+        changed = False
+        for standard in topic.get('standards', []):
+            if standard['id'] in alignment['standard_id_migrations']:
+                standard['id'] = alignment['standard_id_migrations'][standard['id']]
+                changed = True
+        if topic['id'] in alignment['topic_overrides']:
+            topic.update(copy.deepcopy(alignment['topic_overrides'][topic['id']]))
+            changed = True
+        if changed:
+            topic['standard_mapping_source'] = 'suzhou-upstream-alignment'
+    known = {s['id'] for s in read('sources/upstream/cn-curriculum-standards.json')['items']}
+    if any(ref['id'] not in known for t in topics for ref in t.get('standards', [])):
+        raise ValueError('课标引用指向不存在的条款')
+
+
+def attach_figures(questions, assigned):
+    catalog = read('config/question_figures.json')
+    if catalog.get('schema') != 1 or not isinstance(catalog.get('entries'), dict) or not catalog.get('version'):
+        raise ValueError('图示配置格式不正确')
+    by_id = {q['id']: q for q in questions}
+    for key, entry in catalog['entries'].items():
+        question = by_id.get(key)
+        if question is None or question['topicId'] not in assigned or question['prompt'] != entry['expected_prompt']:
+            raise ValueError('图示与当前题干不符：' + key)
+        figure = entry['figure']
+        if figure.get('schema') != 1 or not isinstance(figure.get('nodes'), list) or not figure.get('alt'):
+            raise ValueError('图示结构不正确：' + key)
+        question['figure'] = copy.deepcopy(figure)
+    return len(catalog['entries'])
+
+
 def build():
     topics = copy.deepcopy(read('sources/upstream/topics.json'))
+    align_standards(topics)
     deps = copy.deepcopy(read('sources/upstream/dependencies.json'))
     evidence = read('config/book_evidence.json')
     books, placements = [], []
@@ -136,18 +177,22 @@ def build():
                 q.update(type='numeric', answer=answer)
             questions.append(q)
     append_supplements(questions, assigned)
+    figure_count = attach_figures(questions, assigned)
     if len({q['id'] for q in questions}) != len(questions):
         raise ValueError('题目ID重复')
     questions.sort(key=lambda q:q['id'])
     for t in topics:
         t['question_count'] = sum(q['topicId']==t['id'] for q in questions)
     catalog_counts = Counter(b['catalog_status'] for b in books)
-    meta = dict(schema_version=1, data_version='2026-10-21-suzhou-v4', as_of='2026-10-21',
+    meta = dict(schema_version=1, data_version='2026-10-22-suzhou-v5', as_of='2026-10-22',
                 title='苏州小学数学知识地图', scope='现用苏教小学1—6年级十二册；四上暂选，四至六下采用2013系列',
                 upstream=dict(url='https://github.com/xiaoyang111222/cn-math-taxonomy',
-                              commit='10a0f562b32433b785729661c2164756cb933154',license='CC BY-NC 4.0'),
+                              commit='10a0f562b32433b785729661c2164756cb933154',
+                              checked_commit='62b341d4b66b175413d6e3f697e37639fd96aa2d',
+                              selected_updates=['primary-standards-2025', 'geometry-figure-adaptation', 'map-interaction-adaptation'],
+                              license='CC BY-NC 4.0'),
                 counts=dict(concepts=len(topics), mapped_concepts=len(assigned), questions=len(questions),
-                            dependencies=len(deps), pdf_catalogs=catalog_counts['pdf_checked'],
+                            dependencies=len(deps), illustrated_questions=figure_count, primary_standards=77, pdf_catalogs=catalog_counts['pdf_checked'],
                             official_catalogs=catalog_counts['official_checked'],
                             provisional_catalogs=catalog_counts['pdf_provisional'],
                             external_catalogs=catalog_counts['external_outline'], pending_catalogs=catalog_counts['pending'],
@@ -158,7 +203,7 @@ def build():
                              '四上116页扫描本保持暂选；目录及首尾已抽查，详细版次与全文仍待比对。',
                              '四至六下按现用2013系列组织，课标年份和具体出版版次分别记录。',
                              '六上按已收录扫描件的放大与缩小目录组织，保留与官网比例尺单元的差异。',
-                             '原项目课标小学条文来自公开转写，尚未与教育部PDF逐页核对。',
+                             '小学课标参考共77条：数与代数、图形与几何、统计与概率66条采用上游2025修订整理；综合与实践11条保留原整理，仅采用上游页码。本改编未独立逐字逐页核验。',
                              '练习结果是局部线索，不能作为完整掌握程度或学习能力的结论。'])
     for path,value in [('topics.json',topics),('dependencies.json',deps),('questions.json',questions),
                        ('books.json',books),('placements.json',placements),('meta.json',meta)]:

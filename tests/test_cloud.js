@@ -1,6 +1,6 @@
 /* 真实浏览器界面之外的云端状态/幂等性测试；全部使用合成家庭。 */
 'use strict';
-const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),Cloud=require('../assets/cloud.js');
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),Cloud=require('../assets/cloud.js'),Figures=require('../assets/question-figures.js');
 let passed=0;
 const clone=x=>JSON.parse(JSON.stringify(x));
 function fixture({staticMode=false,role='OWNER',archived=false,signedIn=true,sessionRestoreUrl,capabilityStatus=200,adaptive=false,profileStatus=200,profileOverride}={}){
@@ -35,21 +35,23 @@ function fixture({staticMode=false,role='OWNER',archived=false,signedIn=true,ses
 }
 // 只模拟本模块使用的DOM接口，运行实际条件渲染与事件处理；浏览器布局另行验证。
 function uiFixture(cloud,{previewFamily='family-b',used=false,historyItems=[]}={}){
- const nodes=new Map(),calls=[],messages=[],submittedForms=[];let routeCount=0;
+ const nodes=new Map(),calls=[],messages=[],submittedForms=[];let routeCount=0,document;
  class Element{
-  constructor(id){this.id=id;this.html='';this.ids=[];this.handlers={};this.children=[];}
-  set innerHTML(value){for(const id of this.ids){const node=nodes.get(id);if(node)node.innerHTML='';nodes.delete(id);}this.ids=[];this.html=value;for(const match of value.matchAll(/\bid="([^"]+)"/g)){this.ids.push(match[1]);nodes.set(match[1],new Element(match[1]));}}
+  constructor(id,tag='div'){this.id=id;this.html='';this.ids=[];this.handlers={};this.children=[];this.tagName=tag.toUpperCase();this.attributes={};this.markers=new Map();this.ownerDocument=document;}
+  set innerHTML(value){for(const id of this.ids){const node=nodes.get(id);if(node)node.innerHTML='';nodes.delete(id);}this.ids=[];this.markers.clear();this.children=[];this.html=value;for(const match of value.matchAll(/\bid="([^"]+)"/g)){this.ids.push(match[1]);nodes.set(match[1],new Element(match[1]));}for(const match of value.matchAll(/data-history-figure="([^"]+)"/g))this.markers.set(match[1],new Element(''));}
   get innerHTML(){return this.html;}
-  querySelector(selector){return selector.startsWith('#')?nodes.get(selector.slice(1))||null:null;}
+  querySelector(selector){const figure=selector.match(/^\[data-history-figure="([^"]+)"\]$/);return figure?this.markers.get(figure[1])||null:selector.startsWith('#')?nodes.get(selector.slice(1))||null:null;}
   querySelectorAll(){return [];}
   addEventListener(type,fn){this.handlers[type]=fn;}
   append(...children){this.children.push(...children);}
+  appendChild(child){this.children.push(child);return child;}
+  setAttribute(key,value){this.attributes[key]=value;}
   submit(){submittedForms.push(this);}
  }
  const root=new Element('root'),bar=new Element('family-context');nodes.set('root',root);nodes.set('family-context',bar);
  const original=cloud.request;cloud.request=async(path,options={})=>{calls.push({path,...options});if(path.endsWith('/history'))return {items:historyItems};if(path==='invitations/preview'){if(used)throw new Cloud.ApiError(409,{code:'INVITATION_USED'});return {familyId:previewFamily,familyName:previewFamily?'受邀合成家庭':null,role:previewFamily?'EDITOR':null,expiresAt:'2099-01-01T00:00:00Z'};}if(path.endsWith('/members')||path.endsWith('/invitations'))return [];return original(path,options);};
- const document={getElementById:id=>nodes.get(id)||null,querySelector:selector=>nodes.get(selector.slice(1))||null,createElement:tag=>Object.assign(new Element(''),{tagName:tag.toUpperCase()}),body:new Element('body')};
- const window={addEventListener(){}};vm.runInNewContext(fs.readFileSync('assets/cloud-ui.js','utf8'),{window,document,LearningCloud:Cloud,URL,URLSearchParams,history:{replaceState(){}},location:{href:'https://example.test/edu/math/'},CSS:{escape:x=>x},FormData,console});
+ document={getElementById:id=>nodes.get(id)||null,querySelector:selector=>nodes.get(selector.slice(1))||null,createElement:tag=>new Element('',tag),createElementNS:(namespace,tag)=>Object.assign(new Element('',tag),{namespaceURI:namespace}),body:new Element('body')};root.ownerDocument=document;bar.ownerDocument=document;
+ const window={addEventListener(){},MathQuestionFigures:Figures};vm.runInNewContext(fs.readFileSync('assets/cloud-ui.js','utf8'),{window,document,LearningCloud:Cloud,MathQuestionFigures:Figures,URL,URLSearchParams,history:{replaceState(){}},location:{href:'https://example.test/edu/math/'},CSS:{escape:x=>x},FormData,console});
  const ui=window.LearningCloudUI.create(cloud,{root,toast:message=>messages.push(message),onRoute(){routeCount++;},onResume(){}});
  async function route(name,params={}){ui.renderRoute(name,new URLSearchParams(params));await new Promise(setImmediate);return root.innerHTML;}
  return {ui,route,root,bar,nodes,calls,messages,submittedForms,get routeCount(){return routeCount;}};
@@ -143,6 +145,17 @@ async function test(name,fn){await fn();passed++;console.log('✓ '+name);}
  });
  await test('动态题历史显示当时题干、参考答案解析和人工记录，不引用新版题库',async()=>{
   const f=fixture();await f.cloud.init();const snap={schema:2,mode:'review',dataVersion:'frozen-content',answers:[{id:'concept-a',qid:'dynamic-q',result:'correct',text:'<当时回答>',gradeSource:'manual',answeredAt:'2026-01-01T01:00:00Z'}]},content={topics:[{id:'concept-a',name:'原知识点'}],questions:[{id:'dynamic-q',topicId:'concept-a',type:'numeric',prompt:'当时随机题：6+8',answer:'14',explanation:'当时解析，不用当前模板补猜'}]};const view=uiFixture(f.cloud,{historyItems:[{id:'history-a',kind:'SESSION',snapshot:snap,contentSnapshot:content,finished:true,authorId:'user-a'}]});await view.route('history');const html=view.nodes.get('history-list').innerHTML;assert.match(html,/复习 · 1次直接作答/);assert.match(html,/当时随机题：6\+8/);assert.match(html,/当时参考答案：14/);assert.match(html,/当时解析/);assert.match(html,/人工记录/);assert.match(html,/&lt;当时回答&gt;/);assert.ok(!html.includes('<当时回答>'));
+ });
+ await test('真实历史渲染当时图示，旧同ID无图记录不回填最新版，也不跨记录串图',async()=>{
+  const f=fixture();await f.cloud.init();const current=JSON.parse(fs.readFileSync('data/questions.json','utf8')).find(q=>q.id==='cnm_p147_q1'),frozen=clone(current);assert.ok(current.figure);frozen.figure.alt='合成旧版图示：底8厘米、对应高5厘米';
+  const answer={id:frozen.topicId,qid:frozen.id,result:'correct',text:String(frozen.answer)},snap={schema:2,mode:'practice',dataVersion:'frozen-illustrated-version',plan:[frozen],answers:[answer]},content={dataVersion:snap.dataVersion,questions:[frozen],topics:[{id:frozen.topicId,name:'合成几何知识点'}]};
+  const noFigure=clone(frozen);delete noFigure.figure;const oldSnap={...clone(snap),dataVersion:'old-unillustrated-version',plan:[noFigure]},oldContent={dataVersion:oldSnap.dataVersion,questions:[noFigure],topics:content.topics};
+  const view=uiFixture(f.cloud,{historyItems:[{id:'old-no-figure',kind:'SESSION',snapshot:oldSnap,contentSnapshot:oldContent,finished:true,authorId:'user-a'},{id:'frozen-with-figure',kind:'SESSION',payload:{snapshot:snap,contentSnapshot:content,finished:true},authorId:'user-a'}]});await view.route('history');const list=view.nodes.get('history-list'),oldSlot=list.querySelector('[data-history-figure="0-0"]'),frozenSlot=list.querySelector('[data-history-figure="1-0"]');
+  assert.ok(oldSlot);assert.equal(oldSlot.children.length,0);assert.equal(frozenSlot.children.length,1);const figure=frozenSlot.children[0],svg=figure.children[0];assert.equal(figure.tagName,'FIGURE');assert.equal(svg.namespaceURI,'http://www.w3.org/2000/svg');assert.equal(svg.attributes['aria-label'],frozen.figure.alt);assert.notEqual(svg.attributes['aria-label'],current.figure.alt);assert.equal(svg.children[0].textContent,frozen.figure.alt);assert.ok(figure.children[1].textContent.includes('以题干条件为准'));
+  assert.deepEqual(snap.plan[0].figure,content.questions[0].figure);assert.equal(oldContent.questions[0].figure,undefined);
+ });
+ await test('历史仅有冻结plan时保留图示，恶意旧SVG字符串不解析且仍可读题干',async()=>{
+  const f=fixture();await f.cloud.init();const q=clone(JSON.parse(fs.readFileSync('data/questions.json','utf8')).find(q=>q.figure));q.figure.alt='合成plan留存图';const snap={schema:2,mode:'review',dataVersion:'plan-only',plan:[q],answers:[{id:q.topicId,qid:q.id,result:'wrong',text:'0'}]},bad=clone(q);bad.figure='<svg onload="alert(1)"><script>alert(1)</script></svg>';const view=uiFixture(f.cloud,{historyItems:[{id:'plan-only',kind:'SESSION',snapshot:snap,finished:true},{id:'unsafe-old-figure',kind:'SESSION',snapshot:{...clone(snap),plan:[bad]},contentSnapshot:{questions:[bad]},finished:true}]});await view.route('history');const list=view.nodes.get('history-list');assert.equal(list.querySelector('[data-history-figure="0-0"]').children[0].children[0].attributes['aria-label'],q.figure.alt);assert.equal(list.querySelector('[data-history-figure="1-0"]').children.length,0);assert.ok(list.innerHTML.includes(q.prompt));assert.ok(!list.innerHTML.includes('<svg'));assert.ok(!list.innerHTML.includes('<script>'));
  });
  await test('schema2完整导出副本拒绝走旧JSON导入，避免重复作答统计',async()=>{
   const f=fixture();await f.cloud.init();const view=uiFixture(f.cloud);await view.route('history');await view.nodes.get('import-file').onchange({target:{files:[{size:100,text:async()=>JSON.stringify({schema:2,dataVersion:'synthetic-v1',plan:[],answers:[]})}]}});assert.ok(view.messages.some(m=>/不适用旧JSON导入/.test(m)));assert.ok(!view.calls.some(c=>c.path.includes('/imports/preview')));

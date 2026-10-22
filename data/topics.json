@@ -4454,14 +4454,15 @@
     "external": false,
     "standards": [
       {
-        "id": "cms-2022:3.SP.03",
+        "id": "cms-2022:3.SP.06",
         "confidence": "exact"
       },
       {
-        "id": "cms-2022:3.SP.04",
+        "id": "cms-2022:3.SP.07",
         "confidence": "exact"
       }
     ],
+    "standard_mapping_source": "suzhou-upstream-alignment",
     "origin": {
       "project": "cn-math-taxonomy",
       "source_id": "cnm_p140",
@@ -4489,10 +4490,11 @@
     "external": false,
     "standards": [
       {
-        "id": "cms-2022:3.SP.04",
+        "id": "cms-2022:3.SP.07",
         "confidence": "exact"
       }
     ],
+    "standard_mapping_source": "suzhou-upstream-alignment",
     "origin": {
       "project": "cn-math-taxonomy",
       "source_id": "cnm_p141",
@@ -6170,11 +6172,12 @@
     "external": false,
     "standards": [
       {
-        "id": "cms-2022:3.NA.04",
-        "confidence": "inferred",
-        "note": "百分数出现在第三学段目标和教学提示中，已读到的内容要求编号条款没有单独点名，待核。"
+        "id": "cms-2022:3.SP.04",
+        "confidence": "exact",
+        "note": "条款直接要求探索百分数的意义；依据补齐后的第三学段统计条款调整，映射仍未经教师审核。"
       }
     ],
+    "standard_mapping_source": "suzhou-upstream-alignment",
     "origin": {
       "project": "cn-math-taxonomy",
       "source_id": "cnm_p194",
@@ -6202,11 +6205,12 @@
     "external": false,
     "standards": [
       {
-        "id": "cms-2022:3.NA.02",
+        "id": "cms-2022:3.SP.04",
         "confidence": "inferred",
-        "note": "百分数与小数、分数的互化，内容要求写了小数和分数的转化，没有点名百分数，待核。"
+        "note": "百分数与分数、小数互化是理解和应用百分数的教材细化；本条未逐项列出互化方法。"
       }
     ],
+    "standard_mapping_source": "suzhou-upstream-alignment",
     "origin": {
       "project": "cn-math-taxonomy",
       "source_id": "cnm_p195",
@@ -6234,11 +6238,12 @@
     "external": false,
     "standards": [
       {
-        "id": "cms-2022:3.NA.04",
+        "id": "cms-2022:3.SP.04",
         "confidence": "inferred",
-        "note": "求一个数的百分之几是百分数的基本计算，内容要求条款未点名百分数，待核。"
+        "note": "求一个数的百分之几属于百分数实际问题的具体计算题型；本条未单列计算方法。"
       }
     ],
+    "standard_mapping_source": "suzhou-upstream-alignment",
     "origin": {
       "project": "cn-math-taxonomy",
       "source_id": "cnm_p196",
@@ -6266,11 +6271,12 @@
     "external": false,
     "standards": [
       {
-        "id": "cms-2022:3.NA.08",
+        "id": "cms-2022:3.SP.04",
         "confidence": "inferred",
-        "note": "求百分率是比和百分数的应用，内容要求写了比，没有点名百分数，待核。"
+        "note": "求百分率是百分数统计意义的具体应用；本条未单列各种百分率公式。"
       }
     ],
+    "standard_mapping_source": "suzhou-upstream-alignment",
     "origin": {
       "project": "cn-math-taxonomy",
       "source_id": "cnm_p197",
@@ -6298,11 +6304,12 @@
     "external": false,
     "standards": [
       {
-        "id": "cms-2022:3.NA.04",
+        "id": "cms-2022:3.SP.04",
         "confidence": "inferred",
-        "note": "已知百分之几求原数，内容要求条款未点名百分数，待核。"
+        "note": "已知一个数的百分之几求原数是百分数实际问题的逆向题型；本条未单列解法。"
       }
     ],
+    "standard_mapping_source": "suzhou-upstream-alignment",
     "origin": {
       "project": "cn-math-taxonomy",
       "source_id": "cnm_p198",
@@ -6520,11 +6527,12 @@
     "external": false,
     "standards": [
       {
-        "id": "cms-2022:3.NA.08",
+        "id": "cms-2022:3.SP.04",
         "confidence": "inferred",
-        "note": "增长率是百分数应用，内容要求没有单独点名，待核。"
+        "note": "百分数应用属于本条的简单实际问题范围；具体增长率等题型是教材细化，仍需结合题目判断。"
       }
     ],
+    "standard_mapping_source": "suzhou-upstream-alignment",
     "origin": {
       "project": "cn-math-taxonomy",
       "source_id": "cnm_p205",

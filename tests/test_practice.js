@@ -44,7 +44,7 @@ function expected(q,t){
 test('模板独立版本，全部准确引用已落册知识点；模板版本保持，固定题库按独立数据版本扩充',()=>{
  assert.equal(catalog.schema,1);assert.ok(catalog.version);assert.equal(new Set(catalog.templates.map(t=>t.id)).size,catalog.templates.length);
  const mapped=new Set(data.placements.map(p=>p.topicId));for(const t of catalog.templates){assert.ok(mapped.has(t.topicId),t.topicId);assert.equal(t.version,1);}
- assert.equal(data.meta.data_version,'2026-10-21-suzhou-v4');assert.equal(data.questions.length,898);
+ assert.equal(data.meta.data_version,'2026-10-22-suzhou-v5');assert.equal(data.questions.length,898);
  assert.equal(fs.readFileSync(path.join(__dirname,'../config/practice_templates.json'),'utf8'),fs.readFileSync(path.join(__dirname,'../data/practice_templates.json'),'utf8'));
  assert.deepEqual(new Set(catalog.templates.map(t=>data.topics.find(x=>x.id===t.topicId).grade)),new Set([1,2,3,4,5,6]));
 });

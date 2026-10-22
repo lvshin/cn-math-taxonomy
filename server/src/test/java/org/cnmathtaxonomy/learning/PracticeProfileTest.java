@@ -45,6 +45,25 @@ class PracticeProfileTest {
     }
 
     @Test
+    void reviewPreservesStoredFigureAndNeverBackfillsANewFigureIntoOldQuestions() {
+        ObjectNode current = fixed.deepCopy();
+        current.set("figure", mapper.valueToTree(Map.of("schema", 1, "alt", "Stored diagram")));
+        var profile = new PracticeProfile(mapper, mapper.valueToTree(Map.of("data_version", "v2")),
+                mapper.valueToTree(List.of(current)), mapper.createObjectNode());
+        var old = profile.accumulator(at.plusSeconds(60));
+        old.add("old", snapshot(fixed, "correct", null), content(fixed), at, at);
+        JsonNode oldCandidate = mapper.valueToTree(old.result().get("reviewQuestions")).get(0);
+        assertFalse(oldCandidate.has("figure"));
+        ObjectNode frozen = fixed.deepCopy();
+        frozen.set("figure", mapper.valueToTree(Map.of("schema", 1, "alt", "Original diagram")));
+        var illustrated = profile.accumulator(at.plusSeconds(60));
+        illustrated.add("illustrated", snapshot(frozen, "correct", null), content(frozen), at, at);
+        JsonNode candidate = mapper.valueToTree(illustrated.result().get("reviewQuestions")).get(0);
+        assertEquals(frozen.path("figure"), candidate.path("figure"));
+        assertEquals("correct", family(illustrated.result(), "fixed:q1").get("lastResult"));
+    }
+
+    @Test
     void logicalAnswersAreDeduplicatedAndOrderedByTrustedTimeWithoutReturningText() {
         var accumulator = catalog().accumulator(at.plusSeconds(100));
         ObjectNode first = snapshot(fixed, "correct", at.plusSeconds(5));

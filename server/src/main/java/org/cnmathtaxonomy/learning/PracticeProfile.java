@@ -24,7 +24,7 @@ import org.springframework.core.io.ClassPathResource;
 /** Validates stored question identity without regrading an old answer. No answer text leaves this class. */
 final class PracticeProfile {
     private static final List<String> QUESTION_FIELDS = List.of("id", "topicId", "difficulty", "type", "prompt", "answer", "choices", "explanation",
-            "templateId", "templateVersion", "params", "familyKey", "generated", "origin", "review_status");
+            "templateId", "templateVersion", "params", "familyKey", "generated", "origin", "review_status", "figure");
     private static final List<String> SEMANTIC_FIELDS = List.of("topicId", "type", "prompt", "answer", "choices", "explanation");
     private static final Set<String> RESULTS = Set.of("correct", "wrong", "skip");
     private final ObjectMapper mapper;

@@ -8,7 +8,7 @@ const tick=async()=>{for(let i=0;i<5;i++)await new Promise(setImmediate);};
 let passed=0;
 async function test(name,fn){await fn();passed++;console.log('✓ '+name);}
 async function fixture({adaptive=true,role='OWNER',profileTopics=['cnm_p029'],resources=[]}={}){
- const calls=[],sessions=new Map(resources.map(r=>[r.id,copy(r)])),nodes=new Map(),all=new Set(),events={},downloads=[],blobs=[];let profileGate=null,profileStatus=200,failWrites=false,uuid=0,onResume;
+ const figures=[],calls=[],sessions=new Map(resources.map(r=>[r.id,copy(r)])),nodes=new Map(),all=new Set(),events={},downloads=[],blobs=[];let profileGate=null,profileStatus=200,failWrites=false,uuid=0,onResume;
  function matches(el,selector){return selector.split(',').some(part=>{part=part.trim();if(part.startsWith('#'))return el.id===part.slice(1);const m=part.match(/^\[([^=\]]+)(?:="([^"]*)")?\]$/);return m&&el.attrs[m[1]]!==undefined&&(m[2]===undefined||el.attrs[m[1]]===m[2]);});}
  class Element{
   constructor(tag='div',attrs={}){this.tagName=tag.toUpperCase();this.attrs=attrs;this.id=attrs.id||'';this.dataset={};for(const [k,v] of Object.entries(attrs))if(k.startsWith('data-'))this.dataset[k.slice(5).replace(/-([a-z])/g,(_,x)=>x.toUpperCase())]=v;this.handlers={};this.descendants=[];this.disabled=attrs.disabled!==undefined;this.value=attrs.value||'';this.textContent='';this.classList={toggle(){}};if(this.id)nodes.set(this.id,this);all.add(this);}
@@ -42,16 +42,17 @@ async function fixture({adaptive=true,role='OWNER',profileTopics=['cnm_p029'],re
  const location={hash:'#practice',href:'https://example.test/edu/math/',hostname:'example.test'};let hash=location.hash;
  Object.defineProperty(location,'hash',{get:()=>hash,set(value){hash=value;events.hashchange?.();}});
  const document={getElementById:id=>nodes.get(id)||null,querySelectorAll:sel=>[...all].filter(el=>matches(el,sel)),querySelector:sel=>[...all].find(el=>matches(el,sel))||null,createElement:tag=>new Element(tag)};
- const window={DiagEngine:E,addEventListener:(type,fn)=>events[type]=fn,scrollTo(){},print(){}};
+ const MathQuestionFigures={mount:(container,figure)=>{if(container)figures.push(copy(figure));return !!container;}};
+ const window={MathQuestionFigures,DiagEngine:E,addEventListener:(type,fn)=>events[type]=fn,scrollTo(){},print(){}};
  const ui={create(c,opts){onResume=opts.onResume;c.subscribe(kind=>{if(['context','ready','auth'].includes(kind))opts.onRoute();});return {renderRoute:()=>false,renderBar(){}};}};
  class TestURL extends URL{}
  TestURL.createObjectURL=blob=>{blobs.push(blob);return 'blob:synthetic-export';};TestURL.revokeObjectURL=()=>{};
- const globals={window,document,location,LearningCloud:{create:()=>cloud},LearningCloudUI:ui,SuzhouMath:Model,fetch:fetcher,URL:TestURL,URLSearchParams,Blob,FormData:class{constructor(el){this.el=el;}get(name){return this.el.values?.[name];}},setTimeout:()=>0,clearTimeout(){},console,history:{replaceState(_,__,hashValue){hash=hashValue;}}};
+ const globals={MathQuestionFigures,window,document,location,LearningCloud:{create:()=>cloud},LearningCloudUI:ui,SuzhouMath:Model,fetch:fetcher,URL:TestURL,URLSearchParams,Blob,FormData:class{constructor(el){this.el=el;}get(name){return this.el.values?.[name];}},setTimeout:()=>0,clearTimeout(){},console,history:{replaceState(_,__,hashValue){hash=hashValue;}}};
  await vm.runInNewContext(fs.readFileSync('assets/app.js','utf8'),globals);await tick();
  async function click(selector){const el=document.querySelector(selector);assert.ok(el,'missing '+selector+' in '+root.innerHTML.slice(0,120));if(el.disabled)return;const ev={target:el,preventDefault(){}};if(el.onclick)await el.onclick(ev);else if(el.handlers.click)await el.handlers.click(ev);else root.handlers.click?.(ev);await tick();return el;}
  async function answer(text){const form=nodes.get('answer-form');assert.ok(form);form.values={answer:text};form.onsubmit({target:form,preventDefault(){}});await tick();}
  async function change(selector,value){const el=document.querySelector(selector);el.value=String(value);if(el.onchange)el.onchange({target:el});else el.handlers.change?.({target:el});await tick();}
- return {root,cloud,calls,sessions,nodes,click,answer,change,route:async h=>{location.hash=h;await tick();},resume:(resource,ctx)=>onResume(resource,ctx),gate:promise=>profileGate=promise,status:n=>profileStatus=n,failWrites:value=>failWrites=value,downloads,blobs};
+ return {figures,root,cloud,calls,sessions,nodes,click,answer,change,route:async h=>{location.hash=h;await tick();},resume:(resource,ctx)=>onResume(resource,ctx),gate:promise=>profileGate=promise,status:n=>profileStatus=n,failWrites:value=>failWrites=value,downloads,blobs};
 }
 (async()=>{
  await test('旧后端隐藏新入口，原诊断仍能作答和保存时间/判分来源',async()=>{
@@ -59,6 +60,9 @@ async function fixture({adaptive=true,role='OWNER',profileTopics=['cnm_p029'],re
  });
  await test('首页分别展示固定题总数与独立变式模板，不把测试样本计为题库',async()=>{
   const f=await fixture();await f.route('#home');assert.match(f.root.innerHTML,/>898<\/strong><small>道固定题/);assert.match(f.root.innerHTML,/70个变式模板/);assert.match(f.root.innerHTML,/覆盖66个知识点/);
+ });
+ await test('图谱选择题例题保留完整可选说法，不只展示指代题干和图',async()=>{
+  const f=await fixture();await f.route('#map?id=cnm_p105');const sample=Model.create(data,data.practice_templates).graph.bank.cnm_p105.find(q=>q.figure);assert.equal(sample.type,'choice');for(const choice of sample.choices)assert.ok(f.nodes.get('topic-detail').innerHTML.includes(choice.text),choice.key);assert.ok(f.figures.length>0);
  });
  await test('固定题扩充后保留v3已开始的两题轮次，继续不混入新题',async()=>{
   const resource=JSON.parse(fs.readFileSync('tests/fixtures/v3-practice.json')),f=await fixture({resources:[resource]});assert.equal(resource.snapshot.plan.length,2);assert.equal(data.questions.filter(q=>q.topicId==='cnm_p003').length,10);await f.resume(resource,f.cloud.context());await tick();assert.match(f.root.innerHTML,/共2题/);await f.answer(resource.snapshot.plan[0].answer);const saved=[...f.sessions.values()][0];assert.equal(saved.snapshot.dataVersion,'2026-10-20-suzhou-v3');assert.deepEqual(saved.snapshot.plan,resource.snapshot.plan);assert.deepEqual(saved.contentSnapshot,resource.contentSnapshot);
@@ -94,6 +98,13 @@ async function fixture({adaptive=true,role='OWNER',profileTopics=['cnm_p029'],re
  });
  await test('跨设备恢复使用完整旧题计划，模板/教材更新不改题序或答案',async()=>{
   const f=await fixture();await f.click('[data-review]');const resource=copy([...f.sessions.values()][0]);resource.snapshot.dataVersion='frozen-old-version';resource.contentSnapshot.dataVersion='frozen-old-version';resource.snapshot.selection.catalogVersion='frozen-old-catalog';resource.contentSnapshot.topics[0].name='当时的知识点名称';resource.version=3;const g=await fixture({resources:[resource]});await g.resume(resource,g.cloud.context());await tick();assert.match(g.root.innerHTML,new RegExp(resource.snapshot.plan[0].prompt.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));await g.answer(resource.snapshot.plan[0].answer);const next=[...g.sessions.values()][0];assert.equal(next.version,4);assert.equal(next.snapshot.dataVersion,'frozen-old-version');assert.deepEqual(next.snapshot.plan,resource.snapshot.plan);assert.deepEqual(next.contentSnapshot,resource.contentSnapshot);assert.equal(next.snapshot.answers[0].result,'correct');
+ });
+ await test('图形在练习和结果渲染当时快照，旧无图轮次不补最新图',async()=>{
+  const M=Model.create(data,data.practice_templates),base=data.questions.find(q=>q.figure),question={...copy(base),familyKey:'fixed:'+base.id};
+  const state=M.startPractice([base.topicId],{profile:{schema:1,dataVersion:data.meta.data_version,topicIds:[],families:{},reviewQuestions:[]},limit:5,seed:'figure-ui',now:'2026-01-01T00:00:00Z'});state.plan=[question];
+  const content=Cloud.create({fetcher:async()=>{}}).contentSnapshot(M,state),resource={id:'illustrated-session',snapshot:M.snapshot(state),contentSnapshot:content,finished:false,version:0};
+  const f=await fixture({resources:[resource]});await f.resume(resource,f.cloud.context());await tick();assert.deepEqual(f.figures.at(-1),question.figure);await f.answer(question.answer);await f.click('#next-question');assert.deepEqual(f.figures.at(-1),question.figure);assert.deepEqual([...f.sessions.values()][0].contentSnapshot,content);
+  const old=copy(resource);old.id='old-no-figure';delete old.snapshot.plan[0].figure;delete old.contentSnapshot.questions[0].figure;const g=await fixture({resources:[old]});await g.resume(old,g.cloud.context());await tick();assert.equal(g.figures.length,0);await g.answer(question.answer);assert.ok(![...g.sessions.values()][0].snapshot.plan[0].figure);
  });
  await test('schema2内容快照键顺序兼容PG JSONB，内容冲突拒绝恢复',async()=>{
   const M=Model.create(data,data.practice_templates),profile={schema:1,dataVersion:data.meta.data_version,topicIds:[],families:{},reviewQuestions:[]},s=M.startPractice(['cnm_p029'],{profile,limit:5,seed:'synthetic',now:'2026-01-01T00:00:00Z'}),cloud=Cloud.create({fetcher:async()=>{}}),content=cloud.contentSnapshot(M,s),snap=M.snapshot(s);const reordered=JSON.parse(JSON.stringify(content),(_,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.entries(v).reverse()):v);assert.ok(M.restore(snap,reordered));reordered.questions[0].answer='changed';assert.equal(M.restore(snap,reordered),null);

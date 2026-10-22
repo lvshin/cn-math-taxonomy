@@ -1,0 +1,2127 @@
+{
+  "schema": 1,
+  "version": "2026-10-22-figures-v1",
+  "upstream_commit": "7be0aa56e97497c685ecead41f40dad7dfac45a9",
+  "entries": {
+    "cnm_p077_q1": {
+      "expected_prompt": "正方形四条边有什么关系？",
+      "source_question_id": "cnm_p077_q2",
+      "adaptation": "当前题询问正方形，采用上游正方形图；未按同ID误贴长方形。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0.0,
+          0.0,
+          220.0,
+          170.0
+        ],
+        "alt": "正方形示意，四条边分别标有相同的等长记号。",
+        "nodes": [
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 24,
+              "width": 120,
+              "height": 120,
+              "fill": "currentColor",
+              "fill-opacity": 0.12,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 24,
+              "width": 120,
+              "height": 120,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 64,
+              "y1": 24,
+              "x2": 64,
+              "y2": 38,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.2,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 64,
+              "y1": 38,
+              "x2": 50,
+              "y2": 38,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.2,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 110,
+              "y1": 16,
+              "x2": 110,
+              "y2": 32,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 178,
+              "y1": 84,
+              "x2": 162,
+              "y2": 84,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 110,
+              "y1": 152,
+              "x2": 110,
+              "y2": 136,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 42,
+              "y1": 84,
+              "x2": 58,
+              "y2": 84,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          }
+        ]
+      }
+    },
+    "cnm_p077_q2": {
+      "expected_prompt": "长方形有几个直角？",
+      "source_question_id": "cnm_p077_q1",
+      "adaptation": "当前题询问长方形直角数，补齐四个直角记号。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0.0,
+          0.0,
+          250.0,
+          170.0
+        ],
+        "alt": "长方形示意，四个顶点均标出直角。",
+        "nodes": [
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 40,
+              "y": 36,
+              "width": 180,
+              "height": 100,
+              "fill": "currentColor",
+              "fill-opacity": 0.12,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 40,
+              "y": 36,
+              "width": 180,
+              "height": 100,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 122,
+              "y1": 28,
+              "x2": 122,
+              "y2": 44,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 122,
+              "y1": 128,
+              "x2": 122,
+              "y2": 144,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 48,
+              "y1": 78,
+              "x2": 32,
+              "y2": 78,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 48,
+              "y1": 94,
+              "x2": 32,
+              "y2": 94,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 228,
+              "y1": 78,
+              "x2": 212,
+              "y2": 78,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 228,
+              "y1": 94,
+              "x2": 212,
+              "y2": 94,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 54,
+              "y1": 36,
+              "x2": 54,
+              "y2": 50,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.2,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 54,
+              "y1": 50,
+              "x2": 40,
+              "y2": 50,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.2,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 220,
+              "y1": 50,
+              "x2": 206,
+              "y2": 50,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 206,
+              "y1": 50,
+              "x2": 206,
+              "y2": 36,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 220,
+              "y1": 122,
+              "x2": 206,
+              "y2": 122,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 206,
+              "y1": 122,
+              "x2": 206,
+              "y2": 136,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 40,
+              "y1": 122,
+              "x2": 54,
+              "y2": 122,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 54,
+              "y1": 122,
+              "x2": 54,
+              "y2": 136,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          }
+        ]
+      }
+    },
+    "cnm_p105_q1": {
+      "expected_prompt": "下面哪个说法符合平行四边形的特征？",
+      "source_question_id": "cnm_p105_q1",
+      "adaptation": "按当前题意复用示意；保留原题文字、答案和选项。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0.0,
+          0.0,
+          240.0,
+          160.0
+        ],
+        "alt": "平行四边形示意，两组对边分别有平行记号。",
+        "nodes": [
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "70,36 210,36 170,130 30,130",
+              "fill": "currentColor",
+              "fill-opacity": 0.1,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "70,36 210,36 170,130 30,130",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "134,42 147,36 134,30",
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "94,136 107,130 94,124",
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "46.8,75.1 47.3,89.4 57.9,79.8",
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "186.8,75.1 187.3,89.4 197.9,79.8",
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 154,
+              "y1": 28,
+              "x2": 154,
+              "y2": 44,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 86,
+              "y1": 122,
+              "x2": 86,
+              "y2": 138,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          }
+        ]
+      }
+    },
+    "cnm_p105_q2": {
+      "expected_prompt": "只有一组对边平行的四边形叫什么？",
+      "source_question_id": "cnm_p105_q2",
+      "adaptation": "按当前题意复用示意；保留原题文字、答案和选项。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0.0,
+          0.0,
+          240.0,
+          160.0
+        ],
+        "alt": "四边形示意，上下两条边平行，另外两条边不平行。",
+        "nodes": [
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "70,40 170,40 210,136 30,136",
+              "fill": "currentColor",
+              "fill-opacity": 0.1,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "70,40 170,40 210,136 30,136",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "114,46 127,40 114,34",
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "114,142 127,136 114,130",
+              "fill": "currentColor"
+            }
+          }
+        ]
+      }
+    },
+    "cnm_p147_q1": {
+      "expected_prompt": "平行四边形底8厘米，对应高5厘米，面积多少平方厘米？",
+      "source_question_id": "cnm_p147_q1",
+      "adaptation": "按苏教题底8、高5重绘坐标和标注，替换上游底7、高4。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          290,
+          205
+        ],
+        "alt": "平行四边形，底8厘米，对应高5厘米；虚线表示对应的高。",
+        "nodes": [
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "40,160 200,160 235,60 75,60",
+              "fill": "currentColor",
+              "fill-opacity": 0.12,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "40,160 200,160 235,60 75,60",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 75,
+              "y1": 60,
+              "x2": 75,
+              "y2": 160,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 1.8,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round",
+              "stroke-dasharray": "7 5"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 75,
+              "y1": 148,
+              "x2": 87,
+              "y2": 148,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 87,
+              "y1": 148,
+              "x2": 87,
+              "y2": 160,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 120,
+              "y": 188,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "8厘米"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 65,
+              "y": 112,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "end"
+            },
+            "text": "5厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p148_q1": {
+      "expected_prompt": "三角形底10厘米、对应高6厘米，面积多少平方厘米？",
+      "source_question_id": "cnm_p148_q1",
+      "adaptation": "按苏教题底10、高6重绘坐标和标注，替换上游底8、高5。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          255,
+          215
+        ],
+        "alt": "三角形，底10厘米，对应高6厘米；虚线表示对应的高。",
+        "nodes": [
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "30,170 210,170 84,62",
+              "fill": "currentColor",
+              "fill-opacity": 0.12,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "30,170 210,170 84,62",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 84,
+              "y1": 62,
+              "x2": 84,
+              "y2": 170,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 1.8,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round",
+              "stroke-dasharray": "7 5"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 84,
+              "y1": 158,
+              "x2": 96,
+              "y2": 158,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 96,
+              "y1": 158,
+              "x2": 96,
+              "y2": 170,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 120,
+              "y": 200,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "10厘米"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 96,
+              "y": 116,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "start"
+            },
+            "text": "6厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p149_q1": {
+      "expected_prompt": "梯形上底3、下底7、高4厘米，面积多少平方厘米？",
+      "source_question_id": "cnm_p149_q1",
+      "adaptation": "按苏教题上底3、下底7、高4重绘，替换上游上底2、下底6。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          245,
+          210
+        ],
+        "alt": "梯形，上底3厘米，下底7厘米，对应高4厘米。",
+        "nodes": [
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "78,64 30,160 198,160 150,64",
+              "fill": "currentColor",
+              "fill-opacity": 0.12,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "polygon",
+            "attrs": {
+              "points": "78,64 30,160 198,160 150,64",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 78,
+              "y1": 64,
+              "x2": 78,
+              "y2": 160,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 1.8,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round",
+              "stroke-dasharray": "7 5"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 78,
+              "y1": 148,
+              "x2": 90,
+              "y2": 148,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 90,
+              "y1": 148,
+              "x2": 90,
+              "y2": 160,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 114,
+              "y": 52,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "3厘米"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 114,
+              "y": 190,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "7厘米"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 66,
+              "y": 112,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "end"
+            },
+            "text": "4厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p188_extra_001": {
+      "expected_prompt": "一个圆的直径是10厘米，它的半径是多少厘米？",
+      "source_question_id": "cnm_p188_q3",
+      "adaptation": "按题意将上游直径10示意用于新增题，不按原ID匹配。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0.0,
+          0.0,
+          220.0,
+          190.0
+        ],
+        "alt": "圆心位于直径中点，整条直径标为10厘米。",
+        "nodes": [
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 100,
+              "r": 70,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 50,
+              "y1": 100,
+              "x2": 190,
+              "y2": 100,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 100,
+              "r": 3,
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 120,
+              "y": 90,
+              "fill": "currentColor",
+              "font-weight": 650,
+              "font-size": 16,
+              "text-anchor": "middle"
+            },
+            "text": "10 cm"
+          }
+        ]
+      }
+    },
+    "cnm_p206_q1": {
+      "expected_prompt": "圆柱的两个底面有什么特点？",
+      "source_question_id": "cnm_p206_q1",
+      "adaptation": "按当前题意复用示意；保留原题文字、答案和选项。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0.0,
+          0.0,
+          232.0,
+          188.0
+        ],
+        "alt": "圆柱示意，两个底面平行且形状大小相同；透视画法中的圆呈椭圆。",
+        "nodes": [
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 56 148 A 70 20 0 0 0 196 148",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-dasharray": "7 5",
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 56,
+              "y1": 48,
+              "x2": 56,
+              "y2": 148,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 196,
+              "y1": 48,
+              "x2": 196,
+              "y2": 148,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 56 148 A 70 20 0 0 1 196 148",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "ellipse",
+            "attrs": {
+              "cx": 126,
+              "cy": 48,
+              "rx": 70,
+              "ry": 20,
+              "fill": "currentColor",
+              "fill-opacity": 0.18,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "ellipse",
+            "attrs": {
+              "cx": 126,
+              "cy": 48,
+              "rx": 70,
+              "ry": 20,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          }
+        ]
+      }
+    },
+    "cnm_p207_q1": {
+      "expected_prompt": "圆柱底面积12平方厘米，高4厘米，体积多少立方厘米？",
+      "source_question_id": "cnm_p207_q3",
+      "adaptation": "对应当前底面积12、高4，改取上游同条件的第3题图。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0.0,
+          0.0,
+          312.0,
+          194.0
+        ],
+        "alt": "圆柱，底面积12平方厘米，高4厘米。",
+        "nodes": [
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 56 136 A 64 18 0 0 0 184 136",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-dasharray": "7 5",
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 56,
+              "y1": 46,
+              "x2": 56,
+              "y2": 136,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 184,
+              "y1": 46,
+              "x2": 184,
+              "y2": 136,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 56 136 A 64 18 0 0 1 184 136",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "ellipse",
+            "attrs": {
+              "cx": 120,
+              "cy": 46,
+              "rx": 64,
+              "ry": 18,
+              "fill": "currentColor",
+              "fill-opacity": 0.18,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "ellipse",
+            "attrs": {
+              "cx": 120,
+              "cy": 46,
+              "rx": 64,
+              "ry": 18,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 198,
+              "y": 96,
+              "fill": "currentColor",
+              "font-weight": 650,
+              "font-size": 16,
+              "text-anchor": "start"
+            },
+            "text": "h = 4 cm"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 120,
+              "y": 176,
+              "fill": "currentColor",
+              "font-weight": 650,
+              "font-size": 16,
+              "text-anchor": "middle"
+            },
+            "text": "底面积 12 cm²"
+          }
+        ]
+      }
+    },
+    "cnm_p207_q2": {
+      "expected_prompt": "圆柱半径2厘米，高5厘米，取π＝3.14，体积多少立方厘米？",
+      "source_question_id": "cnm_p207_q1",
+      "adaptation": "对应当前半径2、高5，改取上游同条件的第1题图。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0.0,
+          0.0,
+          280.0,
+          200.0
+        ],
+        "alt": "圆柱，底面半径2厘米，高5厘米。",
+        "nodes": [
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 56 164 A 48 16 0 0 0 152 164",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-dasharray": "7 5",
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 56,
+              "y1": 44,
+              "x2": 56,
+              "y2": 164,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 152,
+              "y1": 44,
+              "x2": 152,
+              "y2": 164,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 56 164 A 48 16 0 0 1 152 164",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "ellipse",
+            "attrs": {
+              "cx": 104,
+              "cy": 44,
+              "rx": 48,
+              "ry": 16,
+              "fill": "currentColor",
+              "fill-opacity": 0.18,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "ellipse",
+            "attrs": {
+              "cx": 104,
+              "cy": 44,
+              "rx": 48,
+              "ry": 16,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.6,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 104,
+              "y1": 44,
+              "x2": 152,
+              "y2": 44,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 1.6,
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 104,
+              "cy": 44,
+              "r": 2.4,
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 125.6,
+              "y": 36,
+              "fill": "currentColor",
+              "font-weight": 650,
+              "font-size": 16,
+              "text-anchor": "middle"
+            },
+            "text": "r = 2 cm"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 166,
+              "y": 109,
+              "fill": "currentColor",
+              "font-weight": 650,
+              "font-size": 16,
+              "text-anchor": "start"
+            },
+            "text": "h = 5 cm"
+          }
+        ]
+      }
+    },
+    "cnm_p209_q1": {
+      "expected_prompt": "圆锥与一个圆柱等底等高，圆柱体积30立方厘米，圆锥体积多少立方厘米？",
+      "source_question_id": "cnm_p209_q3",
+      "adaptation": "对应当前等底等高、圆柱体积30，采用上游第3题图。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0.0,
+          0.0,
+          400.0,
+          204.0
+        ],
+        "alt": "等底等高的圆柱和圆锥，圆柱体积30立方厘米。",
+        "nodes": [
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 185,
+              "y": 20,
+              "fill": "currentColor",
+              "font-weight": 650,
+              "font-size": 16,
+              "text-anchor": "middle"
+            },
+            "text": "等底等高"
+          },
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 44 132 A 46 14 0 0 0 136 132",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.1,
+              "stroke-dasharray": "7 5",
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 44,
+              "y1": 36,
+              "x2": 44,
+              "y2": 132,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 136,
+              "y1": 36,
+              "x2": 136,
+              "y2": 132,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 44 132 A 46 14 0 0 1 136 132",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "ellipse",
+            "attrs": {
+              "cx": 90,
+              "cy": 36,
+              "rx": 46,
+              "ry": 14,
+              "fill": "currentColor",
+              "fill-opacity": 0.16,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "ellipse",
+            "attrs": {
+              "cx": 90,
+              "cy": 36,
+              "rx": 46,
+              "ry": 14,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 234 132 A 46 14 0 0 0 326 132",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.1,
+              "stroke-dasharray": "7 5",
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 280,
+              "y1": 36,
+              "x2": 234,
+              "y2": 132,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 280,
+              "y1": 36,
+              "x2": 326,
+              "y2": 132,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 234 132 A 46 14 0 0 1 326 132",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.4,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 90,
+              "y": 168,
+              "fill": "currentColor",
+              "font-weight": 650,
+              "font-size": 15,
+              "text-anchor": "middle"
+            },
+            "text": "圆柱"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 90,
+              "y": 188,
+              "fill": "currentColor",
+              "font-weight": 650,
+              "font-size": 14,
+              "text-anchor": "middle"
+            },
+            "text": "体积 30 cm³"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 280,
+              "y": 168,
+              "fill": "currentColor",
+              "font-weight": 650,
+              "font-size": 15,
+              "text-anchor": "middle"
+            },
+            "text": "圆锥"
+          }
+        ]
+      }
+    },
+    "cnm_p078_q1": {
+      "expected_prompt": "长方形长8厘米、宽3厘米，周长多少厘米？",
+      "source_question_id": "cnm_p077_q1",
+      "adaptation": "沿用上游平面图示形式，按当前题目边长重新绘制；只标已知条件。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          275,
+          155.5
+        ],
+        "alt": "长方形，长8厘米、宽3厘米。",
+        "nodes": [
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 38,
+              "width": 180,
+              "height": 67.5,
+              "fill": "currentColor",
+              "fill-opacity": 0.12,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 38,
+              "width": 180,
+              "height": 67.5,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 140.0,
+              "y": 132.5,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "8厘米"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 40,
+              "y": 76.75,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "end"
+            },
+            "text": "3厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p078_q2": {
+      "expected_prompt": "正方形边长6厘米，周长多少厘米？",
+      "source_question_id": "cnm_p077_q2",
+      "adaptation": "沿用上游平面图示形式，按当前题目边长重新绘制；只标已知条件。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          275,
+          268.0
+        ],
+        "alt": "正方形，边长6厘米。",
+        "nodes": [
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 38,
+              "width": 180,
+              "height": 180.0,
+              "fill": "currentColor",
+              "fill-opacity": 0.12,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 38,
+              "width": 180,
+              "height": 180.0,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 140.0,
+              "y": 245.0,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "6厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p089_q1": {
+      "expected_prompt": "长方形长7厘米、宽4厘米，面积多少平方厘米？",
+      "source_question_id": "cnm_p077_q1",
+      "adaptation": "沿用上游平面图示形式，按当前题目边长重新绘制；只标已知条件。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          275,
+          190.85714285714286
+        ],
+        "alt": "长方形，长7厘米、宽4厘米。",
+        "nodes": [
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 38,
+              "width": 180,
+              "height": 102.85714285714286,
+              "fill": "currentColor",
+              "fill-opacity": 0.12,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 38,
+              "width": 180,
+              "height": 102.85714285714286,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 140.0,
+              "y": 167.85714285714286,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "7厘米"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 40,
+              "y": 94.42857142857143,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "end"
+            },
+            "text": "4厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p089_q2": {
+      "expected_prompt": "正方形边长5厘米，面积多少平方厘米？",
+      "source_question_id": "cnm_p077_q2",
+      "adaptation": "沿用上游平面图示形式，按当前题目边长重新绘制；只标已知条件。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          275,
+          268.0
+        ],
+        "alt": "正方形，边长5厘米。",
+        "nodes": [
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 38,
+              "width": 180,
+              "height": 180.0,
+              "fill": "currentColor",
+              "fill-opacity": 0.12,
+              "stroke": "none"
+            }
+          },
+          {
+            "tag": "rect",
+            "attrs": {
+              "x": 50,
+              "y": 38,
+              "width": 180,
+              "height": 180.0,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 140.0,
+              "y": 245.0,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "5厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p188_q2": {
+      "expected_prompt": "圆的半径4厘米，直径多少厘米？",
+      "source_question_id": "cnm_p188_q3",
+      "adaptation": "沿用上游圆和尺寸线形式，按当前题意标半径或直径，不标所求值。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          235,
+          210
+        ],
+        "alt": "圆，半径4厘米，所标线段连接圆心和圆上一点。",
+        "nodes": [
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 70,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 3,
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 120,
+              "y1": 110,
+              "x2": 190,
+              "y2": 110,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 155,
+              "y": 100,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "4厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p190_q1": {
+      "expected_prompt": "圆的直径10厘米，取π＝3.14，周长多少厘米？",
+      "source_question_id": "cnm_p188_q3",
+      "adaptation": "沿用上游圆和尺寸线形式，按当前题意标半径或直径，不标所求值。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          235,
+          210
+        ],
+        "alt": "圆，直径10厘米，所标线段经过圆心连接圆上两点。",
+        "nodes": [
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 70,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 3,
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 50,
+              "y1": 110,
+              "x2": 190,
+              "y2": 110,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 120,
+              "y": 100,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "10厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p190_q2": {
+      "expected_prompt": "圆的半径3厘米，取π＝3.14，周长多少厘米？",
+      "source_question_id": "cnm_p188_q3",
+      "adaptation": "沿用上游圆和尺寸线形式，按当前题意标半径或直径，不标所求值。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          235,
+          210
+        ],
+        "alt": "圆，半径3厘米，所标线段连接圆心和圆上一点。",
+        "nodes": [
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 70,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 3,
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 120,
+              "y1": 110,
+              "x2": 190,
+              "y2": 110,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 155,
+              "y": 100,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "3厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p192_q1": {
+      "expected_prompt": "圆的半径2厘米，取π＝3.14，面积多少平方厘米？",
+      "source_question_id": "cnm_p188_q3",
+      "adaptation": "沿用上游圆和尺寸线形式，按当前题意标半径或直径，不标所求值。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          235,
+          210
+        ],
+        "alt": "圆，半径2厘米，所标线段连接圆心和圆上一点。",
+        "nodes": [
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 70,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 3,
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 120,
+              "y1": 110,
+              "x2": 190,
+              "y2": 110,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 155,
+              "y": 100,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "2厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p192_q2": {
+      "expected_prompt": "圆的直径10厘米，取π＝3.14，面积多少平方厘米？",
+      "source_question_id": "cnm_p188_q3",
+      "adaptation": "沿用上游圆和尺寸线形式，按当前题意标半径或直径，不标所求值。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          235,
+          210
+        ],
+        "alt": "圆，直径10厘米，所标线段经过圆心连接圆上两点。",
+        "nodes": [
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 70,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "circle",
+            "attrs": {
+              "cx": 120,
+              "cy": 110,
+              "r": 3,
+              "fill": "currentColor"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 50,
+              "y1": 110,
+              "x2": 190,
+              "y2": 110,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 120,
+              "y": 100,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "10厘米"
+          }
+        ]
+      }
+    },
+    "cnm_p209_q2": {
+      "expected_prompt": "圆锥底面积18平方厘米，高5厘米，体积多少立方厘米？",
+      "source_question_id": "cnm_p209_q3",
+      "adaptation": "沿用上游圆锥透视形式，按当前底面积18、高5重新绘制，不假定未知半径。",
+      "figure": {
+        "schema": 1,
+        "viewBox": [
+          0,
+          0,
+          280,
+          225
+        ],
+        "alt": "圆锥，底面积18平方厘米，高5厘米；虚线表示顶点到底面圆心的高。",
+        "nodes": [
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 50 150 A 65 18 0 0 0 180 150",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round",
+              "stroke-dasharray": "7 5"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 115,
+              "y1": 30,
+              "x2": 50,
+              "y2": 150,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 115,
+              "y1": 30,
+              "x2": 180,
+              "y2": 150,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "path",
+            "attrs": {
+              "d": "M 50 150 A 65 18 0 0 1 180 150",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 2.5,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round"
+            }
+          },
+          {
+            "tag": "line",
+            "attrs": {
+              "x1": 115,
+              "y1": 30,
+              "x2": 115,
+              "y2": 150,
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": 1.8,
+              "stroke-linejoin": "round",
+              "stroke-linecap": "round",
+              "stroke-dasharray": "7 5"
+            }
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 130,
+              "y": 95,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "start"
+            },
+            "text": "5厘米"
+          },
+          {
+            "tag": "text",
+            "attrs": {
+              "x": 115,
+              "y": 198,
+              "fill": "currentColor",
+              "font-size": 16,
+              "font-weight": 650,
+              "text-anchor": "middle"
+            },
+            "text": "底面积18平方厘米"
+          }
+        ]
+      }
+    }
+  }
+}
