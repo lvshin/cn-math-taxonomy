@@ -1,17 +1,19 @@
 {
   "schema_version": 1,
-  "data_version": "2026-10-22-suzhou-v5",
-  "as_of": "2026-10-22",
+  "data_version": "2026-10-26-suzhou-v6",
+  "as_of": "2026-10-26",
   "title": "苏州小学数学知识地图",
   "scope": "现用苏教小学1—6年级十二册；四上暂选，四至六下采用2013系列",
   "upstream": {
     "url": "https://github.com/xiaoyang111222/cn-math-taxonomy",
     "commit": "10a0f562b32433b785729661c2164756cb933154",
-    "checked_commit": "62b341d4b66b175413d6e3f697e37639fd96aa2d",
+    "checked_commit": "ddea0bfd0dbe7bf728e9ea1a6baf866fe5f736f9",
     "selected_updates": [
       "primary-standards-2025",
       "geometry-figure-adaptation",
-      "map-interaction-adaptation"
+      "map-interaction-adaptation",
+      "explicit-percent-answers",
+      "primary-question-correctness"
     ],
     "license": "CC BY-NC 4.0"
   },

@@ -856,11 +856,17 @@
     return { verdict: 'manual', reason: 'unsure' }; // 文字 / 代数式写法太多，不可靠时让用户对照参考答案自评
   }
 
+  /** 显式 percent 题的答案保存百分数数值部分；不改变普通数学题的百分数等值规则。 */
+  function stripPercent(user) {
+    const s = String(user == null ? '' : user).trim();
+    return s.replace(/\s*[%％]$/, '');
+  }
+
   /** 按题型判题：choice 比字母（或选项文字）；numeric 数值等价；short 规范化精确匹配 + accept；self 永远自评。 */
   function judgeQuestion(q, user) {
     switch (q.type) {
       case 'choice': return judgeChoice(user, q);
-      case 'numeric': return judgeNumeric(user, q);
+      case 'numeric': return judgeNumeric(q.percent === true ? stripPercent(user) : user, q);
       case 'short': return judgeShort(user, q);
       case 'self': return { verdict: 'manual', reason: 'self' };
       default: return judgeAnswer(user, q.answer); // legacy：来自 diagnostic_question

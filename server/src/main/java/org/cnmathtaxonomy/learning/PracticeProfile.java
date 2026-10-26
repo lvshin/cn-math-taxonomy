@@ -24,8 +24,8 @@ import org.springframework.core.io.ClassPathResource;
 /** Validates stored question identity without regrading an old answer. No answer text leaves this class. */
 final class PracticeProfile {
     private static final List<String> QUESTION_FIELDS = List.of("id", "topicId", "difficulty", "type", "prompt", "answer", "choices", "explanation",
-            "templateId", "templateVersion", "params", "familyKey", "generated", "origin", "review_status", "figure");
-    private static final List<String> SEMANTIC_FIELDS = List.of("topicId", "type", "prompt", "answer", "choices", "explanation");
+            "templateId", "templateVersion", "params", "familyKey", "generated", "origin", "review_status", "figure", "percent");
+    private static final List<String> SEMANTIC_FIELDS = List.of("topicId", "type", "prompt", "answer", "choices", "explanation", "percent");
     private static final Set<String> RESULTS = Set.of("correct", "wrong", "skip");
     private final ObjectMapper mapper;
     private final Map<String, JsonNode> fixed = new HashMap<>();
@@ -151,6 +151,8 @@ final class PracticeProfile {
         if (!question.isObject() || !text(question.path("id"), 300) || !text(question.path("topicId"), 100)
                 || !text(question.path("prompt"), 10000) || !question.hasNonNull("answer")
                 || !text(question.path("explanation"), 10000)) return null;
+        if (question.has("percent") && (!question.path("percent").isBoolean() || !question.path("percent").asBoolean()
+                || !"numeric".equals(question.path("type").asText()))) return null;
         String family = familyKey(question);
         if (question.hasNonNull("familyKey") && !family.equals(question.path("familyKey").asText())) return null;
         if (question.hasNonNull("templateId")) {

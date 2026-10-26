@@ -562,6 +562,27 @@ test('单位：别名等价，缺省单位放行，不同单位判错', () => {
   assert.strictEqual(verdict('1,000', '1000'), 'correct');
 });
 
+test('显式百分数题接受数值与百分号，普通题和旧无标记快照保留原判法', () => {
+  const verdict = (q, value) => E.judgeQuestion(q, value).verdict;
+  for (const answer of ['25', '30', '12.5', '0', '100']) {
+    const q = { type: 'numeric', answer, percent: true };
+    for (const value of [answer, answer + '%', answer + '％', '  ' + answer + ' %  ']) {
+      assert.strictEqual(verdict(q, value), 'correct', answer + ': ' + value);
+    }
+    assert.strictEqual(verdict(q, String(Number(answer) + 1) + '%'), 'wrong');
+    if (answer !== '0') assert.strictEqual(verdict(q, String(Number(answer) / 100)), 'wrong');
+  }
+  const precise = { type: 'numeric', answer: '33.333333333333333333', percent: true };
+  assert.strictEqual(verdict(precise, '33.333333333333333333%'), 'correct');
+  assert.strictEqual(verdict(precise, '33.333333333333333334%'), 'wrong');
+  assert.strictEqual(verdict({ type: 'numeric', answer: '12.5', percent: true }, '12.50％'), 'correct');
+  assert.strictEqual(verdict({ type: 'numeric', answer: '0.25' }, '25%'), 'correct');
+  assert.strictEqual(verdict({ type: 'numeric', answer: '25' }, '25%'), 'wrong');
+  assert.strictEqual(verdict({ type: 'numeric', answer: '25', percent: false }, '25%'), 'wrong');
+  assert.strictEqual(verdict({ type: 'numeric', answer: '25', percent: 'true' }, '25%'), 'wrong');
+  assert.notStrictEqual(verdict({ type: 'numeric', answer: '25', percent: true }, '25%米'), 'correct');
+});
+
 test('坐标等有括号的多值答案', () => {
   assert.strictEqual(verdict('（１，２）', '(1,2)'), 'correct');
   assert.strictEqual(verdict('(1, 2)', '(1,2)'), 'correct');

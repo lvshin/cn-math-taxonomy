@@ -1115,9 +1115,10 @@
   {
     "topicId": "cnm_p140",
     "prerequisiteId": "cnm_p037",
-    "strength": "hard",
-    "reason": "学习「可能性」需要先掌握「分类与整理」。",
-    "review_status": "ai_draft_not_teacher_reviewed"
+    "strength": "soft",
+    "reason": "「分类与整理」对学习「可能性」有帮助（会分类、会数数更容易统计结果），但不会前者也可以开始学后者。",
+    "review_status": "ai_draft_not_teacher_reviewed",
+    "source": "upstream-correctness:611fd40aff09f338ba3049366e46915bdcd48c96"
   },
   {
     "topicId": "cnm_p141",

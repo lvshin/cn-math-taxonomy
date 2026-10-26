@@ -409,22 +409,23 @@
     "choices": [
       {
         "key": "A",
-        "text": "一个也没有"
+        "text": "0"
       },
       {
         "key": "B",
-        "text": "还有 1 个"
+        "text": "1"
       },
       {
         "key": "C",
-        "text": "比 5 多"
+        "text": "5"
       }
     ],
     "answer": "A",
     "explanation": "一个也没有，用 0 表示。",
-    "verify": "'一个也没有'",
+    "verify": "0",
     "origin": "upstream-reused",
-    "review_status": "ai_draft_not_teacher_reviewed"
+    "review_status": "ai_draft_not_teacher_reviewed",
+    "content_correction": "611fd40aff09f338ba3049366e46915bdcd48c96"
   },
   {
     "id": "cnm_p005_q3",
@@ -1855,22 +1856,23 @@
     "choices": [
       {
         "key": "A",
-        "text": "先把十几分成 10 和几"
+        "text": "3"
       },
       {
         "key": "B",
-        "text": "先把 9 加成 13"
+        "text": "4"
       },
       {
         "key": "C",
-        "text": "先算 13 个十"
+        "text": "9"
       }
     ],
     "answer": "A",
     "explanation": "13 分成 10 和 3，10－9＝1，再加 3 得 4。",
-    "verify": "'先把十几分成 10 和几'",
+    "verify": "13-10",
     "origin": "upstream-reused",
-    "review_status": "ai_draft_not_teacher_reviewed"
+    "review_status": "ai_draft_not_teacher_reviewed",
+    "content_correction": "611fd40aff09f338ba3049366e46915bdcd48c96"
   },
   {
     "id": "cnm_p025_q2",
@@ -2748,12 +2750,13 @@
     "topicId": "cnm_p040",
     "difficulty": "standard",
     "type": "numeric",
-    "prompt": "计算：3＋2＝？",
+    "prompt": "两根小棒分别长 3 厘米和 2 厘米，首尾接在一起，一共长多少厘米？",
     "answer": "5",
-    "explanation": "两段分别长 3 厘米和 2 厘米，合起来 5 厘米。",
+    "explanation": "两段长度相加，3 厘米＋2 厘米＝5 厘米。",
     "verify": "3+2",
     "origin": "upstream-reused",
-    "review_status": "ai_draft_not_teacher_reviewed"
+    "review_status": "ai_draft_not_teacher_reviewed",
+    "content_correction": "1a76fb33bfa185325b40d328884bc22fdc76cc96"
   },
   {
     "id": "cnm_p040_q4",
@@ -7782,27 +7785,14 @@
     "id": "cnm_p112_q1",
     "topicId": "cnm_p112",
     "difficulty": "basic",
-    "type": "choice",
-    "prompt": "小括号要怎样算？",
-    "choices": [
-      {
-        "key": "A",
-        "text": "先算小括号里面的"
-      },
-      {
-        "key": "B",
-        "text": "先算加减再算括号"
-      },
-      {
-        "key": "C",
-        "text": "小括号可以跳过"
-      }
-    ],
-    "answer": "A",
-    "explanation": "括号优先，然后才是先乘除、后加减。",
-    "verify": "'先算小括号里面的'",
+    "type": "numeric",
+    "prompt": "运算顺序是先算小括号里面的，再算乘除，最后算加减。50－（8＋12）×2 的得数是多少？",
+    "answer": "10",
+    "explanation": "先算 8＋12＝20，再算 20×2＝40，最后 50－40＝10。",
+    "verify": "50-(8+12)*2",
     "origin": "upstream-reused",
-    "review_status": "ai_draft_not_teacher_reviewed"
+    "review_status": "ai_draft_not_teacher_reviewed",
+    "content_correction": "1a76fb33bfa185325b40d328884bc22fdc76cc96"
   },
   {
     "id": "cnm_p112_q2",
@@ -14685,7 +14675,8 @@
     "review_status": "ai_draft_not_teacher_reviewed",
     "type": "numeric",
     "answer": "25",
-    "verify": "100-30-45"
+    "verify": "100-30-45",
+    "percent": true
   },
   {
     "id": "cnm_p199_extra_003",
@@ -14724,7 +14715,8 @@
     "review_status": "ai_draft_not_teacher_reviewed",
     "type": "numeric",
     "answer": "30",
-    "verify": "12/40*100"
+    "verify": "12/40*100",
+    "percent": true
   },
   {
     "id": "cnm_p199_q1",

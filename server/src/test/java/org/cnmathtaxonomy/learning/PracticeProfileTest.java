@@ -45,6 +45,49 @@ class PracticeProfileTest {
     }
 
     @Test
+    void percentageModeIsFrozenAndChangedModeDoesNotEnterTheNewReviewProfile() {
+        ObjectNode oldQuestion = fixed.deepCopy();
+        oldQuestion.put("prompt", "桃占总数的百分之几？").put("answer", "25").put("explanation", "100-30-45=25。");
+        ObjectNode current = oldQuestion.deepCopy().put("percent", true);
+        var upgraded = new PracticeProfile(mapper, mapper.valueToTree(Map.of("data_version", "v2")),
+                mapper.valueToTree(List.of(current)), mapper.createObjectNode());
+        ObjectNode oldAnswer = snapshot(oldQuestion, "wrong", null);
+        var old = upgraded.accumulator(at.plusSeconds(60));
+        old.add("old", oldAnswer, content(oldQuestion), at, at);
+        assertTrue(((Map<?, ?>) old.result().get("families")).isEmpty());
+        assertEquals(List.of(), old.result().get("reviewQuestions"));
+        assertFalse(oldQuestion.has("percent"));
+        assertEquals("wrong", oldAnswer.path("answers").get(0).path("result").asText());
+
+        var latest = upgraded.accumulator(at.plusSeconds(60));
+        latest.add("latest", snapshot(current, "correct", null), content(current), at, at);
+        JsonNode selected = mapper.valueToTree(latest.result().get("reviewQuestions")).get(0);
+        assertTrue(selected.path("percent").isBoolean());
+        assertTrue(selected.path("percent").asBoolean());
+        assertEquals("correct", family(latest.result(), "fixed:q1").get("lastResult"));
+        ObjectNode invalid = current.deepCopy().put("percent", "true");
+        var malformed = upgraded.accumulator(at.plusSeconds(60));
+        malformed.add("malformed", snapshot(invalid, "correct", null), content(invalid), at, at);
+        assertTrue(((Map<?, ?>) malformed.result().get("families")).isEmpty());
+    }
+
+    @Test
+    void changingPercentageModeCannotRewriteAnActivePlanButOldModeCanContinue() {
+        ObjectNode original = v2(fixed);
+        ObjectNode current = fixed.deepCopy();
+        current.put("percent", true);
+        var upgraded = new PracticeProfile(mapper, mapper.valueToTree(Map.of("data_version", "v2")),
+                mapper.valueToTree(List.of(current)), mapper.createObjectNode());
+        assertThrows(ApiException.class, () -> upgraded.validateSnapshot(original, content(fixed)));
+        assertDoesNotThrow(() -> upgraded.validateSnapshot(original.deepCopy().put("savedAt", at.toString()), content(fixed), original));
+        ObjectNode rewritten = v2(current);
+        assertThrows(ApiException.class, () -> upgraded.validateSnapshot(rewritten, content(current), original));
+        assertDoesNotThrow(() -> upgraded.validateSnapshot(rewritten, content(current)));
+        ObjectNode changedAgain = v2(current.deepCopy().put("percent", false));
+        assertThrows(ApiException.class, () -> upgraded.validateSnapshot(changedAgain, content(current), rewritten));
+    }
+
+    @Test
     void reviewPreservesStoredFigureAndNeverBackfillsANewFigureIntoOldQuestions() {
         ObjectNode current = fixed.deepCopy();
         current.set("figure", mapper.valueToTree(Map.of("schema", 1, "alt", "Stored diagram")));

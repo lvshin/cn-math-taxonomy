@@ -54,6 +54,10 @@ def append_supplements(questions, assigned):
                         raise ValueError('数值补充题缺少标准答案或独立算式：' + q['id'])
                     Fraction(answer)
                     q.update(type='numeric', answer=answer, verify=row['verify'])
+                if 'percent' in row:
+                    if row['percent'] is not True or q['type'] != 'numeric':
+                        raise ValueError('百分数判题只允许明确数值题：' + q['id'])
+                    q['percent'] = True
                 questions.append(q)
 
 def align_standards(topics):
@@ -94,6 +98,35 @@ def attach_figures(questions, assigned):
             raise ValueError('图示结构不正确：' + key)
         question['figure'] = copy.deepcopy(figure)
     return len(catalog['entries'])
+
+
+def apply_upstream_correctness(questions, dependencies):
+    config = read('config/upstream_correctness.json')
+    if config.get('schema') != 1:
+        raise ValueError('正确性修正配置格式无效')
+    by_id = {q['id']: q for q in questions}
+    for key, correction in config['questions'].items():
+        question = by_id.get(key)
+        expected, replacement = correction['expected'], correction['replacement']
+        if question is None or question.get('origin') != 'upstream-reused' or any(question.get(k) != v for k, v in expected.items()):
+            raise ValueError('修正题不符合已审阅旧快照：' + key)
+        if (expected['id'], expected['topicId']) != (replacement['id'], replacement['topicId']):
+            raise ValueError('修正不能改变稳定ID：' + key)
+        if set(correction['remove_fields']) != set(expected) - set(replacement):
+            raise ValueError('修正删除字段未明确声明：' + key)
+        for field in correction['remove_fields']:
+            question.pop(field, None)
+        question.update(copy.deepcopy(replacement))
+        question['content_correction'] = correction['source_commit']
+    for correction in config['dependency_overrides']:
+        expected, replacement = correction['expected'], correction['replacement']
+        matches = [d for d in dependencies if d['topicId'] == expected['topicId'] and d['prerequisiteId'] == expected['prerequisiteId']]
+        if len(matches) != 1 or any(matches[0].get(k) != v for k, v in expected.items()):
+            raise ValueError('先修修正不符合旧边')
+        if (expected['topicId'], expected['prerequisiteId']) != (replacement['topicId'], replacement['prerequisiteId']):
+            raise ValueError('先修修正不能改变关联概念')
+        matches[0].update(copy.deepcopy(replacement))
+        matches[0]['source'] = 'upstream-correctness:' + correction['source_commit']
 
 
 def build():
@@ -177,6 +210,7 @@ def build():
                 q.update(type='numeric', answer=answer)
             questions.append(q)
     append_supplements(questions, assigned)
+    apply_upstream_correctness(questions, deps)
     figure_count = attach_figures(questions, assigned)
     if len({q['id'] for q in questions}) != len(questions):
         raise ValueError('题目ID重复')
@@ -184,12 +218,12 @@ def build():
     for t in topics:
         t['question_count'] = sum(q['topicId']==t['id'] for q in questions)
     catalog_counts = Counter(b['catalog_status'] for b in books)
-    meta = dict(schema_version=1, data_version='2026-10-22-suzhou-v5', as_of='2026-10-22',
+    meta = dict(schema_version=1, data_version='2026-10-26-suzhou-v6', as_of='2026-10-26',
                 title='苏州小学数学知识地图', scope='现用苏教小学1—6年级十二册；四上暂选，四至六下采用2013系列',
                 upstream=dict(url='https://github.com/xiaoyang111222/cn-math-taxonomy',
                               commit='10a0f562b32433b785729661c2164756cb933154',
-                              checked_commit='62b341d4b66b175413d6e3f697e37639fd96aa2d',
-                              selected_updates=['primary-standards-2025', 'geometry-figure-adaptation', 'map-interaction-adaptation'],
+                              checked_commit='ddea0bfd0dbe7bf728e9ea1a6baf866fe5f736f9',
+                              selected_updates=['primary-standards-2025', 'geometry-figure-adaptation', 'map-interaction-adaptation', 'explicit-percent-answers', 'primary-question-correctness'],
                               license='CC BY-NC 4.0'),
                 counts=dict(concepts=len(topics), mapped_concepts=len(assigned), questions=len(questions),
                             dependencies=len(deps), illustrated_questions=figure_count, primary_standards=77, pdf_catalogs=catalog_counts['pdf_checked'],
