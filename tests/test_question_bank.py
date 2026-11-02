@@ -27,9 +27,9 @@ class FixedQuestionBank(unittest.TestCase):
         cls.added = [q for q in cls.questions if q['origin'] == 'suzhou-supplement']
 
     def test_original_458_questions_change_only_by_declared_corrections(self):
-        # Reverse only four explicit audited fixes; every other legacy field remains locked.
+        # Reverse only six explicit audited fixes; every other legacy field remains locked.
         corrections = read('config/upstream_correctness.json')['questions']
-        self.assertEqual(set(corrections), {'cnm_p005_q2', 'cnm_p025_q1', 'cnm_p040_q3', 'cnm_p112_q1'})
+        self.assertEqual(set(corrections), {'cnm_p001_q4', 'cnm_p005_q2', 'cnm_p025_q1', 'cnm_p040_q3', 'cnm_p072_q1', 'cnm_p112_q1'})
         original = []
         for question in self.questions:
             if question['origin'] == 'suzhou-supplement':

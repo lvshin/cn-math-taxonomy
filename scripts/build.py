@@ -218,11 +218,11 @@ def build():
     for t in topics:
         t['question_count'] = sum(q['topicId']==t['id'] for q in questions)
     catalog_counts = Counter(b['catalog_status'] for b in books)
-    meta = dict(schema_version=1, data_version='2026-10-26-suzhou-v6', as_of='2026-10-26',
+    meta = dict(schema_version=1, data_version='2026-11-02-suzhou-v7', as_of='2026-11-02',
                 title='苏州小学数学知识地图', scope='现用苏教小学1—6年级十二册；四上暂选，四至六下采用2013系列',
                 upstream=dict(url='https://github.com/xiaoyang111222/cn-math-taxonomy',
                               commit='10a0f562b32433b785729661c2164756cb933154',
-                              checked_commit='ddea0bfd0dbe7bf728e9ea1a6baf866fe5f736f9',
+                              checked_commit='dc764bddace4b0918a50f8cb5acec289887e5f5f',
                               selected_updates=['primary-standards-2025', 'geometry-figure-adaptation', 'map-interaction-adaptation', 'explicit-percent-answers', 'primary-question-correctness'],
                               license='CC BY-NC 4.0'),
                 counts=dict(concepts=len(topics), mapped_concepts=len(assigned), questions=len(questions),

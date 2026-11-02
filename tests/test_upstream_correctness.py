@@ -9,7 +9,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-QUESTION_IDS = {'cnm_p005_q2', 'cnm_p025_q1', 'cnm_p040_q3', 'cnm_p112_q1'}
+QUESTION_IDS = {'cnm_p001_q4', 'cnm_p005_q2', 'cnm_p025_q1',
+                'cnm_p040_q3', 'cnm_p072_q1', 'cnm_p112_q1'}
 METADATA = {'origin', 'review_status', 'figure', 'content_correction'}
 
 
@@ -66,7 +67,29 @@ class UpstreamCorrectness(unittest.TestCase):
         self.assertNotIn('choices', mixed)
         self.assertEqual(self.config['questions']['cnm_p112_q1']['remove_fields'], ['choices'])
 
-    def test_built_reused_questions_change_only_the_four_declared_objects(self):
+    def test_counting_and_subtraction_questions_test_their_own_concepts(self):
+        topics = {t['id']: t for t in read('data/topics.json')}
+        counting = self.config['questions']['cnm_p001_q4']['replacement']
+        self.assertEqual(topics[counting['topicId']]['name'], '1到5各数的认识')
+        self.assertIn('1，2，3，5', counting['prompt'])
+        self.assertIn('漏掉了哪一个数', counting['prompt'])
+        self.assertEqual(counting['answer'], str((set(range(1, 6)) - {1, 2, 3, 5}).pop()))
+        self.assertEqual(counting['difficulty'], 'standard')
+        self.assertEqual(counting['verify'], '3+1')
+        subtraction = self.config['questions']['cnm_p072_q1']['replacement']
+        self.assertEqual(topics[subtraction['topicId']]['name'], '三位数减法笔算')
+        for condition in ('756 本', '搬走 234 本', '还剩多少本'):
+            self.assertIn(condition, subtraction['prompt'])
+        self.assertEqual(subtraction['answer'], str(756 - 234))
+        self.assertEqual(subtraction['verify'], '756-234')
+        for qid in ('cnm_p001_q4', 'cnm_p072_q1'):
+            entry = self.config['questions'][qid]
+            self.assertEqual(entry['source_commit'], '8b5defb1b96432214ce3bfa7dde1a32b54ff5331')
+            self.assertEqual(entry['replacement']['type'], 'numeric')
+            self.assertNotIn('choices', entry['replacement'])
+            self.assertEqual(entry['remove_fields'], ['choices'])
+
+    def test_built_reused_questions_change_only_the_six_declared_objects(self):
         reused = [q for q in self.current.values() if q['origin'] == 'upstream-reused']
         self.assertEqual(len(reused), 180)
         for question in reused:

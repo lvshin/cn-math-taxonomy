@@ -39,27 +39,14 @@
     "id": "cnm_p001_q4",
     "topicId": "cnm_p001",
     "difficulty": "standard",
-    "type": "choice",
-    "prompt": "第几是看顺序，从 1 开始数。排队时左边第 1 个，表示的是什么？",
-    "choices": [
-      {
-        "key": "A",
-        "text": "顺序，从 1 开始数"
-      },
-      {
-        "key": "B",
-        "text": "一共有多少个"
-      },
-      {
-        "key": "C",
-        "text": "比别人多几个"
-      }
-    ],
-    "answer": "A",
-    "explanation": "第几说的是位置顺序，不是总数。",
-    "verify": "'顺序，从 1 开始数'",
+    "type": "numeric",
+    "prompt": "小明数数：1，2，3，5。他漏掉了哪一个数？",
+    "answer": "4",
+    "explanation": "1 到 5 要一个一个数，3 和 5 中间是 4。",
+    "verify": "3+1",
     "origin": "upstream-reused",
-    "review_status": "ai_draft_not_teacher_reviewed"
+    "review_status": "ai_draft_not_teacher_reviewed",
+    "content_correction": "8b5defb1b96432214ce3bfa7dde1a32b54ff5331"
   },
   {
     "id": "cnm_p002_q1",
@@ -4574,27 +4561,14 @@
     "id": "cnm_p072_q1",
     "topicId": "cnm_p072",
     "difficulty": "basic",
-    "type": "choice",
-    "prompt": "笔算加法算完后，常用什么方法验算？",
-    "choices": [
-      {
-        "key": "A",
-        "text": "用减法：和减去一个加数，看是否等于另一个加数"
-      },
-      {
-        "key": "B",
-        "text": "把两个加数再乘一次"
-      },
-      {
-        "key": "C",
-        "text": "只看个位，不管其它数位"
-      }
-    ],
-    "answer": "A",
-    "explanation": "加法验算常用减法：和减去一个加数，应得到另一个加数。",
-    "verify": "'用减法：和减去一个加数，看是否等于另一个加数'",
+    "type": "numeric",
+    "prompt": "书架上有 756 本书，搬走 234 本。还剩多少本？",
+    "answer": "522",
+    "explanation": "756－234＝522。",
+    "verify": "756-234",
     "origin": "upstream-reused",
-    "review_status": "ai_draft_not_teacher_reviewed"
+    "review_status": "ai_draft_not_teacher_reviewed",
+    "content_correction": "8b5defb1b96432214ce3bfa7dde1a32b54ff5331"
   },
   {
     "id": "cnm_p072_q2",

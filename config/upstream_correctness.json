@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "2026-10-26-upstream-correctness-v1",
-  "checked_commit": "ddea0bfd0dbe7bf728e9ea1a6baf866fe5f736f9",
+  "version": "2026-11-02-upstream-correctness-v2",
+  "checked_commit": "dc764bddace4b0918a50f8cb5acec289887e5f5f",
   "applies_to_question_snapshot": "10a0f562b32433b785729661c2164756cb933154",
   "review_status": "ai_draft_not_teacher_reviewed",
   "questions": {
@@ -172,6 +172,88 @@
         "answer": "10",
         "explanation": "先算 8＋12＝20，再算 20×2＝40，最后 50－40＝10。",
         "verify": "50-(8+12)*2"
+      },
+      "remove_fields": [
+        "choices"
+      ]
+    },
+    "cnm_p001_q4": {
+      "source_commit": "8b5defb1b96432214ce3bfa7dde1a32b54ff5331",
+      "reason": "题目由脱离本概念的序数辨析改为1到5顺序数数；采用上游题意与答案，保留本版standard难度，不引入challenge诊断策略。",
+      "expected": {
+        "id": "cnm_p001_q4",
+        "topicId": "cnm_p001",
+        "difficulty": "standard",
+        "type": "choice",
+        "prompt": "第几是看顺序，从 1 开始数。排队时左边第 1 个，表示的是什么？",
+        "choices": [
+          {
+            "key": "A",
+            "text": "顺序，从 1 开始数"
+          },
+          {
+            "key": "B",
+            "text": "一共有多少个"
+          },
+          {
+            "key": "C",
+            "text": "比别人多几个"
+          }
+        ],
+        "answer": "A",
+        "explanation": "第几说的是位置顺序，不是总数。",
+        "verify": "'顺序，从 1 开始数'"
+      },
+      "replacement": {
+        "id": "cnm_p001_q4",
+        "topicId": "cnm_p001",
+        "difficulty": "standard",
+        "type": "numeric",
+        "prompt": "小明数数：1，2，3，5。他漏掉了哪一个数？",
+        "answer": "4",
+        "explanation": "1 到 5 要一个一个数，3 和 5 中间是 4。",
+        "verify": "3+1"
+      },
+      "remove_fields": [
+        "choices"
+      ]
+    },
+    "cnm_p072_q1": {
+      "source_commit": "8b5defb1b96432214ce3bfa7dde1a32b54ff5331",
+      "reason": "题目由加法验算改为实际三位数减法，保持减法笔算概念、基础难度和稳定ID。",
+      "expected": {
+        "id": "cnm_p072_q1",
+        "topicId": "cnm_p072",
+        "difficulty": "basic",
+        "type": "choice",
+        "prompt": "笔算加法算完后，常用什么方法验算？",
+        "choices": [
+          {
+            "key": "A",
+            "text": "用减法：和减去一个加数，看是否等于另一个加数"
+          },
+          {
+            "key": "B",
+            "text": "把两个加数再乘一次"
+          },
+          {
+            "key": "C",
+            "text": "只看个位，不管其它数位"
+          }
+        ],
+        "answer": "A",
+        "explanation": "加法验算常用减法：和减去一个加数，应得到另一个加数。",
+        "verify": "'用减法：和减去一个加数，看是否等于另一个加数'"
+      },
+      "replacement": {
+        "id": "cnm_p072_q1",
+        "topicId": "cnm_p072",
+        "difficulty": "basic",
+        "type": "numeric",
+        "prompt": "书架上有 756 本书，搬走 234 本。还剩多少本？",
+        "answer": "522",
+        "explanation": "756－234＝522。",
+        "verify": "756-234"
       },
       "remove_fields": [
         "choices"
