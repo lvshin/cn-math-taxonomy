@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "2026-11-02-upstream-correctness-v2",
-  "checked_commit": "dc764bddace4b0918a50f8cb5acec289887e5f5f",
+  "version": "2026-11-09-upstream-correctness-v3",
+  "checked_commit": "9807ec996bf72ee1d0e3d1e05691accec08fbd99",
   "applies_to_question_snapshot": "10a0f562b32433b785729661c2164756cb933154",
   "review_status": "ai_draft_not_teacher_reviewed",
   "questions": {
@@ -274,6 +274,21 @@
         "prerequisiteId": "cnm_p037",
         "strength": "soft",
         "reason": "「分类与整理」对学习「可能性」有帮助（会分类、会数数更容易统计结果），但不会前者也可以开始学后者。"
+      }
+    },
+    {
+      "source_commit": "c935017186f16eb8766e10c71b6cbf8faf151a6c",
+      "expected": {
+        "topicId": "cnm_p205",
+        "prerequisiteId": "cnm_p204",
+        "strength": "hard",
+        "reason": "学习「百分数的应用」需要先掌握「利率」。"
+      },
+      "replacement": {
+        "topicId": "cnm_p205",
+        "prerequisiteId": "cnm_p204",
+        "strength": "soft",
+        "reason": "学习「求一个数比另一个数多百分之几（增长率）」时，利率是同类的百分数应用，可以作参考，但不是必须先会。"
       }
     }
   ]

@@ -103,23 +103,30 @@ class UpstreamCorrectness(unittest.TestCase):
                 self.assertNotIn('content_correction', question)
             self.assertEqual(question['review_status'], 'ai_draft_not_teacher_reviewed')
 
-    def test_probability_requires_no_hard_classification_gate(self):
+    def test_classification_and_interest_are_only_supporting_prerequisites(self):
+        def pair(edge):
+            return edge['topicId'], edge['prerequisiteId']
+
+        expected_reasons = {
+            ('cnm_p140', 'cnm_p037'): '但不会前者也可以开始学后者',
+            ('cnm_p205', 'cnm_p204'): '可以作参考，但不是必须先会',
+        }
         changes = self.config['dependency_overrides']
-        self.assertEqual(len(changes), 1)
-        entry = changes[0]
-        expected, replacement = entry['expected'], entry['replacement']
+        self.assertEqual(len(changes), len(expected_reasons))
+        self.assertEqual({pair(c['expected']) for c in changes}, set(expected_reasons))
         source = read('sources/upstream/dependencies.json')
-        self.assertIn(expected, source)
-        self.assertEqual((expected['topicId'], expected['prerequisiteId']),
-                         ('cnm_p140', 'cnm_p037'))
-        self.assertEqual(expected['strength'], 'hard')
-        self.assertEqual(replacement['strength'], 'soft')
-        self.assertIn('但不会前者也可以开始学后者', replacement['reason'])
-        actual = [d for d in read('data/dependencies.json')
-                  if d['topicId'] == 'cnm_p140' and d['prerequisiteId'] == 'cnm_p037']
-        self.assertEqual(len(actual), 1)
-        self.assertEqual({k: actual[0][k] for k in replacement}, replacement)
-        self.assertEqual(actual[0]['review_status'], 'ai_draft_not_teacher_reviewed')
+        dependencies = read('data/dependencies.json')
+        for entry in changes:
+            expected, replacement = entry['expected'], entry['replacement']
+            self.assertIn(expected, source)
+            self.assertEqual(pair(expected), pair(replacement))
+            self.assertEqual(expected['strength'], 'hard')
+            self.assertEqual(replacement['strength'], 'soft')
+            self.assertIn(expected_reasons[pair(expected)], replacement['reason'])
+            actual = [edge for edge in dependencies if pair(edge) == pair(expected)]
+            self.assertEqual(len(actual), 1)
+            self.assertEqual({k: actual[0][k] for k in replacement}, replacement)
+            self.assertEqual(actual[0]['review_status'], 'ai_draft_not_teacher_reviewed')
 
 
 if __name__ == '__main__':

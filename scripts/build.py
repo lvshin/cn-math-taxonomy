@@ -218,12 +218,12 @@ def build():
     for t in topics:
         t['question_count'] = sum(q['topicId']==t['id'] for q in questions)
     catalog_counts = Counter(b['catalog_status'] for b in books)
-    meta = dict(schema_version=1, data_version='2026-11-02-suzhou-v7', as_of='2026-11-02',
+    meta = dict(schema_version=1, data_version='2026-11-09-suzhou-v8', as_of='2026-11-09',
                 title='苏州小学数学知识地图', scope='现用苏教小学1—6年级十二册；四上暂选，四至六下采用2013系列',
                 upstream=dict(url='https://github.com/xiaoyang111222/cn-math-taxonomy',
                               commit='10a0f562b32433b785729661c2164756cb933154',
-                              checked_commit='dc764bddace4b0918a50f8cb5acec289887e5f5f',
-                              selected_updates=['primary-standards-2025', 'geometry-figure-adaptation', 'map-interaction-adaptation', 'explicit-percent-answers', 'primary-question-correctness'],
+                              checked_commit='9807ec996bf72ee1d0e3d1e05691accec08fbd99',
+                              selected_updates=['primary-standards-2025', 'geometry-figure-adaptation', 'map-interaction-adaptation', 'explicit-percent-answers', 'primary-question-correctness', 'hard-prerequisite-screening'],
                               license='CC BY-NC 4.0'),
                 counts=dict(concepts=len(topics), mapped_concepts=len(assigned), questions=len(questions),
                             dependencies=len(deps), illustrated_questions=figure_count, primary_standards=77, pdf_catalogs=catalog_counts['pdf_checked'],

@@ -110,6 +110,19 @@ test('答对：该点及所有祖先（含外部）视为掌握并跳过', () =>
   assert.strictEqual(sum.asked, 1);
 });
 
+test('范围筛查只推断全程为 hard 的先修路径', () => {
+  const graph = E.buildGraph(smallTopics, smallDeps.concat([
+    { topicId: 'B', prerequisiteId: 'Z', strength: 'hard' },
+    { topicId: 'C', prerequisiteId: 'B', strength: 'soft' }
+  ]));
+  assert.deepStrictEqual(sorted(E.ancestors(graph, 'T')), ['B', 'C', 'D', 'E', 'F', 'X', 'Z']);
+  const screen = E.createSession(graph, ['B', 'C', 'D', 'E', 'F', 'T', 'Z'], { mode: 'screen' });
+  assert.strictEqual(E.nextQuestion(graph, screen), 'T');
+  const answered = E.applyAnswer(graph, screen, 'T', 'correct');
+  assert.deepStrictEqual(sorted(Object.keys(answered.status)), ['C', 'D', 'E', 'F', 'T', 'X']);
+  assert.strictEqual(E.nextQuestion(graph, answered), 'B');
+});
+
 test('答错：回溯先修，hard 先于 soft，深度优先', () => {
   const s0 = E.createSession(G, ['T']);
   const [s, asked] = run(s0, { T: 'wrong', C: 'wrong', E: 'correct', D: 'correct', B: 'correct' });

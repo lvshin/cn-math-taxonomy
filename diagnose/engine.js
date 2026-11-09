@@ -67,21 +67,22 @@
     Object.keys(bank).forEach(function (id) { bank[id].sort(function (a, b) { return qNum(a) - qNum(b); }); });
     return {
       topics: topics, byId: byId, index: index, prereqs: prereqs, dependents: dependents, bank: bank,
-      hasBank: fromFile > 0, _anc: Object.create(null)
+      hasBank: fromFile > 0, _anc: Object.create(null), _hardAnc: Object.create(null)
     };
   }
 
-  /** 严格祖先集合（不含自身），带缓存。 */
-  function ancestorSet(graph, id) {
-    const memo = graph._anc;
+  /** 严格祖先集合（不含自身），全路径与必要先修路径分别缓存。 */
+  function ancestorSet(graph, id, hardOnly) {
+    const memo = hardOnly ? graph._hardAnc : graph._anc;
     if (memo[id]) return memo[id];
     const visiting = graph._visiting || (graph._visiting = Object.create(null));
     if (visiting[id]) throw new Error('先修图存在环：' + id);
     visiting[id] = true;
     const out = new Set();
     graph.prereqs[id].forEach(function (p) {
+      if (hardOnly && p.strength !== 'hard') return;
       out.add(p.id);
-      ancestorSet(graph, p.id).forEach(function (a) { out.add(a); });
+      ancestorSet(graph, p.id, hardOnly).forEach(function (a) { out.add(a); });
     });
     visiting[id] = false;
     memo[id] = out;
@@ -244,7 +245,7 @@
 
   /**
    * 记录一次作答（针对 nextItem 给出的那道题）。
-   *  - 第一题 correct：该点及其所有尚未判定的祖先记为掌握（祖先为 inferred）；
+   *  - 第一题 correct：该点及其尚未判定的祖先记为掌握（祖先为 inferred；范围筛查只沿 hard 先修推断）；
    *  - 第一题 wrong/skip：还没有结论，该点仍排在最前面，下一题给它出第二题（没有第二题可出就直接判薄弱）；
    *  - 第二题 correct：不稳（shaky），不向先修回溯；
    *  - 第二题 wrong/skip：薄弱，并把其先修（hard 先、soft 后）压到出题栈顶。
@@ -265,7 +266,7 @@
     if (result === 'correct') {
       if (nth === 1) {
         s.status[id] = { s: 'mastered', src: 'direct' };
-        ancestorSet(graph, id).forEach(function (a) {
+        ancestorSet(graph, id, s.mode === 'screen').forEach(function (a) {
           if (!s.status[a]) s.status[a] = { s: 'mastered', src: 'inferred' };
         });
       } else {

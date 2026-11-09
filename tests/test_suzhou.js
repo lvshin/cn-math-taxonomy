@@ -71,6 +71,17 @@ test('两错才回溯、第二题对是不稳，范围检查不越界',()=>{
  s=E.applyAnswer(M.graph,s,id,'wrong');assert.notEqual(E.nextItem(M.graph,s)?.topicId,id);
  let screen=M.start([id],{seed:'test',mode:'screen'});screen=E.applyAnswer(M.graph,screen,id,'wrong');screen=E.applyAnswer(M.graph,screen,id,'wrong');assert.equal(E.nextItem(M.graph,screen),null);
 });
+test('六下比例单元的范围检查保留反比例作答',()=>{
+ const ids=M.topicsFor('6b','6b-u07').map(t=>t.id);
+ const screen=M.start(ids,{mode:'screen',seed:'soft-screen-regression',limit:12});
+ const item=M.next(screen);assert.equal(item.topicId,'cnm_p215');
+ const answered=M.apply(screen,item,'correct');
+ const summary=M.summary(answered);
+ assert.deepEqual(summary.inferredMastered,['cnm_p213']);
+ assert.deepEqual(summary.untested,['cnm_p214']);
+ assert.equal(M.next(answered).topicId,'cnm_p214');
+ assert.equal(M.next(M.restore(M.snapshot(answered))).question.id,M.next(answered).question.id);
+});
 test('存储重放保持题目与答案；拒绝错版、损坏及篡改记录',()=>{
  let s=M.start(['cnm_p133'],{seed:'restore',limit:16});
  for(let i=0;i<5&&E.nextItem(M.graph,s);i++)s=E.applyAnswer(M.graph,s,E.nextItem(M.graph,s).topicId,'wrong',{text:'0'});
